@@ -8,7 +8,7 @@ public class User {
     private String userID, accountType, firstName, lastName, emailAddress;
     private LinkedList<Vehicle> garage = new LinkedList<>();
     private Vehicle defaultVehicle;
-    private boolean expireWarningNotification, breachNoticeNotification;
+    private boolean expireWarningNotification, breachNoticeNotification, dataModified;
     private ParkingSession currentParkingSession;
     private LinkedList<ParkingSession> parkingRecord = new LinkedList<>();
 
@@ -20,6 +20,7 @@ public class User {
     public User(String userID, String accountType) {
         this.userID = userID;
         this.accountType = accountType;
+        this.dataModified = false;
     }
 
     public void addVehicleToGarage(Vehicle vehicle){
