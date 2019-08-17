@@ -12,19 +12,22 @@ public class ParkingSession {
     private ParkingSpace parkingSpace;
     private Date startTime, endTime, refundedTime;
     private CarPark carPark;
+    private Campus campus;
     private boolean refunded;
     private Map<String, Object> map;
 
     public static final String KEY_SESSIONID = "SessionID", KEY_USERID = "UserID", KEY_SPACEID = "SpaceID", KEY_STARTTIME = "StartTime",
-                KEY_ENDTIME = "EndTime", KEY_REFUNDTIME = "RefundTime", KEY_CARPARKID = "CarParkID", KEY_REFUNDED = "Refunded";
+                KEY_ENDTIME = "EndTime", KEY_REFUNDTIME = "RefundTime", KEY_CARPARKID = "CarParkID", KEY_REFUNDED = "Refunded",
+                KEY_CAMPUSID = "CampusID";
 
-    public ParkingSession(String sessionID, User user, ParkingSpace parkingSpace, Date startTime, Date endTime, CarPark carPark) {
+    public ParkingSession(String sessionID, User user, ParkingSpace parkingSpace, Date startTime, Date endTime, CarPark carPark, Campus campus) {
         this.sessionID = sessionID;
         this.user = user;
         this.parkingSpace = parkingSpace;
         this.startTime = startTime;
         this.endTime = endTime;
         this.carPark = carPark;
+        this.campus = campus;
         this.refunded = false;
     }
 
@@ -33,6 +36,7 @@ public class ParkingSession {
 
         this.map.put(ParkingSession.KEY_SESSIONID, this.sessionID);
         this.map.put(ParkingSession.KEY_USERID, this.user.getUserID());
+        this.map.put(ParkingSession.KEY_CAMPUSID, this.campus.getCampusID());
         this.map.put(ParkingSession.KEY_CARPARKID, this.carPark.getCarParkID());
         this.map.put(ParkingSession.KEY_SPACEID, this.parkingSpace.getSpaceID());
         this.map.put(ParkingSession.KEY_STARTTIME, new Timestamp(this.startTime));
@@ -77,6 +81,10 @@ public class ParkingSession {
 
     public CarPark getCarPark() {
         return carPark;
+    }
+
+    public Campus getCampus() {
+        return campus;
     }
 
     public boolean isRefunded() {
