@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "312434547751",
+    "firebase_url": "https://autparkitnz.firebaseio.com",
+    "project_id": "autparkitnz",
+    "storage_bucket": "autparkitnz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312434547751:android:7f6873e6757cdb17",
+        "android_client_info": {
+          "package_name": "com.aut.parkit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312434547751-46bpu037gfdulbrq0uvcku4g14p1jbvs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aut.parkit",
+            "certificate_hash": "29221e638f77c4c6640da128b486b691160f0468"
+          }
+        },
+        {
+          "client_id": "312434547751-pldvgb6j4eua2bnt6pglk7pbnds7boaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyAcrZoop9wYKXdjGNbDAkYNQT37VmOEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312434547751-pldvgb6j4eua2bnt6pglk7pbnds7boaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
