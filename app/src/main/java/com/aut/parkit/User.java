@@ -9,7 +9,7 @@ public class User implements Serializable {
     private String userID, accountType, firstName, lastName, emailAddress;
     private LinkedList<Vehicle> garage = new LinkedList<>();
     private Vehicle defaultVehicle;
-    private boolean expireWarningNotification, breachNoticeNotification, dataModified;
+    private boolean expireWarningNotification, breachNoticeNotification, dataModified, partialClone;
     private ParkingSession currentParkingSession;
     private LinkedList<ParkingSession> parkingRecord = new LinkedList<>();
     private boolean modified;
@@ -24,6 +24,7 @@ public class User implements Serializable {
         this.accountType = accountType;
         this.dataModified = false;
         this.modified = false;
+        this.partialClone = false;
     }
 
     public void addVehicleToGarage(Vehicle vehicle) {
@@ -35,8 +36,7 @@ public class User implements Serializable {
     }
 
     public boolean removeVehicleFromGarage(String numberPlate) {
-        for (Vehicle v : this.garage
-        ) {
+        for (Vehicle v : this.garage) {
             if (v.getNumberPlate().contentEquals(numberPlate)) {
                 this.garage.remove(v);
                 return true;
@@ -44,6 +44,10 @@ public class User implements Serializable {
         }
 
         return false;
+    }
+
+    public void addParkingSession(ParkingSession parkingSession){
+        this.parkingRecord.add(parkingSession);
     }
 
     public Map<String, Object> toMap() {
@@ -59,6 +63,42 @@ public class User implements Serializable {
         this.map.put(User.KEY_DEFAULTVEHIVLE, this.defaultVehicle.getNumberPlate());
 
         return this.map;
+    }
+
+    @Override
+    public User clone(){
+        User user = this.setUpClone();
+
+        for (Vehicle v: this.garage) {
+            user.addVehicleToGarage(v);
+        }
+
+        for (ParkingSession p : this.parkingRecord) {
+            user.addParkingSession(p.clone());
+        }
+
+        return user;
+    }
+
+    public User partialClone(){
+        User user = this.setUpClone();
+        user.setPartialClone();
+
+        return user;
+    }
+
+    private User setUpClone(){
+        User user = new User(this.userID, this.accountType);
+
+        user.setLastName(this.lastName);
+        user.setFirstName(this.firstName);
+        user.setExpireWarningNotification(this.expireWarningNotification);
+        user.setEmailAddress(this.emailAddress);
+        user.setDefaultVehicle(this.defaultVehicle);
+        user.setCurrentParkingSession(this.currentParkingSession);
+        user.setBreachNoticeNotification(this.breachNoticeNotification);
+
+        return user;
     }
 
     public void invalidate(){
@@ -91,6 +131,14 @@ public class User implements Serializable {
 
     public void setCurrentParkingSession(ParkingSession currentParkingSession) {
         this.currentParkingSession = currentParkingSession;
+    }
+
+    public boolean isPartialClone() {
+        return partialClone;
+    }
+
+    public void setPartialClone() {
+        this.partialClone = true;
     }
 
     public String getUserID() {
