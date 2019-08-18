@@ -9,7 +9,7 @@ public class User implements Serializable {
     private String userID, accountType, firstName, lastName, emailAddress;
     private LinkedList<Vehicle> garage = new LinkedList<>();
     private Vehicle defaultVehicle;
-    private boolean expireWarningNotification, breachNoticeNotification, dataModified, partialClone;
+    private boolean expireWarningNotification, breachNoticeNotification, partialClone;
     private ParkingSession currentParkingSession;
     private LinkedList<ParkingSession> parkingRecord = new LinkedList<>();
     private boolean modified;
@@ -22,7 +22,6 @@ public class User implements Serializable {
     public User(String userID, String accountType) {
         this.userID = userID;
         this.accountType = accountType;
-        this.dataModified = false;
         this.modified = false;
         this.partialClone = false;
     }
