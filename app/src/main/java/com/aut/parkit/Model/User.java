@@ -1,4 +1,4 @@
-package com.aut.parkit;
+package com.aut.parkit.Model;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.aut.parkit;
+package com.aut.parkit.Model;
 
 import android.widget.Space;
 

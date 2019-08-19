@@ -1,4 +1,4 @@
-package com.aut.parkit;
+package com.aut.parkit.Model;
 
 import com.google.firebase.Timestamp;
 
