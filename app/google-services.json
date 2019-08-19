@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "312434547751-j4ehbqcfbast7s6t5a644e2r40obdibl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aut.parkit",
+            "certificate_hash": "720dbaae3afce2defcbe6232be7c69d6f0ddeaa5"
+          }
+        },
+        {
           "client_id": "312434547751-46bpu037gfdulbrq0uvcku4g14p1jbvs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
