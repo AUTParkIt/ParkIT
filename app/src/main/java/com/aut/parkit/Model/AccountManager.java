@@ -4,48 +4,48 @@ import java.util.Map;
 
 public class AccountManager {
 
-    private static User user;
-    private static Map<Object, User> refrenceList;
+    private static UserData userData;
+    private static Map<Object, UserData> refrenceList;
 
-    public static User getUser(Object caller){
+    public static UserData getUser(Object caller){
         AccountManager.removeOldReference(caller);
 
-        if (AccountManager.user == null){
+        if (AccountManager.userData == null){
             AccountManager.loadUserFromDB();
         }
-        User newUser = AccountManager.user.clone();
-        refrenceList.put(caller, newUser);
+        UserData newUserData = AccountManager.userData.clone();
+        refrenceList.put(caller, newUserData);
 
-        return newUser;
+        return newUserData;
     }
 
-    public static User getPartialUser(Object caller){
+    public static UserData getPartialUser(Object caller){
         AccountManager.removeOldReference(caller);
 
-        if (AccountManager.user == null){
+        if (AccountManager.userData == null){
             AccountManager.loadUserFromDB();
         }
 
-        User newUser = AccountManager.user.partialClone();
-        refrenceList.put(caller, newUser);
+        UserData newUserData = AccountManager.userData.partialClone();
+        refrenceList.put(caller, newUserData);
 
-        return newUser;
+        return newUserData;
     }
 
     private static void removeOldReference(Object caller){
-        User oldUser  = refrenceList.get(caller);
+        UserData oldUserData = refrenceList.get(caller);
 
-        if (oldUser != null){
-            oldUser.invalidate();
-            refrenceList.remove(oldUser);
+        if (oldUserData != null){
+            oldUserData.invalidate();
+            refrenceList.remove(oldUserData);
         }
     }
 
-    public static void pushModifiedUser(User user) throws Exception {
+    public static void pushModifiedUser(UserData userData) throws Exception {
 
-        if (!user.isPartialClone()){
+        if (!userData.isPartialClone()){
             AccountManager.invalidateAll();
-            AccountManager.user = user;
+            AccountManager.userData = userData;
         }
         else {
             throw new Exception("Cannot push Partial Clone");
@@ -53,12 +53,12 @@ public class AccountManager {
     }
 
     private static void invalidateAll(){
-        for (User u : AccountManager.refrenceList.values()) {
+        for (UserData u : AccountManager.refrenceList.values()) {
             u.invalidate();
             AccountManager.refrenceList.remove(u);
         }
 
-        AccountManager.user.invalidate();
+        AccountManager.userData.invalidate();
     }
 
     private static void loadUserFromDB(){
@@ -67,6 +67,27 @@ public class AccountManager {
 
     private static void storeUserToDB(){
 
+    }
+
+    public static Vehicle getVehicle(String numberPlate){
+        Vehicle v = AccountManager.userData.getVehicle(numberPlate);
+
+        if (v != null){
+            return v;
+        }
+
+        v = AccountManager.getVehicleFromDB();
+
+        if (v != null){
+            AccountManager.userData.addVehicleToGarage(v);
+            return v;
+        }
+
+        return null;
+    }
+
+    private static Vehicle getVehicleFromDB(){
+        return null;  //TODO: need to get connected to db and find out how to make process wait for date. lock?
     }
 
     //TODO: Finish
