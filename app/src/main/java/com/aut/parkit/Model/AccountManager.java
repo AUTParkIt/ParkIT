@@ -22,6 +22,10 @@ public class AccountManager {
     public static User getPartialUser(Object caller){
         AccountManager.removeOldReference(caller);
 
+        if (AccountManager.user == null){
+            AccountManager.loadUserFromDB();
+        }
+
         User newUser = AccountManager.user.partialClone();
         refrenceList.put(caller, newUser);
 
