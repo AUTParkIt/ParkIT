@@ -23,7 +23,7 @@ android {
 
 repositories {
     maven {
-        url  "https://cardinalcommerce.bintray.com/android"
+        url "https://cardinalcommerce.bintray.com/android"
         credentials {
             username 'braintree-team-sdk@cardinalcommerce'
             password '220cc9476025679c4e5c843666c27d97cfb0f951'
@@ -32,6 +32,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.braintreepayments.api:braintree:3.4.2'
     implementation 'com.braintreepayments.api:drop-in:4.3.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
