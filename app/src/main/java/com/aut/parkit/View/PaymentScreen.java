@@ -26,7 +26,8 @@ public class PaymentScreen extends AppCompatActivity {
 
     public void onBraintreeSubmit(View v) {
         DropInRequest dropInRequest = new DropInRequest()
-                .clientToken(clientToken);
+                .clientToken(clientToken)
+                .vaultManager(true);
         startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
     }
 
