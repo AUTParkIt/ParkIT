@@ -1,5 +1,6 @@
 package com.aut.parkit.Model;
 
+import java.util.Date;
 import java.util.LinkedList;
 
 public class User {
@@ -116,6 +117,11 @@ public class User {
             this.updateUser();
             return this.getCurrentParkingSession();
         }
+    }
+
+    public LinkedList<ParkingSession> getParkingSession(Date date){
+        return this.userData.getParkingSession(date); //TODO: Set the throw clause in UserData
+        //TODO: Setup the ability for the Account manager to get the vehicle by date.
     }
 
     public LinkedList<ParkingSession> getParkingRecord(){

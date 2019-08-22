@@ -1,6 +1,9 @@
 package com.aut.parkit.Model;
 
+import io.opencensus.trace.Link;
+
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -224,5 +227,17 @@ public class UserData implements Serializable {
         }
 
         return parkingRecord;
+    }
+
+    public LinkedList<ParkingSession> getParkingSession(Date date){
+        LinkedList<ParkingSession> list = new LinkedList<>();
+
+        for (ParkingSession ps : this.parkingRecord) {
+            if (ps.getStartTime().equals(date)){
+                list.add(ps);
+            }
+        }
+
+        return list;
     }
 }
