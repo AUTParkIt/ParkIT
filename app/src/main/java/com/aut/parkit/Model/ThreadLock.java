@@ -4,16 +4,15 @@ public class ThreadLock {
 
     private boolean waiting = false;
 
-    public void lockThread(){
+    public void lockThread() {
         this.locker(false);
     }
 
-    private synchronized void locker(boolean bool){
-        if (bool){
+    private synchronized void locker(boolean bool) {
+        if (bool) {
             waitForThread(bool);
             notifyAll();
-        }
-        else {
+        } else {
             try {
                 waiting = true;
                 waitForThread(bool);
@@ -25,20 +24,19 @@ public class ThreadLock {
         }
     }
 
-    private synchronized void waitForThread(boolean bool){
-        if (bool && !waiting){
+    private synchronized void waitForThread(boolean bool) {
+        if (bool && !waiting) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             notifyAll();
         }
     }
 
-    public void unlockAll(){
+    public void unlockAll() {
         this.locker(true);
     }
 }

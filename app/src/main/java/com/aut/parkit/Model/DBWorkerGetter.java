@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 public class DBWorkerGetter implements Runnable {
     private DocumentSnapshot doc;
     private DocumentReference docRef;
-    private FirebaseFirestore mFStore  = FirebaseFirestore.getInstance();
+    private FirebaseFirestore mFStore = FirebaseFirestore.getInstance();
     private ThreadLock locker;
 
     public DBWorkerGetter(String location, ThreadLock locker) {

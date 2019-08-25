@@ -1,5 +1,8 @@
 package com.aut.parkit.Model;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Map;
@@ -8,7 +11,7 @@ public class AccountManager {
 
     private static UserData userData;
     private static Map<Object, UserData> refrenceList;
-    //private static mAuth = FirebaseAuth.getInstance();
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public static UserData getUser(Object caller){
         AccountManager.removeOldReference(caller);
@@ -103,8 +106,15 @@ public class AccountManager {
 
     private static Vehicle getVehicleFromDB(String numberPlate){
         ThreadLock lock = new ThreadLock();
-        //DBWorkerGetter dbw = new DBWorkerGetter()
-        return null;  //TODO: need to get connected to db and find out how to make process wait for date. lock?
+        DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid() + "/" + "Vehicle/" + numberPlate, lock);
+        Thread t = new Thread(dbw);
+
+        t.start();
+        lock.lockThread();
+
+        DocumentSnapshot doc = dbw.getDoc();
+
+        return DocumentConverter.toVehicle(doc.getData());
     }
 
     private static LinkedList<ParkingSession> getParkingSessionFromBD(Date date){

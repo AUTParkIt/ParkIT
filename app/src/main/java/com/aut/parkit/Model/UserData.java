@@ -11,8 +11,8 @@ public class UserData implements Serializable {
     private ParkingSession currentParkingSession;
     private LinkedList<ParkingSession> parkingRecord = new LinkedList<>();
     private boolean modified;
-
     private Map<String, Object> map;
+
     public static final String KEY_USERID = "UserID", KEY_ACCOUNTTYPE = "AccountType", KEY_FIRSTNAME = "FirstName", KEY_LASTNAME = "LastName",
             KEY_EMAILADDRESS = "EmailAddress", KEY_EXPIREWARNINGNOTIFICATION = "ExpireWarningNotification",
             KEY_BREACHNOTICENOTIFICATION = "BreachWarningNotification", KEY_DEFAULTVEHIVLE = "DefaultVehicleID";
@@ -43,22 +43,22 @@ public class UserData implements Serializable {
         return false;
     }
 
-    public void addParkingSession(ParkingSession parkingSession){
+    public void addParkingSession(ParkingSession parkingSession) {
         this.parkingRecord.add(parkingSession);
     }
 
-    public void insertParkingSessions(LinkedList<ParkingSession> parkingSessionsList){
+    public void insertParkingSessions(LinkedList<ParkingSession> parkingSessionsList) {
         Collections.sort(this.parkingRecord);
         Collections.sort(parkingSessionsList);
 
         for (ParkingSession psL : parkingSessionsList) {
             for (ParkingSession pr : this.parkingRecord) {
-                if (psL.getSessionID().equalsIgnoreCase(pr.getSessionID())){
+                if (psL.getSessionID().equalsIgnoreCase(pr.getSessionID())) {
                     this.parkingRecord.remove(pr);
                     break;
                 }
 
-                if (Integer.parseInt(pr.getSessionID()) > Integer.parseInt(psL.getSessionID())){
+                if (Integer.parseInt(pr.getSessionID()) > Integer.parseInt(psL.getSessionID())) {
                     break;
                 }
             }
@@ -84,10 +84,10 @@ public class UserData implements Serializable {
     }
 
     @Override
-    public UserData clone(){
+    public UserData clone() {
         UserData userData = this.setUpClone();
 
-        for (Vehicle v: this.garage) {
+        for (Vehicle v : this.garage) {
             userData.addVehicleToGarage(v);
         }
 
@@ -98,14 +98,14 @@ public class UserData implements Serializable {
         return userData;
     }
 
-    public UserData partialClone(){
+    public UserData partialClone() {
         UserData userData = this.setUpClone();
         userData.setPartialClone();
 
         return userData;
     }
 
-    private UserData setUpClone(){
+    private UserData setUpClone() {
         UserData userData = new UserData(this.userID, this.accountType);
 
         userData.setLastName(this.lastName);
@@ -119,14 +119,14 @@ public class UserData implements Serializable {
         return userData;
     }
 
-    public void invalidate(){
+    public void invalidate() {
         this.modified = true;
     }
 
     public Vehicle getVehicle(String numberPlate) {  //TODO: Decide if need to throw exception
 
         for (Vehicle v : this.garage) {
-            if (v.getNumberPlate().contentEquals(numberPlate)){
+            if (v.getNumberPlate().contentEquals(numberPlate)) {
                 return v;
             }
         }
@@ -175,70 +175,70 @@ public class UserData implements Serializable {
     }
 
     public String getAccountType() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return accountType;
     }
 
     public String getFirstName() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return firstName;
     }
 
     public String getLastName() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return lastName;
     }
 
     public String getEmailAddress() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return emailAddress;
     }
 
     public LinkedList<Vehicle> getGarage() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return garage;
     }
 
     public Vehicle getDefaultVehicle() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return defaultVehicle;
     }
 
     public boolean isExpireWarningNotification() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return expireWarningNotification;
     }
 
     public boolean isBreachNoticeNotification() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return breachNoticeNotification;
     }
 
     public ParkingSession getCurrentParkingSession() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
         return currentParkingSession;
     }
 
     public LinkedList<ParkingSession> getParkingRecord() throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
 
@@ -246,7 +246,7 @@ public class UserData implements Serializable {
     }
 
     public LinkedList<ParkingSession> getParkingSession(Date date) throws Exception {
-        if (this.modified){
+        if (this.modified) {
             throw new Exception("UserData Object Obsolete");
         }
 
@@ -255,7 +255,7 @@ public class UserData implements Serializable {
         for (ParkingSession ps : this.parkingRecord) {
             Date dayAfter = (Date) date.clone();
             dayAfter.setDate(date.getDate() + 1);
-            if (ps.getStartTime().after(date) && ps.getStartTime().before(dayAfter)){
+            if (ps.getStartTime().after(date) && ps.getStartTime().before(dayAfter)) {
                 list.add(ps);
             }
         }

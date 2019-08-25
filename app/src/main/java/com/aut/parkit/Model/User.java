@@ -11,11 +11,11 @@ public class User {
         this.userData = AccountManager.getPartialUser(this);
     }
 
-    public String getUserID(){
+    public String getUserID() {
         return this.userData.getUserID();
     }
 
-    public String getAccountType(){
+    public String getAccountType() {
         try {
             return this.userData.getAccountType();
         } catch (Exception e) {
@@ -24,7 +24,7 @@ public class User {
         }
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         try {
             return this.userData.getFirstName();
         } catch (Exception e) {
@@ -33,7 +33,7 @@ public class User {
         }
     }
 
-    public String getLastName(){
+    public String getLastName() {
         try {
             return this.userData.getLastName();
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class User {
         }
     }
 
-    public String getEmailAddress(){
+    public String getEmailAddress() {
         try {
             return this.userData.getEmailAddress();
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class User {
         }
     }
 
-    public LinkedList<Vehicle> getGarage(){
+    public LinkedList<Vehicle> getGarage() {
         try {
             return this.userData.getGarage();
         } catch (Exception e) {
@@ -62,20 +62,20 @@ public class User {
 
     }
 
-    public Vehicle getVehicle(String numberPlate){
-        if (this.userData.isPartialClone()){
+    public Vehicle getVehicle(String numberPlate) {
+        if (this.userData.isPartialClone()) {
             this.userData = AccountManager.getUser(this);
         }
 
         Vehicle v = this.userData.getVehicle(numberPlate);
 
-        if (v != null){
+        if (v != null) {
             return v;
         }
 
         v = AccountManager.getVehicle(numberPlate);
 
-        if (v != null){
+        if (v != null) {
             this.userData.addVehicleToGarage(v);
             return v;
         }
@@ -83,7 +83,7 @@ public class User {
         return null;
     }
 
-    public Vehicle getDefaultVehicle(){
+    public Vehicle getDefaultVehicle() {
         try {
             return this.userData.getDefaultVehicle();
         } catch (Exception e) {
@@ -92,7 +92,7 @@ public class User {
         }
     }
 
-    public boolean isExpireWarningNotification(){
+    public boolean isExpireWarningNotification() {
         try {
             return this.userData.isExpireWarningNotification();
         } catch (Exception e) {
@@ -101,7 +101,7 @@ public class User {
         }
     }
 
-    public boolean isBreachNoticeNotification(){
+    public boolean isBreachNoticeNotification() {
         try {
             return this.userData.isBreachNoticeNotification();
         } catch (Exception e) {
@@ -110,7 +110,7 @@ public class User {
         }
     }
 
-    public ParkingSession getCurrentParkingSession(){
+    public ParkingSession getCurrentParkingSession() {
         try {
             return this.userData.getCurrentParkingSession();
         } catch (Exception e) {
@@ -119,7 +119,7 @@ public class User {
         }
     }
 
-    public LinkedList<ParkingSession> getParkingSession(Date date){ //TODO: Optimise the parking comparison by sorting and checking by date or sessionID
+    public LinkedList<ParkingSession> getParkingSession(Date date) { //TODO: Optimise the parking comparison by sorting and checking by date or sessionID
         try {
             LinkedList<ParkingSession> accountManagerSessions = AccountManager.getParkingSession(date);
             userData.insertParkingSessions(accountManagerSessions);
@@ -132,7 +132,7 @@ public class User {
         //TODO: Setup the ability for the Account manager to get the vehicle by date.
     }
 
-    public LinkedList<ParkingSession> getParkingRecord(){
+    public LinkedList<ParkingSession> getParkingRecord() {
         try {
             return this.userData.getParkingRecord();
         } catch (Exception e) {
@@ -141,11 +141,10 @@ public class User {
         }
     }
 
-    private void updateUser(){
-        if (!this.userData.isPartialClone()){
+    private void updateUser() {
+        if (!this.userData.isPartialClone()) {
             this.userData = AccountManager.getUser(this);
-        }
-        else {
+        } else {
             this.userData = AccountManager.getPartialUser(this);
         }
 
