@@ -1,11 +1,14 @@
 package com.aut.parkit.Model;
 
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class AccountManager {
 
     private static UserData userData;
     private static Map<Object, UserData> refrenceList;
+    //private static mAuth = FirebaseAuth.getInstance();
 
     public static UserData getUser(Object caller){
         AccountManager.removeOldReference(caller);
@@ -76,7 +79,7 @@ public class AccountManager {
             return v;
         }
 
-        v = AccountManager.getVehicleFromDB();
+        v = AccountManager.getVehicleFromDB(numberPlate);
 
         if (v != null){
             AccountManager.userData.addVehicleToGarage(v);
@@ -86,8 +89,26 @@ public class AccountManager {
         return null;
     }
 
-    private static Vehicle getVehicleFromDB(){
+    public static LinkedList<ParkingSession> getParkingSession(Date date){
+        try {
+            LinkedList<ParkingSession> parkingList = AccountManager.getParkingSessionFromBD(date);
+            AccountManager.userData.insertParkingSessions(parkingList);
+            return AccountManager.userData.getParkingSession(date);
+        } catch (Exception e) {
+            AccountManager.loadUserFromDB();
+        }
+
+        return AccountManager.getParkingSession(date);
+    }
+
+    private static Vehicle getVehicleFromDB(String numberPlate){
+        ThreadLock lock = new ThreadLock();
+        //DBWorkerGetter dbw = new DBWorkerGetter()
         return null;  //TODO: need to get connected to db and find out how to make process wait for date. lock?
+    }
+
+    private static LinkedList<ParkingSession> getParkingSessionFromBD(Date date){
+        return null; //TODo: need to impliment geting patrkingsessions from the DB and convert it to a parkingSession
     }
 
     //TODO: Finish

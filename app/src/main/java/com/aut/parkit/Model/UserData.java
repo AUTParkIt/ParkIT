@@ -1,12 +1,7 @@
 package com.aut.parkit.Model;
 
-import io.opencensus.trace.Link;
-
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class UserData implements Serializable {
     private String userID, accountType, firstName, lastName, emailAddress;
@@ -50,6 +45,27 @@ public class UserData implements Serializable {
 
     public void addParkingSession(ParkingSession parkingSession){
         this.parkingRecord.add(parkingSession);
+    }
+
+    public void insertParkingSessions(LinkedList<ParkingSession> parkingSessionsList){
+        Collections.sort(this.parkingRecord);
+        Collections.sort(parkingSessionsList);
+
+        for (ParkingSession psL : parkingSessionsList) {
+            for (ParkingSession pr : this.parkingRecord) {
+                if (psL.getSessionID().equalsIgnoreCase(pr.getSessionID())){
+                    this.parkingRecord.remove(pr);
+                    break;
+                }
+
+                if (Integer.parseInt(pr.getSessionID()) > Integer.parseInt(psL.getSessionID())){
+                    break;
+                }
+            }
+        }
+
+        this.parkingRecord.addAll(parkingSessionsList);
+        Collections.sort(this.parkingRecord);
     }
 
     public Map<String, Object> toMap() {
@@ -229,11 +245,17 @@ public class UserData implements Serializable {
         return parkingRecord;
     }
 
-    public LinkedList<ParkingSession> getParkingSession(Date date){
+    public LinkedList<ParkingSession> getParkingSession(Date date) throws Exception {
+        if (this.modified){
+            throw new Exception("UserData Object Obsolete");
+        }
+
         LinkedList<ParkingSession> list = new LinkedList<>();
 
         for (ParkingSession ps : this.parkingRecord) {
-            if (ps.getStartTime().equals(date)){
+            Date dayAfter = (Date) date.clone();
+            dayAfter.setDate(date.getDate() + 1);
+            if (ps.getStartTime().after(date) && ps.getStartTime().before(dayAfter)){
                 list.add(ps);
             }
         }

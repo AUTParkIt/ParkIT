@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParkingSession {
+public class ParkingSession implements Comparable<ParkingSession>{
     private String sessionID;
     private String userID;
     private String parkingSpaceID;
@@ -42,7 +42,6 @@ public class ParkingSession {
         this.map.put(ParkingSession.KEY_STARTTIME, new Timestamp(this.startTime));
         this.map.put(ParkingSession.KEY_ENDTIME, new Timestamp(this.endTime));
         this.map.put(ParkingSession.KEY_REFUNDED, this.refunded);
-
         if (this.refunded){
             this.map.put(ParkingSession.KEY_REFUNDTIME, new Timestamp(this.refundedTime));
         }
@@ -99,5 +98,10 @@ public class ParkingSession {
 
     public boolean isRefunded() {
         return refunded;
+    }
+
+    @Override
+    public int compareTo(ParkingSession parkingSession) {
+        return Integer.parseInt(parkingSession.getSessionID()) - Integer.parseInt(this.sessionID);
     }
 }

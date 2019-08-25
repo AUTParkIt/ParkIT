@@ -119,8 +119,16 @@ public class User {
         }
     }
 
-    public LinkedList<ParkingSession> getParkingSession(Date date){
-        return this.userData.getParkingSession(date); //TODO: Set the throw clause in UserData
+    public LinkedList<ParkingSession> getParkingSession(Date date){ //TODO: Optimise the parking comparison by sorting and checking by date or sessionID
+        try {
+            LinkedList<ParkingSession> accountManagerSessions = AccountManager.getParkingSession(date);
+            userData.insertParkingSessions(accountManagerSessions);
+
+            return this.userData.getParkingSession(date);
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getParkingSession(date);
+        }
         //TODO: Setup the ability for the Account manager to get the vehicle by date.
     }
 
