@@ -13,6 +13,9 @@ public class AccountManager {
     private static Map<Object, UserData> refrenceList;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+
+    //TODO: need to add the ability to push a parking session and update the records
+
     public static UserData getUser(Object caller){
         AccountManager.removeOldReference(caller);
 
@@ -68,11 +71,21 @@ public class AccountManager {
     }
 
     private static void loadUserFromDB(){
-        //Will need to make it wait;
+        ThreadLock lock = new ThreadLock();
+
+        DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid(), lock);
+        Thread t = new Thread(dbw);
+
+        t.start();
+        lock.lockThread();
+
+        UserData newUser = DocumentConverter.toUser(dbw.getDoc().getData());
+        userData = newUser;
+
     }
 
     private static void storeUserToDB(){
-
+        //TODO:Finish
     }
 
     public static Vehicle getVehicle(String numberPlate){
@@ -104,6 +117,22 @@ public class AccountManager {
         return AccountManager.getParkingSession(date);
     }
 
+    public static ParkingSession getParkingSession(String parkingSessionID){
+        return null; //TODO: Finish
+    }
+
+    private static ParkingSession getParkingSessionFromDB(String parkingSessionID){
+        return null; //TODO:Finish
+    }
+
+    public static LinkedList<ParkingSession> getParkingRecord(){
+        return AccountManager.userData.getParkingRecord();
+    }
+
+    public static LinkedList<Vehicle> getGarage(){
+        return AccountManager.userData.getGarage();
+    }
+
     private static Vehicle getVehicleFromDB(String numberPlate){
         ThreadLock lock = new ThreadLock();
         DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid() + "/" + "Vehicle/" + numberPlate, lock);
@@ -118,7 +147,7 @@ public class AccountManager {
     }
 
     private static LinkedList<ParkingSession> getParkingSessionFromBD(Date date){
-        return null; //TODo: need to impliment geting patrkingsessions from the DB and convert it to a parkingSession
+        return null; //TODO: need to impliment geting patrkingsessions from the DB and convert it to a parkingSession
     }
 
     //TODO: Finish

@@ -202,10 +202,7 @@ public class UserData implements Serializable {
         return emailAddress;
     }
 
-    public LinkedList<Vehicle> getGarage() throws Exception {
-        if (this.modified) {
-            throw new Exception("UserData Object Obsolete");
-        }
+    public LinkedList<Vehicle> getGarage(){
         return garage;
     }
 
@@ -237,10 +234,7 @@ public class UserData implements Serializable {
         return currentParkingSession;
     }
 
-    public LinkedList<ParkingSession> getParkingRecord() throws Exception {
-        if (this.modified) {
-            throw new Exception("UserData Object Obsolete");
-        }
+    public LinkedList<ParkingSession> getParkingRecord() {
 
         return parkingRecord;
     }
@@ -261,5 +255,13 @@ public class UserData implements Serializable {
         }
 
         return list;
+    }
+
+    public void setParkingRecord(LinkedList<ParkingSession> record){
+        this.parkingRecord = record;
+    }
+
+    public void setGarage(LinkedList<Vehicle> garage){
+        this.garage = garage;
     }
 }
