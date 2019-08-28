@@ -10,5 +10,5 @@
             android:text="@string/actionbar"
             android:textColor="#ffffff"
             android:layout_gravity="left"
-            android:textSize="30dp" android:layout_marginStart="90dp"/>
+            android:textSize="30dp" android:layout_marginStart="100dp"/>
 </LinearLayout>
