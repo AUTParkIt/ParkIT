@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ParkIT</string>
+    <string name="actionbar"><font color='#ffffff'>PARK</font><font color='#000000'>IT</font></string>
+    <string name="myaccount">My Account</string>
 </resources>
