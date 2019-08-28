@@ -8,6 +8,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/actionbar"
+            android:textStyle="bold"
             android:textColor="#ffffff"
             android:layout_gravity="left"
             android:textSize="30dp" android:layout_marginStart="100dp"/>
