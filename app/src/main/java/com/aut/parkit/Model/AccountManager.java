@@ -1,7 +1,12 @@
 package com.aut.parkit.Model;
 
+import android.util.Log;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -12,6 +17,7 @@ public class AccountManager {
     private static UserData userData;
     private static Map<Object, UserData> refrenceList;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static FirebaseFirestore mFStore = FirebaseFirestore.getInstance();
 
 
     //TODO: need to add the ability to push a parking session and update the records
@@ -55,6 +61,7 @@ public class AccountManager {
         if (!userData.isPartialClone()){
             AccountManager.invalidateAll();
             AccountManager.userData = userData;
+            AccountManager.storeUserToDB();
         }
         else {
             throw new Exception("Cannot push Partial Clone");
@@ -84,8 +91,18 @@ public class AccountManager {
 
     }
 
+    public static void createUser(String FirstName, String LastName, String EmailAddress, String LicencePlate){
+        //TODO: create a userData class and a vehicle class
+    }
+
     private static void storeUserToDB(){
-        //TODO:Finish
+        mFStore.collection("Users").document(mAuth.getUid()).set(userData.toMap())
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FireBase", e.toString());
+            }
+        });
     }
 
     public static Vehicle getVehicle(String numberPlate){
