@@ -9,17 +9,20 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
-        <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
-                  android:launchMode="singleTask">
+        <activity android:name=".View.SignupScreen">
+        </activity>
+        <activity
+                android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+                android:launchMode="singleTask">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <data android:scheme="${applicationId}.braintree" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW"/>
+
+                <data android:scheme="${applicationId}.braintree"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".View.LoadingScreen">
         </activity>
         <activity android:name=".View.PaymentScreen">
