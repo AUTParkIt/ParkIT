@@ -4,50 +4,63 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import com.aut.parkit.Model.Payment.ClientToken;
+import com.aut.parkit.Model.Payment.BraintreeTransaction;
 import com.aut.parkit.R;
 import com.braintreepayments.api.dropin.DropInActivity;
 import com.braintreepayments.api.dropin.DropInRequest;
 import com.braintreepayments.api.dropin.DropInResult;
 
-public class PaymentScreen extends AppCompatActivity {
+public class PaymentScreen extends AppCompatActivity{
 
     public static final int REQUEST_CODE = 1;
+    private ClientToken token;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_payment_screen);
+        token = new ClientToken();
+
+      /* TODO Check onClickListener with Brad
+        Button startParking = (Button)findViewById(R.id.start_parking);
+        startParking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBraintreeSubmit(view);
+            }
+        });*/
     }
 
     public void onBraintreeSubmit(View v) {
-        ClientToken token = new ClientToken();
         DropInRequest dropInRequest = new DropInRequest()
-                .clientToken(token.getClientToken());
+                .clientToken(token.getClientToken())
+                .vaultManager(true);
         startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
     }
 
-    @Override
+   @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                //Get payment nonce and send to cloud functions
                 DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
-                //TODO use the result to update your UI and send the payment method nonce to your server
+                BraintreeTransaction transaction = new BraintreeTransaction(result.getPaymentMethodNonce().getNonce());
             } else if (resultCode == RESULT_CANCELED) {
-                //TODO the user canceled
+                System.out.println("User cancelled payment");
             } else {
-                //TODO handle errors here, an exception may be available in
                 Exception error = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
+                System.err.println(error);
             }
         }
     }
 
+    //SETTINGS MENU METHODS:
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

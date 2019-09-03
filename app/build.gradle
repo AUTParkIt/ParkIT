@@ -21,9 +21,19 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url  "https://cardinalcommerce.bintray.com/android"
+        credentials {
+            username 'braintree-team-sdk@cardinalcommerce'
+            password '220cc9476025679c4e5c843666c27d97cfb0f951'
+        }
+    }
+}
+
 dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.10'
-    implementation 'com.braintreepayments.api:drop-in:3.6.0'
+    implementation 'com.braintreepayments.api:drop-in:4.3.1'
     implementation 'com.braintreepayments.api:braintree:3.4.2'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -35,5 +45,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation files('libs/android-async-http-1.4.10.jar')
 }
