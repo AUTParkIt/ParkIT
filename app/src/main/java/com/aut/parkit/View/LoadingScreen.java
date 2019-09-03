@@ -12,5 +12,12 @@ public class LoadingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
+        startActivity(new Intent(LoadingScreen.this, SignupScreen.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startActivity(new Intent(LoadingScreen.this, SignupScreen.class));
     }
 }
