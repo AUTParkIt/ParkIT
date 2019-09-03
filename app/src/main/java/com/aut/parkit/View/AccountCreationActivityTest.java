@@ -37,13 +37,16 @@ public class AccountCreationActivityTest extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String name, lasname, emaladd, passwrd, conpwrd, licenplat;
+                //String name, lasname, emaladd, passwrd, conpwrd, licenplat;
 
-                name = fName.getText().toString();
-                lasname = lName.getText().toString();
-                emaladd = eAddress.getText().toString();
-                passwrd = pWord.getText().toString();
-                licenplat = lp.getText().toString();
+                final String name = fName.getText().toString();
+                final String lasname = lName.getText().toString();
+                final String emaladd = eAddress.getText().toString();
+                final String passwrd = pWord.getText().toString();
+                final String licenplat = lp.getText().toString();
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_SHORT);
+                toast.show();
 
                 mAuth.createUserWithEmailAndPassword(emaladd, passwrd).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -53,7 +56,8 @@ public class AccountCreationActivityTest extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AccountCreationActivityTest.this, e.toString(), Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 });
 

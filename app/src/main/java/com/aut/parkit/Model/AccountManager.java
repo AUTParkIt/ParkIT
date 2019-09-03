@@ -91,8 +91,25 @@ public class AccountManager {
 
     }
 
-    public static void createUser(String FirstName, String LastName, String EmailAddress, String LicencePlate){
-        //TODO: create a userData class and a vehicle class
+    public static void createUser(String firstName, String lastName, String emailAddress, String licencePlate){
+        UserData newUser = new UserData(mAuth.getUid(), UserData.DRIVER);
+
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setEmailAddress(emailAddress);
+        newUser.setExpireWarningNotification(true);
+        newUser.setBreachNoticeNotification(true);
+
+        Vehicle defaultVehicle = new Vehicle(licencePlate, "myCar", mAuth.getUid());
+
+        newUser.setDefaultVehicle(defaultVehicle);
+        newUser.addVehicleToGarage(defaultVehicle);
+
+        AccountManager.userData = newUser;
+        storeUserToDB();
+
+        AccountManager.addVehicle(defaultVehicle);
+
     }
 
     private static void storeUserToDB(){
@@ -120,6 +137,12 @@ public class AccountManager {
         }
 
         return null;
+    }
+
+    public static void addVehicle(Vehicle v){
+        AccountManager.userData.addVehicleToGarage(v);
+
+        mFStore.collection("Users").document(mAuth.getUid()).collection("Vehicles").document(v.getNumberPlate()).set(v.toMap());
     }
 
     public static LinkedList<ParkingSession> getParkingSession(Date date){

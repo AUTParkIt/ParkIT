@@ -17,6 +17,8 @@ public class UserData implements Serializable {
             KEY_EMAILADDRESS = "EmailAddress", KEY_EXPIREWARNINGNOTIFICATION = "ExpireWarningNotification",
             KEY_BREACHNOTICENOTIFICATION = "BreachWarningNotification", KEY_DEFAULTVEHIVLE = "DefaultVehicleID";
 
+    public static final String DRIVER = "Driver";
+
     public UserData(String userID, String accountType) {
         this.userID = userID;
         this.accountType = accountType;
