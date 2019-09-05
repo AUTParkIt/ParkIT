@@ -1,5 +1,8 @@
 package com.aut.parkit.Model.Payment;
 
+//Class for creating and managing customers on the Braintree payment gateway
+//This enables user to store their payment methods in the Braintree vault
+
 import com.braintreegateway.*;
 
 public class BraintreeCustomer {
@@ -15,6 +18,7 @@ public class BraintreeCustomer {
         );
     }
 
+    //TODO need to call this when new user account is created
     public boolean createBraintreeCustomer(String cFirstName, String cLastName, String userID){
         CustomerRequest request = new CustomerRequest()
                 .firstName(cFirstName)

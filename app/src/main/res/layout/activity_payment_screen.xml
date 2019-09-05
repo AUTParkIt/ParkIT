@@ -12,5 +12,5 @@
             android:layout_height="wrap_content"
             android:text="Pay Now"
             android:gravity="center"
-            android:onClick="onBraintreeSubmit"/>
+            android:onClick="onPaymentSubmit"/>
 </LinearLayout>

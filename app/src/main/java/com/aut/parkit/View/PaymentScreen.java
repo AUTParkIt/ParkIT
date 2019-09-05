@@ -1,5 +1,7 @@
 package com.aut.parkit.View;
 
+//Purchasing screen placeholder class
+
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -7,17 +9,12 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
-import com.aut.parkit.Model.Payment.ClientToken;
-import com.aut.parkit.Model.Payment.BraintreeTransaction;
+import com.aut.parkit.Model.Payment.BraintreeClientToken;
 import com.aut.parkit.R;
-import com.braintreepayments.api.dropin.DropInActivity;
-import com.braintreepayments.api.dropin.DropInRequest;
-import com.braintreepayments.api.dropin.DropInResult;
 
 public class PaymentScreen extends AppCompatActivity{
 
-    public static final int REQUEST_CODE = 1;
-    private ClientToken token;
+    private BraintreeClientToken token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,39 +22,13 @@ public class PaymentScreen extends AppCompatActivity{
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_payment_screen);
-        token = new ClientToken();
-
-      /* TODO Check onClickListener with Brad
-        Button startParking = (Button)findViewById(R.id.start_parking);
-        startParking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBraintreeSubmit(view);
-            }
-        });*/
+        token = new BraintreeClientToken();
     }
 
-    public void onBraintreeSubmit(View v) {
-        DropInRequest dropInRequest = new DropInRequest()
-                .clientToken(token.getClientToken())
-                .vaultManager(true);
-        startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
-    }
-
-   @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE){
-            if (resultCode == RESULT_OK){
-                //Get payment nonce and send to cloud functions
-                DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
-                BraintreeTransaction transaction = new BraintreeTransaction(result.getPaymentMethodNonce().getNonce());
-            } else if (resultCode == RESULT_CANCELED) {
-                System.out.println("User cancelled payment");
-            } else {
-                Exception error = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
-                System.err.println(error);
-            }
-        }
+    public void onPaymentSubmit(View v) {
+        Intent intent = new Intent(this, TransactionScreen.class);
+        intent.putExtra("token", token.getClientToken());
+        startActivity(intent);
     }
 
     //SETTINGS MENU METHODS:

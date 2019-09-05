@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.loopj.android.http.*;
 import cz.msebera.android.httpclient.Header;
 
-public class ClientToken extends AppCompatActivity {
+public class BraintreeClientToken extends AppCompatActivity {
 
     private String clientToken;
     private final String URL = "https://us-central1-autparkitnz.cloudfunctions.net/getClientToken";
 
-    public ClientToken(){
+    //Retrieve client token from Braintree server via cloud functions https trigger
+    public BraintreeClientToken(){
         RequestParams params = new RequestParams();
         //TODO get userID
         params.put("customerId", "natalie1234");

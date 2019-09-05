@@ -23,15 +23,18 @@ android {
 
 repositories {
     maven {
-        url  "https://cardinalcommerce.bintray.com/android"
+        url "https://cardinalcommerce.bintray.com/android"
         credentials {
             username 'braintree-team-sdk@cardinalcommerce'
             password '220cc9476025679c4e5c843666c27d97cfb0f951'
         }
     }
+
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
+    implementation 'com.github.TutorialsAndroid:KAlertDialog:v5.0.19'
     implementation 'com.loopj.android:android-async-http:1.4.10'
     implementation 'com.braintreepayments.api:drop-in:4.3.1'
     implementation 'com.braintreepayments.api:braintree:3.4.2'
