@@ -1,7 +1,6 @@
 package com.aut.parkit.Model;
 
 import android.util.Log;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -9,13 +8,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 public class AccountManager {
 
     private static UserData userData;
-    private static Map<Object, UserData> refrenceList;
+    private static Map<Object, UserData> referenceList = new HashMap<>();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static FirebaseFirestore mFStore = FirebaseFirestore.getInstance();
 
@@ -29,7 +29,7 @@ public class AccountManager {
             AccountManager.loadUserFromDB();
         }
         UserData newUserData = AccountManager.userData.clone();
-        refrenceList.put(caller, newUserData);
+        referenceList.put(caller, newUserData);
 
         return newUserData;
     }
@@ -42,17 +42,17 @@ public class AccountManager {
         }
 
         UserData newUserData = AccountManager.userData.partialClone();
-        refrenceList.put(caller, newUserData);
+        referenceList.put(caller, newUserData);
 
         return newUserData;
     }
 
     private static void removeOldReference(Object caller){
-        UserData oldUserData = refrenceList.get(caller);
+        UserData oldUserData = referenceList.get(caller);
 
         if (oldUserData != null){
             oldUserData.invalidate();
-            refrenceList.remove(oldUserData);
+            referenceList.remove(oldUserData);
         }
     }
 
@@ -69,9 +69,9 @@ public class AccountManager {
     }
 
     private static void invalidateAll(){
-        for (UserData u : AccountManager.refrenceList.values()) {
+        for (UserData u : AccountManager.referenceList.values()) {
             u.invalidate();
-            AccountManager.refrenceList.remove(u);
+            AccountManager.referenceList.remove(u);
         }
 
         AccountManager.userData.invalidate();

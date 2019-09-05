@@ -1,19 +1,19 @@
 package com.aut.parkit.View;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import com.aut.parkit.Model.AccountManager;
 import com.aut.parkit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AccountCreationActivityTest extends AppCompatActivity {
     private Button signUp;
@@ -52,6 +52,7 @@ public class AccountCreationActivityTest extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         AccountManager.createUser(name, lasname, emaladd, licenplat);
+                        startActivity(new Intent(AccountCreationActivityTest.this, LoggedInActivity.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
