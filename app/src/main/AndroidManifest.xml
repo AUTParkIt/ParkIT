@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".View.AccountCreationActivityTest">
             android:theme="@style/AppTheme">
+        </activity>
         <activity android:name=".View.SignupScreen">
         </activity>
         <activity
@@ -36,15 +37,16 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
-        <activity android:name=".View.LoadingScreen">
-        </activity>
-
-        <activity android:name=".View.PaymentScreen">
+        <activity android:name=".View.LoadingScreenTemp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".View.LoadingScreen">
+        </activity>
+
+
         <activity android:name=".View.PaymentScreen">
 
         </activity>
