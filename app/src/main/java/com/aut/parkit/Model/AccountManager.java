@@ -123,20 +123,25 @@ public class AccountManager {
     }
 
     public static Vehicle getVehicle(String numberPlate){
-        Vehicle v = AccountManager.userData.getVehicle(numberPlate);
+        Vehicle v;
 
-        if (v != null){
-            return v;
+        if (AccountManager.userData != null){
+            v = AccountManager.userData.getVehicle(numberPlate);
+
+            if (v != null){
+                return v;
+            }
         }
+
 
         v = AccountManager.getVehicleFromDB(numberPlate);
 
-        if (v != null){
+        if (v != null && AccountManager.userData != null){
             AccountManager.userData.addVehicleToGarage(v);
-            return v;
+
         }
 
-        return null;
+        return v;
     }
 
     public static void addVehicle(Vehicle v){
@@ -166,6 +171,7 @@ public class AccountManager {
     }
 
     public static LinkedList<ParkingSession> getParkingRecord(){
+
         return AccountManager.userData.getParkingRecord();
     }
 
@@ -175,7 +181,7 @@ public class AccountManager {
 
     private static Vehicle getVehicleFromDB(String numberPlate){
         ThreadLock lock = new ThreadLock();
-        DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid() + "/" + "Vehicle/" + numberPlate, lock);
+        DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid() + "/" + "Vehicles/" + numberPlate, lock);
         Thread t = new Thread(dbw);
 
         t.start();
