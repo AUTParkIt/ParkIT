@@ -60,4 +60,7 @@ dependencies {
     androidTestImplementation 'com.lukekorth:device-automator:1.0.0'
 }
 
+apply plugin: 'com.google.gms.google-services'
+googleServices.disableVersionCheck = true
+
 

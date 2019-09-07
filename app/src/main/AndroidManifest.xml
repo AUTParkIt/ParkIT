@@ -26,7 +26,7 @@
         <activity android:name=".View.AccountCreationActivityTest">
         </activity>
       
-        <activity android:name=".View.LoadingScreen">
+        <activity android:name=".View.LoadingScreenJava">
         </activity>
 
         <activity android:name=".View.PaymentScreen">
