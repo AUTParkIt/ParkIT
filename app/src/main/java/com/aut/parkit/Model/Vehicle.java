@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Vehicle {
-    private String numberPlate, vehicleName;
-    private String ownerID;
+    private String numberPlate, vehicleName, ownerID;
     private Map<String, Object> map;
 
     public static final String KEY_NUMBERPLATE = "NumberPlate", KEY_VEHICLENAME = "VehicleName", KEY_OWNER = "Owner";

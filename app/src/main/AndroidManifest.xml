@@ -16,7 +16,16 @@
 
         <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
         </activity>
-
+      
+        <activity android:name=".View.LoginTestActivity">
+        </activity>
+      
+        <activity android:name=".View.LoggedInActivity">
+        </activity>
+      
+        <activity android:name=".View.AccountCreationActivityTest">
+        </activity>
+      
         <activity android:name=".View.LoadingScreen">
         </activity>
 

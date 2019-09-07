@@ -1,217 +1,152 @@
 package com.aut.parkit.Model;
 
-import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.LinkedList;
-import java.util.Map;
 
-public class User implements Serializable {
-    private String userID, accountType, firstName, lastName, emailAddress;
-    private LinkedList<Vehicle> garage = new LinkedList<>();
-    private Vehicle defaultVehicle;
-    private boolean expireWarningNotification, breachNoticeNotification, partialClone;
-    private ParkingSession currentParkingSession;
-    private LinkedList<ParkingSession> parkingRecord = new LinkedList<>();
-    private boolean modified;
+public class User {
 
-    private Map<String, Object> map;
-    public static final String KEY_USERID = "UserID", KEY_ACCOUNTTYPE = "AccountType", KEY_FIRSTNAME = "FirstName", KEY_LASTNAME = "LastName",
-            KEY_EMAILADDRESS = "EmailAddress", KEY_EXPIREWARNINGNOTIFICATION = "ExpireWarningNotification",
-            KEY_BREACHNOTICENOTIFICATION = "BreachWarningNotification", KEY_DEFAULTVEHIVLE = "DefaultVehicleID";
+    UserData userData;
 
-    public User(String userID, String accountType) {
-        this.userID = userID;
-        this.accountType = accountType;
-        this.modified = false;
-        this.partialClone = false;
-    }
-
-    public void addVehicleToGarage(Vehicle vehicle) {
-        this.garage.add(vehicle);
-    }
-
-    public void removeVehicleFromGarage(Vehicle vehicle) {
-        this.garage.remove(vehicle);
-    }
-
-    public boolean removeVehicleFromGarage(String numberPlate) {
-        for (Vehicle v : this.garage) {
-            if (v.getNumberPlate().contentEquals(numberPlate)) {
-                this.garage.remove(v);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void addParkingSession(ParkingSession parkingSession){
-        this.parkingRecord.add(parkingSession);
-    }
-
-    public Map<String, Object> toMap() {
-        this.map = new HashMap<>();
-
-        this.map.put(User.KEY_USERID, this.userID);
-        this.map.put(User.KEY_ACCOUNTTYPE, this.accountType);
-        this.map.put(User.KEY_FIRSTNAME, this.firstName);
-        this.map.put(User.KEY_LASTNAME, this.lastName);
-        this.map.put(User.KEY_EMAILADDRESS, this.emailAddress);
-        this.map.put(User.KEY_BREACHNOTICENOTIFICATION, this.breachNoticeNotification);
-        this.map.put(User.KEY_EXPIREWARNINGNOTIFICATION, this.expireWarningNotification);
-        this.map.put(User.KEY_DEFAULTVEHIVLE, this.defaultVehicle.getNumberPlate());
-
-        return this.map;
-    }
-
-    @Override
-    public User clone(){
-        User user = this.setUpClone();
-
-        for (Vehicle v: this.garage) {
-            user.addVehicleToGarage(v);
-        }
-
-        for (ParkingSession p : this.parkingRecord) {
-            user.addParkingSession(p.clone());
-        }
-
-        return user;
-    }
-
-    public User partialClone(){
-        User user = this.setUpClone();
-        user.setPartialClone();
-
-        return user;
-    }
-
-    private User setUpClone(){
-        User user = new User(this.userID, this.accountType);
-
-        user.setLastName(this.lastName);
-        user.setFirstName(this.firstName);
-        user.setExpireWarningNotification(this.expireWarningNotification);
-        user.setEmailAddress(this.emailAddress);
-        user.setDefaultVehicle(this.defaultVehicle);
-        user.setCurrentParkingSession(this.currentParkingSession);
-        user.setBreachNoticeNotification(this.breachNoticeNotification);
-
-        return user;
-    }
-
-    public void invalidate(){
-        this.modified = true;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public void setDefaultVehicle(Vehicle defaultVehicle) {
-        this.defaultVehicle = defaultVehicle;
-    }
-
-    public void setExpireWarningNotification(boolean expireWarningNotification) {
-        this.expireWarningNotification = expireWarningNotification;
-    }
-
-    public void setBreachNoticeNotification(boolean breachNoticeNotification) {
-        this.breachNoticeNotification = breachNoticeNotification;
-    }
-
-    public void setCurrentParkingSession(ParkingSession currentParkingSession) {
-        this.currentParkingSession = currentParkingSession;
-    }
-
-    public boolean isPartialClone() {
-        return partialClone;
-    }
-
-    public void setPartialClone() {
-        this.partialClone = true;
+    public User() {
+        this.userData = AccountManager.getPartialUser(this);
     }
 
     public String getUserID() {
-        return userID;
+        return this.userData.getUserID();
     }
 
-    public String getAccountType() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public String getAccountType() {
+        try {
+            return this.userData.getAccountType();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getAccountType();
         }
-        return accountType;
     }
 
-    public String getFirstName() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public String getFirstName() {
+        try {
+            return this.userData.getFirstName();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getAccountType();
         }
-        return firstName;
     }
 
-    public String getLastName() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public String getLastName() {
+        try {
+            return this.userData.getLastName();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getLastName();
         }
-        return lastName;
     }
 
-    public String getEmailAddress() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public String getEmailAddress() {
+        try {
+            return this.userData.getEmailAddress();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getEmailAddress();
         }
-        return emailAddress;
     }
 
-    public LinkedList<Vehicle> getGarage() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public LinkedList<Vehicle> getGarage() {
+        try {
+            return this.userData.getGarage();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getGarage();
         }
-        return garage;
+
+
     }
 
-    public Vehicle getDefaultVehicle() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public Vehicle getVehicle(String numberPlate) {
+        if (this.userData.isPartialClone()) {
+            this.userData = AccountManager.getUser(this);
         }
-        return defaultVehicle;
+
+        Vehicle v = this.userData.getVehicle(numberPlate);
+
+        if (v != null) {
+            return v;
+        }
+
+        v = AccountManager.getVehicle(numberPlate);
+
+        if (v != null) {
+            this.userData.addVehicleToGarage(v);
+            return v;
+        }
+
+        return null;
     }
 
-    public boolean isExpireWarningNotification() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public Vehicle getDefaultVehicle() {
+        try {
+            return this.userData.getDefaultVehicle();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getDefaultVehicle();
         }
-        return expireWarningNotification;
     }
 
-    public boolean isBreachNoticeNotification() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public boolean isExpireWarningNotification() {
+        try {
+            return this.userData.isExpireWarningNotification();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.isExpireWarningNotification();
         }
-        return breachNoticeNotification;
     }
 
-    public ParkingSession getCurrentParkingSession() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public boolean isBreachNoticeNotification() {
+        try {
+            return this.userData.isBreachNoticeNotification();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.isBreachNoticeNotification();
         }
-        return currentParkingSession;
     }
 
-    public LinkedList<ParkingSession> getParkingRecord() throws Exception {
-        if (this.modified){
-            throw new Exception("User Object Obsolete");
+    public ParkingSession getCurrentParkingSession() {
+        try {
+            return this.userData.getCurrentParkingSession();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getCurrentParkingSession();
+        }
+    }
+
+    public LinkedList<ParkingSession> getParkingSession(Date date) { //TODO: Optimise the parking comparison by sorting and checking by date or sessionID
+        try {
+            LinkedList<ParkingSession> accountManagerSessions = AccountManager.getParkingSession(date);
+            userData.insertParkingSessions(accountManagerSessions);
+
+            return this.userData.getParkingSession(date);
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getParkingSession(date);
+        }
+        //TODO: Setup the ability for the Account manager to get the vehicle by date.
+    }
+
+    public LinkedList<ParkingSession> getParkingRecord() {
+        try {
+            return this.userData.getParkingRecord();
+        } catch (Exception e) {
+            this.updateUser();
+            return this.getParkingRecord();
+        }
+    }
+
+    private void updateUser() {
+        if (!this.userData.isPartialClone()) {
+            this.userData = AccountManager.getUser(this);
+        } else {
+            this.userData = AccountManager.getPartialUser(this);
         }
 
-        return parkingRecord;
     }
 }
