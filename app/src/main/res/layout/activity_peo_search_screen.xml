@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:gravity="center|top"
+              android:orientation="vertical"
+              android:padding="16dp" android:background="#EBEAEA">
+
+    <EditText
+            android:id="@+id/enter_licence"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:textAlignment="center"
+            android:background="@color/colorWhite"
+            android:inputType=""
+            android:layout_marginTop="80dp" android:hint="@string/search_by_licence_plate"
+            android:textColorHint="@color/greyText" android:singleLine="true" android:selectAllOnFocus="true"
+            android:textSize="18sp" android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <EditText
+            android:id="@+id/enter_carpark"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:textAlignment="center"
+            android:background="@color/colorWhite"
+            android:inputType=""
+            android:layout_margin="40dp" android:hint="@string/search_by_carpark_id"
+            android:textColorHint="@color/greyText" android:singleLine="true" android:selectAllOnFocus="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <Button
+            android:id="@+id/searchButton"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:textSize="24sp"
+            android:text="@string/search"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/rounded_button"
+    />
+</LinearLayout>
