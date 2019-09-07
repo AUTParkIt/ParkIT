@@ -23,11 +23,14 @@ public class PaymentScreen extends AppCompatActivity{
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_payment_screen);
         token = new BraintreeClientToken();
+        token.generateClientTokenfromServer();
     }
 
     public void onPaymentSubmit(View v) {
         Intent intent = new Intent(this, TransactionScreen.class);
         intent.putExtra("token", token.getClientToken());
+        //TODO get payment total
+        intent.putExtra("amount", "2.00");
         startActivity(intent);
     }
 

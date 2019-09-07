@@ -17,7 +17,8 @@ import com.developer.kalert.KAlertDialog;
 
 public class TransactionScreen extends AppCompatActivity {
     private KAlertDialog dialog;
-    private BraintreeClientToken token;
+    private String token;
+    private String amount;
     private String nonce;
     public static final int REQUEST_CODE = 1;
 
@@ -25,10 +26,12 @@ public class TransactionScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_screen);
+        this.token = getIntent().getStringExtra("token");
+        this.amount = getIntent().getStringExtra("amount");
 
         //Load payment drop-in UI
         DropInRequest dropInRequest = new DropInRequest()
-                .clientToken(getIntent().getStringExtra("token"))
+                .clientToken(token)
                 .vaultManager(true);
         startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
     }
@@ -41,7 +44,7 @@ public class TransactionScreen extends AppCompatActivity {
                 nonce = result.getPaymentMethodNonce().getNonce();
                 //Send nonce to server to create transaction
                 showProcessing();
-                BraintreeTransaction transaction = new BraintreeTransaction(nonce, new BraintreeInterface() {
+                BraintreeTransaction transaction = new BraintreeTransaction(nonce, amount, new BraintreeInterface() {
                     @Override
                     public void onSuccess(String responseMain) {
                         showConfirmation(responseMain);
@@ -52,8 +55,10 @@ public class TransactionScreen extends AppCompatActivity {
                         showError(responseMain, responseDesc);
                     }
                 });
+                transaction.createTransaction();
             } else if (resultCode == RESULT_CANCELED) {
                 System.out.println("User cancelled payment");
+                finish();
             } else {
                 Exception error = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
                 System.err.println(error);

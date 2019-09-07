@@ -9,19 +9,38 @@ import cz.msebera.android.httpclient.Header;
 
 public class BraintreeTransaction extends AppCompatActivity {
 
-    private final String URL = "https://us-central1-autparkitnz.cloudfunctions.net/createTransaction";
+    private String url;
+    private String paymentNonce;
+    private BraintreeInterface bInterface;
+    private AsyncHttpClient client;
+    private String amount;
+    public static String testAmount = "5.00"; //TEST VALUE FOR USE IN SANDBOX ENVIRONMENT ONLY
 
-    public BraintreeTransaction(String paymentNonce, final BraintreeInterface bInterface){
+    public BraintreeTransaction(String paymentNonce, String amount, BraintreeInterface bInterface){
+        this.paymentNonce = paymentNonce;
+        this.amount = amount;
+        this.bInterface = bInterface;
+        client = new AsyncHttpClient();
+        url = "https://us-central1-autparkitnz.cloudfunctions.net/createTransaction";
+    }
+
+    public void setUrl(String url){
+        this.url = url;
+    }
+
+    public void setClient(AsyncHttpClient client){
+        this.client = client;
+    }
+
+    public void createTransaction(){
         RequestParams params = new RequestParams();
         params.put("payment_method_nonce", paymentNonce);
-        //TODO get transaction amount
-        params.put("amount", "1.00");
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.post(URL, params, new TextHttpResponseHandler() {
+        //TODO change to 'testAmount' to 'amount' variable when payment screen complete
+        params.put("amount", testAmount);
+        client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable error) {
-                System.err.println("Error: "+error);
-                System.err.println("Response String: "+responseString);
+                System.err.println("Error: "+responseString);
                 bInterface.onFailure("Oops!", "Something went wrong... please try again");
             }
 
@@ -29,12 +48,10 @@ public class BraintreeTransaction extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, String responseString){
                 if(responseString.contains("\"success\":false")){
                     System.err.println("Error: "+responseString);
-                    System.err.println("Response String: "+responseString);
                     bInterface.onFailure("Payment Failed!", "Please check your payment method and try again");
                 }
                 else{
-                    System.out.println("Transaction successful");
-                    System.out.println("Response String: "+responseString);
+                    System.out.println("Transaction successful: "+responseString);
                     bInterface.onSuccess("Payment Success!");
                 }
             }

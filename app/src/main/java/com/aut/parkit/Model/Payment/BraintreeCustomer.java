@@ -10,12 +10,7 @@ public class BraintreeCustomer {
     private BraintreeGateway gateway;
 
     public BraintreeCustomer(){
-        gateway = new BraintreeGateway(
-            Environment.SANDBOX,
-            "nqhd7msq7bkx89wm",
-            "vmp7mmx4b4xp6cyw",
-            "3d66224d4559111d2e5303fa5497c2d9"
-        );
+        gateway = new BraintreePaymentGateway().getGateway();
     }
 
     //TODO need to call this when new user account is created
@@ -36,5 +31,22 @@ public class BraintreeCustomer {
 
         Result<Customer> updateResult = gateway.customer().update(userID, request);
         return updateResult.isSuccess();
+    }
+
+    public boolean deleteBraintreeCustomer(String userID){
+        boolean success = false;
+
+        try{
+            Result<Customer> deleteResult = gateway.customer().delete(userID);
+            success = deleteResult.isSuccess();
+        }catch(Exception NotFoundException){
+            System.err.println("Unable to delete customer: User ID does not exist");
+        }
+
+        return success;
+    }
+
+    public BraintreeGateway gateway(){
+        return gateway;
     }
 }

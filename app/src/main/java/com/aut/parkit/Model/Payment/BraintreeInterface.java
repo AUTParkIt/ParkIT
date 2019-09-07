@@ -1,6 +1,6 @@
 package com.aut.parkit.Model.Payment;
 
-//Interface to send result of Braintree transaction to TransactionScreen activity
+//Interface to send response from server to activities on main thread
 
 public interface BraintreeInterface {
     void onSuccess(String responseMain);
