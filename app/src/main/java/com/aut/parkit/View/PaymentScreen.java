@@ -1,24 +1,40 @@
 package com.aut.parkit.View;
 
+//Purchasing screen placeholder class
+
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import androidx.annotation.Nullable;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
+import com.aut.parkit.Model.Payment.BraintreeClientToken;
 import com.aut.parkit.R;
 
-public class PaymentScreen extends AppCompatActivity {
+public class PaymentScreen extends AppCompatActivity{
+
+    private BraintreeClientToken token;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
-
         setContentView(R.layout.activity_payment_screen);
+        token = new BraintreeClientToken();
+        token.generateClientTokenfromServer();
     }
 
+    public void onPaymentSubmit(View v) {
+        Intent intent = new Intent(this, TransactionScreen.class);
+        intent.putExtra("token", token.getClientToken());
+        //TODO get payment total
+        intent.putExtra("amount", "2.00");
+        startActivity(intent);
+    }
+
+    //SETTINGS MENU METHODS:
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
