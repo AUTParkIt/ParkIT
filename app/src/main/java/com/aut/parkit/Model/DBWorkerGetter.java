@@ -1,5 +1,8 @@
 package com.aut.parkit.Model;
 
+import android.util.Log;
+import androidx.annotation.NonNull;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
@@ -16,18 +19,28 @@ public class DBWorkerGetter implements Runnable {
 
     public DBWorkerGetter(String location, ThreadLock locker) {
         docRef = mFStore.document(location);
+        //docRef = mFStore.collection("Users").document("Test User");
         this.locker = locker;
     }
 
     @Override
     public void run() {
-        Task<DocumentSnapshot> task = docRef.get();
+        final Task<DocumentSnapshot> task = docRef.get();
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+
 
         doc = null;
         try {
             doc = Tasks.await(task);
         } catch (ExecutionException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            Log.e("Error:", e.toString());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

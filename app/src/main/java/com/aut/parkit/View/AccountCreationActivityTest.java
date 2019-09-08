@@ -16,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountCreationActivityTest extends AppCompatActivity {
-    private Button signUp;
+    private Button signUp, login;
     EditText fName, lName, eAddress, pWord, cPWork, lp;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -27,6 +27,7 @@ public class AccountCreationActivityTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_creation_test);
         signUp = findViewById(R.id.button);
+        login = findViewById(R.id.loginBtn_AccCrea);
         fName = findViewById(R.id.fName);
         lName = findViewById(R.id.lName);
         eAddress = findViewById(R.id.eAddress);
@@ -62,6 +63,13 @@ public class AccountCreationActivityTest extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AccountCreationActivityTest.this, LoginTestActivity.class));
             }
         });
     }
