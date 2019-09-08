@@ -25,6 +25,7 @@ public class LoginTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_test);
 
+
         emailText = findViewById(R.id.email_LoginTest);
         passwordText = findViewById(R.id.password_LoginTest);
 

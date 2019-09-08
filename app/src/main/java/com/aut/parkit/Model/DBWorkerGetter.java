@@ -1,8 +1,6 @@
 package com.aut.parkit.Model;
 
 import android.util.Log;
-import androidx.annotation.NonNull;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,13 +24,6 @@ public class DBWorkerGetter implements Runnable {
     @Override
     public void run() {
         final Task<DocumentSnapshot> task = docRef.get();
-
-        task.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
 
 
         doc = null;

@@ -16,6 +16,8 @@ class LoadingScreen : AppCompatActivity() {
 
         val intent:Intent
 
+        mAuth.signOut()
+
         if (mAuth.uid == null){
             intent = Intent(this, LoginTestActivity::class.java)
         }

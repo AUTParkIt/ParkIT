@@ -13,12 +13,19 @@ public class LoggedInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        class testing implements Runnable{
+            @Override
+            public void run() {
+                user = new User();
+
+                logInView = findViewById(R.id.textView_loginActivity);
+
+                logInView.setText("Welcome " + user.getFirstName() + " " + user.getLastName());
+            }
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
-        user = new User();
-
-        logInView = findViewById(R.id.textView_loginActivity);
-
-        logInView.setText("Welcome" + user.getFirstName() + " " + user.getLastName());
+        Thread t = new Thread(new testing());
+        t.start();
     }
 }
