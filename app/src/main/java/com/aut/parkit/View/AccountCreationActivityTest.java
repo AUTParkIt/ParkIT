@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.aut.parkit.Model.AccountManager;
+import com.aut.parkit.Model.DatabaseManagmentSystem.AccountManager;
 import com.aut.parkit.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

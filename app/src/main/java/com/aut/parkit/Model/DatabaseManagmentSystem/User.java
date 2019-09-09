@@ -1,4 +1,4 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import java.util.Date;
 import java.util.LinkedList;

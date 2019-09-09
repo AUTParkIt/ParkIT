@@ -1,4 +1,4 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aut.parkit.Model.User;
+import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 
 public class LoggedInTestActivity extends AppCompatActivity {

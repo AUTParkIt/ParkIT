@@ -1,4 +1,4 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import android.util.Log;
 import androidx.annotation.NonNull;

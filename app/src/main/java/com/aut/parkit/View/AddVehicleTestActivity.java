@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aut.parkit.Model.AccountManager;
-import com.aut.parkit.Model.Vehicle;
+import com.aut.parkit.Model.DatabaseManagmentSystem.AccountManager;
+import com.aut.parkit.Model.DatabaseManagmentSystem.Vehicle;
 import com.aut.parkit.R;
 import com.google.firebase.auth.FirebaseAuth;
 
