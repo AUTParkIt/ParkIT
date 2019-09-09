@@ -56,6 +56,11 @@ public class LoginTestActivity extends AppCompatActivity {
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LoginTestActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                    }
                 });
             }
         });

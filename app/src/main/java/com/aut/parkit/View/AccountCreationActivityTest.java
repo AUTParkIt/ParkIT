@@ -46,9 +46,6 @@ public class AccountCreationActivityTest extends AppCompatActivity {
                 final String passwrd = pWord.getText().toString();
                 final String licenplat = lp.getText().toString();
 
-                Toast toast = Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_SHORT);
-                toast.show();
-
                 mAuth.createUserWithEmailAndPassword(emaladd, passwrd).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
