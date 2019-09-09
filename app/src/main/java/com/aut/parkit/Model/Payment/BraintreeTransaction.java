@@ -14,7 +14,7 @@ public class BraintreeTransaction extends AppCompatActivity {
     private BraintreeInterface bInterface;
     private AsyncHttpClient client;
     private String amount;
-    public static String testAmount = "5.00"; //TEST VALUE FOR USE IN SANDBOX ENVIRONMENT ONLY
+    //public static String testAmount = "5.00"; //TEST VALUE FOR USE IN SANDBOX ENVIRONMENT ONLY
 
     public BraintreeTransaction(String paymentNonce, String amount, BraintreeInterface bInterface){
         this.paymentNonce = paymentNonce;
@@ -36,7 +36,7 @@ public class BraintreeTransaction extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.put("payment_method_nonce", paymentNonce);
         //TODO change to 'testAmount' to 'amount' variable when payment screen complete
-        params.put("amount", testAmount);
+        params.put("amount", amount);
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable error) {
