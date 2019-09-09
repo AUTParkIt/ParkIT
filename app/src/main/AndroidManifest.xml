@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.aut.parkit">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.aut.parkit">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <supports-screens
             android:smallScreens="true"
@@ -14,28 +17,24 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
 
-            android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
+        </activity>
+      
         <activity android:name=".View.LoginTestActivity">
         </activity>
+      
         <activity android:name=".View.LoggedInActivity">
         </activity>
+      
         <activity android:name=".View.AccountCreationActivityTest">
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".View.SignupScreen">
-        </activity>
-        <activity
-                android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
-                android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <data android:scheme="${applicationId}.braintree"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-            </intent-filter>
+        <activity android:name=".View.SignupScreen" />
+      
+        <activity android:name=".View.LoadingScreenJava">
         </activity>
         <activity android:name=".View.LoadingScreenTemp">
             <intent-filter>
@@ -43,12 +42,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".View.LoadingScreen">
-        </activity>
 
 
         <activity android:name=".View.PaymentScreen">
 
+        </activity>
+
+        <activity
+                android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+                android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="${applicationId}.braintree"/>
+            </intent-filter>
         </activity>
     </application>
 
