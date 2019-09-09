@@ -22,7 +22,7 @@ class LoadingScreen : AppCompatActivity() {
             intent = Intent(this, LoginTestActivity::class.java)
         }
         else {
-            intent = Intent(this, LoggedInActivity::class.java)
+            intent = Intent(this, LoggedInTestActivity::class.java)
         }
 
 // start your next activity

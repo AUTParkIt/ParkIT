@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.aut.parkit">
+        package="com.aut.parkit">
 
     <application
             android:allowBackup="true"
@@ -9,17 +9,17 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".View.LoginTestActivity">
-        </activity>
-        <activity android:name=".View.LoggedInActivity">
-        </activity>
-        <activity android:name=".View.AccountCreationActivityTest">
-        </activity>
+        <activity android:name=".View.ViewVehicleTestActivity"></activity>
+        <activity android:name=".View.AddVehicleTestActivity" />
+        <activity android:name=".View.AddVehicleTestScreen" />
+        <activity android:name=".View.LoginTestActivity" />
+        <activity android:name=".View.LoggedInTestActivity" />
+        <activity android:name=".View.AccountCreationActivityTest" />
         <activity android:name=".View.LoadingScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

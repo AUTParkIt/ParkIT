@@ -27,7 +27,7 @@ public class AccountCreationActivityTest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_creation_test);
         signUp = findViewById(R.id.button);
-        login = findViewById(R.id.loginBtn_AccCrea);
+        login = findViewById(R.id.loginBtn_AccCreaa);
         fName = findViewById(R.id.fName);
         lName = findViewById(R.id.lName);
         eAddress = findViewById(R.id.eAddress);
@@ -53,7 +53,7 @@ public class AccountCreationActivityTest extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         AccountManager.createUser(name, lasname, emaladd, licenplat);
-                        startActivity(new Intent(AccountCreationActivityTest.this, LoggedInActivity.class));
+                        startActivity(new Intent(AccountCreationActivityTest.this, LoggedInTestActivity.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
