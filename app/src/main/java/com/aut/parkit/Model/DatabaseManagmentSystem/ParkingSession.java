@@ -1,4 +1,4 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.google.firebase.Timestamp;
 
@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParkingSession {
+public class ParkingSession implements Comparable<ParkingSession> {
     private String sessionID;
     private String userID;
     private String parkingSpaceID;
@@ -17,8 +17,8 @@ public class ParkingSession {
     private Map<String, Object> map;
 
     public static final String KEY_SESSIONID = "SessionID", KEY_USERID = "UserID", KEY_SPACEID = "SpaceID", KEY_STARTTIME = "StartTime",
-                KEY_ENDTIME = "EndTime", KEY_REFUNDTIME = "RefundTime", KEY_CARPARKID = "CarParkID", KEY_REFUNDED = "Refunded",
-                KEY_CAMPUSID = "CampusID";
+            KEY_ENDTIME = "EndTime", KEY_REFUNDTIME = "RefundTime", KEY_CARPARKID = "CarParkID", KEY_REFUNDED = "Refunded",
+            KEY_CAMPUSID = "CampusID";
 
     public ParkingSession(String sessionID, String userID, String parkingSpaceID, Date startTime, Date endTime, String carParkID, String campusID) {
         this.sessionID = sessionID;
@@ -31,7 +31,7 @@ public class ParkingSession {
         this.refunded = false;
     }
 
-    public Map<String, Object> toMap(){
+    public Map<String, Object> toMap() {
         this.map = new HashMap<>();
 
         this.map.put(ParkingSession.KEY_SESSIONID, this.sessionID);
@@ -42,18 +42,17 @@ public class ParkingSession {
         this.map.put(ParkingSession.KEY_STARTTIME, new Timestamp(this.startTime));
         this.map.put(ParkingSession.KEY_ENDTIME, new Timestamp(this.endTime));
         this.map.put(ParkingSession.KEY_REFUNDED, this.refunded);
-
-        if (this.refunded){
+        if (this.refunded) {
             this.map.put(ParkingSession.KEY_REFUNDTIME, new Timestamp(this.refundedTime));
         }
 
         return map;
     }
 
-    public ParkingSession clone(){
+    public ParkingSession clone() {
         ParkingSession parking = new ParkingSession(this.sessionID, this.userID, this.parkingSpaceID, (Date) this.startTime.clone(), (Date) this.endTime.clone(), this.carParkID, this.campusID);
 
-        if (this.refunded){
+        if (this.refunded) {
             parking.setRefundedTime((Date) this.refundedTime.clone());
         }
 
@@ -99,5 +98,10 @@ public class ParkingSession {
 
     public boolean isRefunded() {
         return refunded;
+    }
+
+    @Override
+    public int compareTo(ParkingSession parkingSession) {
+        return Integer.parseInt(parkingSession.getSessionID()) - Integer.parseInt(this.sessionID);
     }
 }
