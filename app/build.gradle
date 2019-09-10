@@ -33,11 +33,11 @@ repositories {
             password '220cc9476025679c4e5c843666c27d97cfb0f951'
         }
     }
+
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.1.0-alpha10'
     implementation 'com.github.TutorialsAndroid:KAlertDialog:v5.0.19'
     implementation 'com.loopj.android:android-async-http:1.4.10'
     implementation 'com.braintreepayments.api:drop-in:4.3.1'
@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-firestore:21.0.0'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.2.0'
     testImplementation 'org.mockito:mockito-core:1.10.19'
     testImplementation 'junit:junit:4.12'
@@ -63,3 +64,5 @@ dependencies {
 
 apply plugin: 'com.google.gms.google-services'
 googleServices.disableVersionCheck = true
+
+

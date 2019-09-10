@@ -24,16 +24,24 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             android:layout_marginBottom="64dp"
             app:layout_constraintHorizontal_bias="0.501" app:layout_constraintBottom_toTopOf="@+id/signUp_LoginTest"/>
+
     <EditText
+            android:id="@+id/email_LoginTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:ems="10"
-            android:id="@+id/email_LoginTest" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/password_LoginTest"
-            app:layout_constraintVertical_bias="0.907" android:hint="Email" android:text="test@test.com"/>
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:text="test2@test.com"
+            app:layout_constraintBottom_toTopOf="@+id/password_LoginTest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.907" />
     <Button
             android:text="Sign Up"
             android:layout_width="wrap_content"

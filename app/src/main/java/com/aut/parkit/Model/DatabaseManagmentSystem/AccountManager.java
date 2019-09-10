@@ -1,4 +1,4 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
@@ -88,7 +88,6 @@ public class AccountManager {
 
         UserData newUser = DocumentConverter.toUser(dbw.getDoc().getData());
         userData = newUser;
-
     }
 
     public static void createUser(String firstName, String lastName, String emailAddress, String licencePlate){
@@ -123,15 +122,20 @@ public class AccountManager {
     }
 
     public static Vehicle getVehicle(String numberPlate){
-        Vehicle v = AccountManager.userData.getVehicle(numberPlate);
+        Vehicle v;
 
-        if (v != null){
-            return v;
+        if (AccountManager.userData != null){
+            v = AccountManager.userData.getVehicle(numberPlate.toUpperCase());
+
+            if (v != null){
+                return v;
+            }
         }
 
-        v = AccountManager.getVehicleFromDB(numberPlate);
 
-        if (v != null){
+        v = AccountManager.getVehicleFromDB(numberPlate.toUpperCase());
+
+        if (v != null && AccountManager.userData != null){
             AccountManager.userData.addVehicleToGarage(v);
             return v;
         }
@@ -142,7 +146,7 @@ public class AccountManager {
     public static void addVehicle(Vehicle v){
         AccountManager.userData.addVehicleToGarage(v);
 
-        mFStore.collection("Users").document(mAuth.getUid()).collection("Vehicles").document(v.getNumberPlate()).set(v.toMap());
+        mFStore.collection("Users").document(mAuth.getUid()).collection("Vehicles").document(mAuth.getUid()+"-"+v.getNumberPlate()).set(v.toMap());
     }
 
     public static LinkedList<ParkingSession> getParkingSession(Date date){
@@ -166,6 +170,7 @@ public class AccountManager {
     }
 
     public static LinkedList<ParkingSession> getParkingRecord(){
+
         return AccountManager.userData.getParkingRecord();
     }
 
@@ -175,7 +180,8 @@ public class AccountManager {
 
     private static Vehicle getVehicleFromDB(String numberPlate){
         ThreadLock lock = new ThreadLock();
-        DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid() + "/" + "Vehicle/" + numberPlate, lock);
+
+        DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid() + "/" + "Vehicles/" + mAuth.getUid()+"-"+numberPlate, lock);
         Thread t = new Thread(dbw);
 
         t.start();
@@ -183,7 +189,11 @@ public class AccountManager {
 
         DocumentSnapshot doc = dbw.getDoc();
 
-        return DocumentConverter.toVehicle(doc.getData());
+        if (doc.exists()) {
+            return DocumentConverter.toVehicle(doc.getData());
+        }
+
+        return null;
     }
 
     private static LinkedList<ParkingSession> getParkingSessionFromBD(Date date){

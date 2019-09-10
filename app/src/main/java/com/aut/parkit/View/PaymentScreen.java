@@ -3,12 +3,15 @@ package com.aut.parkit.View;
 //Purchasing screen placeholder class
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+import android.widget.EditText;
+
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.aut.parkit.Model.Payment.BraintreeClientToken;
 import com.aut.parkit.R;
 
@@ -30,7 +33,9 @@ public class PaymentScreen extends AppCompatActivity{
         Intent intent = new Intent(this, TransactionScreen.class);
         intent.putExtra("token", token.getClientToken());
         //TODO get payment total
-        intent.putExtra("amount", "2.00");
+        //intent.putExtra("amount", "2.00");
+        EditText t = findViewById(R.id.testAmount_paymentScreen);
+        intent.putExtra("amount", t.getText().toString());
         startActivity(intent);
     }
 
