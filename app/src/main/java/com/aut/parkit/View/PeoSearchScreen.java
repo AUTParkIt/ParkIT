@@ -22,7 +22,11 @@ public class PeoSearchScreen extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
     }
 
-    public void onSearchSubmit(){
+    public void onLicenceSearchSubmit(){
+
+    }
+
+    public void onSpaceSearchSubmit(){
 
     }
 

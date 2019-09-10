@@ -5,4 +5,5 @@
     <color name="colorAccent">#ffffff</color>
     <color name="greyText">#B4B4B4</color>
     <color name="greyBackground">#EBEAEA</color>
+    <color name="transparentBlack">#80000000</color>
 </resources>
