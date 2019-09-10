@@ -3,6 +3,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.aut.parkit">
 
+
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <supports-screens
@@ -20,6 +22,7 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
+
         <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
         </activity>
       
@@ -29,10 +32,12 @@
         <activity android:name=".View.LoggedInActivity">
         </activity>
       
-        <activity android:name=".View.AccountCreationActivityTest">
-            android:theme="@style/AppTheme">
+        <activity android:name=".View.AccountCreationActivityTest"
+            android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name=".View.SignupScreen" />
+
+        <activity android:name=".View.SignupScreen" >
+        </activity>
       
         <activity android:name=".View.LoadingScreenJava">
         </activity>

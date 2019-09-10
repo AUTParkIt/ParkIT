@@ -5,6 +5,5 @@
     <item
             android:id="@+id/action_myaccount"
             android:orderInCategory="101"
-            android:title="@string/myaccount"
-            app:showAsAction="never" />
+            android:title="@string/myaccount" />
 </menu>

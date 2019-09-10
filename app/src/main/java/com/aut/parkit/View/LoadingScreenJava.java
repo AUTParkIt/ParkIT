@@ -1,7 +1,10 @@
 package com.aut.parkit.View;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.aut.parkit.R;
 
 public class LoadingScreenJava extends AppCompatActivity {
@@ -10,12 +13,12 @@ public class LoadingScreenJava extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
-        startActivity(new Intent(LoadingScreen.this, SignupScreen.class));
+        startActivity(new Intent(LoadingScreenJava.this, SignupScreen.class));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        startActivity(new Intent(LoadingScreen.this, SignupScreen.class));
+        startActivity(new Intent(LoadingScreenJava.this, SignupScreen.class));
     }
 }
