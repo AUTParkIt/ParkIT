@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
+      <!--tools:context="com.example.myapplication.PaymentScreen"-->
+    <item
+            android:id="@+id/action_myaccount"
+            android:orderInCategory="101"
+            android:title="@string/myaccount"
+            app:showAsAction="never" />
+
+</menu>

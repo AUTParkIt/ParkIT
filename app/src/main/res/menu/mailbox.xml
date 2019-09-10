@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".LoginScreen">
+
+    <item
+            android:id="@+id/action_mailbox"
+            android:title=""
+            android:icon="@drawable/ic_mail_outline_black_24dp"
+            app:showAsAction="always" />
+
+</menu>
