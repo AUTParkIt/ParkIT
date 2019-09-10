@@ -1,4 +1,4 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import java.util.LinkedList;
 
@@ -8,9 +8,9 @@ public class Campus {
     private LinkedList<CarPark> carParks;
     //TODO: Finish Class
 
-    public CarPark getCarPark(String carParkID){
-        for (CarPark c: this.carParks) {
-            if (c.getCarParkID().contentEquals(carParkID)){
+    public CarPark getCarPark(String carParkID) {
+        for (CarPark c : this.carParks) {
+            if (c.getCarParkID().contentEquals(carParkID)) {
                 return c;
             }
         }
