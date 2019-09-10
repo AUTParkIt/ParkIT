@@ -18,6 +18,7 @@
         <activity android:name=".View.LoginTestActivity" />
         <activity android:name=".View.LoggedInTestActivity" />
         <activity android:name=".View.AccountCreationActivityTest" />
+
         <activity android:name=".View.LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,8 +55,8 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data android:scheme="${applicationId}.braintree"/>
-            
-
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>
