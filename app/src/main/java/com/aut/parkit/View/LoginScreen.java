@@ -5,6 +5,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.graphics.Color;
+import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,12 @@ public class LoginScreen extends AppCompatActivity
         setContentView(R.layout.activity_login_screen);
 
         TextView textView2 = findViewById(R.id.textView2);
+        textView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open();
+            }
+        });
 
         String text = "AUT PARKIT";
         SpannableString ss = new SpannableString(text);
