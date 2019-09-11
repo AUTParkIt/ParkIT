@@ -17,7 +17,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="60dp"
-            app:end_angle="358"
             app:layout_constraintBottom_toTopOf="@+id/startParkBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -32,7 +31,7 @@
             app:start_angle="2"
             app:text_color="#FF8100"
             app:text_size="50dp"
-            app:wheel_active_color="@drawable/gradient"
+            app:wheel_active_color="@drawable/wheel"
             app:wheel_size="60"
             app:wheel_unactive_color="#A9A9A9" />
 
@@ -69,7 +68,6 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:background="#FFFFFF"
@@ -80,9 +78,10 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.946" />
+            app:layout_constraintTop_toBottomOf="@+id/carRegisText"
+            app:layout_constraintVertical_bias="0.0" />
 
     <EditText
             android:id="@+id/spaceNumText"
@@ -105,10 +104,10 @@
             android:textColor="#050505"
             app:layout_constraintBottom_toTopOf="@+id/durationSeekbar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintHorizontal_bias="0.478"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.917" />
+            app:layout_constraintVertical_bias="1.0" />
 
     <TextView
             android:id="@+id/carRegisText"
@@ -129,10 +128,10 @@
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.784" />
+            app:layout_constraintVertical_bias="0.608" />
 
     <TextView
             android:id="@+id/durationEndsText"
@@ -169,9 +168,10 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/durationSeekbar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.893" />
+            app:layout_constraintVertical_bias="0.878" />
 
     <TextView
             android:id="@+id/valueText"
@@ -186,16 +186,17 @@
             android:textSize="40sp"
             app:layout_constraintBottom_toTopOf="@+id/durationEndsText"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/durationSeekbar"
-            app:layout_constraintVertical_bias="0.853" />
+            app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
             android:id="@+id/titleBarImage"
             android:layout_width="412dp"
             android:layout_height="64dp"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="56dp"
+            android:layout_marginBottom="40dp"
             android:contentDescription="@string/titlebar"
             app:layout_constraintBottom_toTopOf="@+id/carRegisText"
             app:layout_constraintEnd_toEndOf="parent"
