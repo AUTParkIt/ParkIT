@@ -1,54 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.aut.parkit">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.aut.parkit">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
             android:allowBackup="true"
+            android:fullBackupContent="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
-        </activity>
-      
-        <activity android:name=".View.LoginTestActivity">
-        </activity>
-      
-        <activity android:name=".View.LoggedInActivity">
-        </activity>
-      
-        <activity android:name=".View.AccountCreationActivityTest">
-        </activity>
-      
-        <activity android:name=".View.LoadingScreenJava">
-        </activity>
-
-        <activity android:name=".View.PaymentScreen">
+        <activity android:name="$View.HomeScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+                android:name="$View.TransactionScreen"
+                android:theme="@style/Transparent" />
+        <activity android:name="$View.LoginTestActivity" />
+        <activity android:name="$View.LoggedInActivity" />
+        <activity android:name="$View.AccountCreationActivityTest" />
+        <activity android:name="$View.LoadingScreenJava" />
+        <activity android:name="$View.PaymentScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
                 android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
                 android:launchMode="singleTask">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="${applicationId}.braintree"/>
+                <data android:scheme="${applicationId}.braintree" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
