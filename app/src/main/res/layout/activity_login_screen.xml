@@ -21,13 +21,13 @@
             android:textColor="#ddeeeeee"
             android:textSize="49sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
-            app:layout_constraintVertical_bias="0.023"
+            app:layout_constraintTop_toBottomOf="@+id/TextView3"
+            app:layout_constraintVertical_bias="0.0"
             tools:layout_editor_absoluteX="0dp"
             tools:text="AUT PARKIT" />
 
-    <EditText
-            android:id="@+id/editText"
+    <TextView
+            android:id="@+id/TextView3"
             android:layout_width="326dp"
             android:layout_height="214dp"
             android:layout_marginStart="8dp"
@@ -35,10 +35,10 @@
             android:drawableTop="@drawable/ic_directions_car_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.695"
+            app:layout_constraintHorizontal_bias="0.652"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.03" />
+            app:layout_constraintVertical_bias="0.009" />
 
     <EditText
             android:id="@+id/editTextEmailAddress"
@@ -85,7 +85,7 @@
             app:layout_constraintHorizontal_bias="0.608"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.683"
+            app:layout_constraintVertical_bias="0.662"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="376dp" />
 
@@ -132,7 +132,7 @@
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.849"
+            app:layout_constraintHorizontal_bias="0.86"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.808"
