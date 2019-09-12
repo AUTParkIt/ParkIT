@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.aut.parkit.R
 import com.google.firebase.auth.FirebaseAuth
 
-class LoadingScreen : AppCompatActivity() {
+class LoadingScreenTemp : AppCompatActivity() {
 
     private val mAuth = FirebaseAuth.getInstance()
 
@@ -16,13 +16,11 @@ class LoadingScreen : AppCompatActivity() {
 
         val intent:Intent
 
-        mAuth.signOut()
-
-        if (mAuth.uid != null){
-            intent = Intent(this, LoginTestActivity::class.java)
+        if (mAuth.uid == null){
+            intent = Intent(this, SignupScreen::class.java)
         }
         else {
-            intent = Intent(this, LoggedInTestActivity::class.java)
+            intent = Intent(this, LoggedInActivity::class.java)
         }
 
 // start your next activity

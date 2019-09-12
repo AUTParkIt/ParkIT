@@ -33,12 +33,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
 				</intent-filter>
         </activity>
-		
+
         <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
         </activity>
-      
-      
-      
+
+
+
         <activity android:name=".View.LoadingScreenJava">
         </activity>
 

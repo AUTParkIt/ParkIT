@@ -3,4 +3,25 @@
     <string name="actionbar">
     </string>
     <string name="myaccount">My Account</string>
+    <string name="terms_conditions">Terms &amp; Conditions</string>
+    <string name="terms_conditions_text">By using this app the User agrees to the Terms and Conditions contained herein.
+        \n\n
+        <b><u>USER\'s RESPONSIBILITIES</u></b>
+        \n\n
+        <i>It is your responsibility to:</i>
+        \n
+        1. Understand the terms and conditions of this app as these may change from time to time\n
+        2. Ensure you have an active Parking Session that is valid and can be viewed on your device whilst the vehicle is parked in the AUT carpark\n
+        3. Monitor your parking session and leave at the appropriate time <b>OR</b> extend your parking Session
+        \n\n
+        <i>You understand that:</i>
+        \n
+        1. Parking in an AUT carpark space without a valid parking session may result in a breach notice being issued on your vehicle\n
+        \n
+        <b><u>PARKING ENFORCEMENT</u></b>
+        \n
+        AUT uses the services of Parking Enforcement Services phone 0800 727 536 and Auckland Towing Company phone 09 3780780
+
+    </string>
+
 </resources>
