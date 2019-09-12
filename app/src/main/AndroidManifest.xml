@@ -13,26 +13,20 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".View.RemainingTimeScreen"></activity>
-        <activity android:name=".View.PeoSearchScreen">
+        <activity android:name=".View.RemainingTimeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.PeoSearchScreen"/>
         <activity android:name=".View.ViewVehicleTestActivity" />
         <activity android:name=".View.AddVehicleTestActivity" />
         <activity android:name=".View.LoginTestActivity" />
         <activity android:name=".View.LoggedInTestActivity" />
         <activity android:name=".View.AccountCreationActivityTest" />
-        <activity android:name=".View.LoadingScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".View.LoadingScreen"/>
         <activity
                 android:name=".View.TransactionScreen"
                 android:theme="@style/Transparent"></activity>
