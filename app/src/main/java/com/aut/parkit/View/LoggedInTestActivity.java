@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 
-public class LoggedInTestActivity extends AppCompatActivity {
+public class LoggedInTestActivity extends AppCompatActivity implements Updatable{
 
     private TextView logInView;
     private User user;
@@ -19,19 +19,18 @@ public class LoggedInTestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        class testing implements Runnable{
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_logged_in_test);
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                user = new User();
+                user = new User(LoggedInTestActivity.this);
 
                 logInView = findViewById(R.id.textView_loginActivity);
 
                 logInView.setText("Welcome " + user.getFirstName() + " " + user.getLastName());
             }
-        }
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logged_in_test);
-        Thread t = new Thread(new testing());
+        });
         t.start();
 
         this.AddVehicleBtn = findViewById(R.id.addVehicleBtn_LoggedInScreen);
@@ -50,5 +49,15 @@ public class LoggedInTestActivity extends AppCompatActivity {
                 startActivity(new Intent(LoggedInTestActivity.this, ViewVehicleTestActivity.class));
             }
         });
+    }
+
+    @Override
+    public void update() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logInView.setText("Welcome " + user.getFirstName() + " " + user.getLastName());
+            }
+        }).start();
     }
 }

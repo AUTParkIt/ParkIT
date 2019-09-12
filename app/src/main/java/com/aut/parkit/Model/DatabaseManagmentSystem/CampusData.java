@@ -1,12 +1,14 @@
 package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import java.util.LinkedList;
+import java.util.Map;
 
-public class Campus {
+public class CampusData {
     private String campusID;
     private int totalSpaces, freeSpaces;
     private LinkedList<CarPark> carParks;
-    //TODO: Finish Class
+
+    public static final String KEY_ID = "ID";
 
     public CarPark getCarPark(String carParkID) {
         for (CarPark c : this.carParks) {
@@ -32,5 +34,9 @@ public class Campus {
 
     public LinkedList<CarPark> getCarParks() {
         return carParks;
+    }
+
+    public Map<String, Object> toMap(){
+        return null;
     }
 }
