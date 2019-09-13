@@ -2,17 +2,20 @@ package com.aut.parkit.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.aut.parkit.R;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 
-import java.sql.Time;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -28,9 +31,40 @@ public class HomeScreen extends AppCompatActivity {
         final TextView endTime = findViewById(R.id.durationEndsText);
         final TextView totalPurchase = findViewById(R.id.totalPayText);
         final TextView duration = findViewById(R.id.valueText);
-        final int[] hour = {0};
-        final int[] minute = {0};
 
+        seekBar.setOnSeekBarChangeListener(new HoloCircleSeekBar.OnCircleSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(HoloCircleSeekBar holoCircleSeekBar, int i, boolean b) {
+                double pay = i * 0.75;
+                String price = "Total: $"+pay;
+                totalPurchase.setText(price);
+
+                if(i%2 == 1){
+                    i = i/2;
+                    String s30 = i+"h 30m";
+                    duration.setText(s30);
+                }
+                else if(i == 10){
+                    String max = "ALL DAY PARKING";
+                    duration.setText(max);
+                }
+                else{
+                    i = i/2;
+                    String s = i+"h";
+                    duration.setText(s);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {
+
+            }
+        });
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,50 +77,10 @@ public class HomeScreen extends AppCompatActivity {
             public void onClick(View view) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Confirm Park", Toast.LENGTH_SHORT);
                 toast.show();
+                startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
             }
         });
 
-        seekBar.setOnSeekBarChangeListener(new HoloCircleSeekBar.OnCircleSeekBarChangeListener(){
 
-            @Override
-            public void onProgressChanged(HoloCircleSeekBar holoCircleSeekBar, int i, boolean b) {
-                int progress = holoCircleSeekBar.getValue();
-                float purchase;
-                for(; progress%60 == 0; progress -=60){
-                    hour[0]++;
-                    minute[0] = progress - 60;
-
-                    if(minute[0] > 0 && minute[0] < 60){
-                        String s1 = hour[0]+"hr(s) "+minute[0]+"min(s)";
-                        duration.setText(s1);
-                        String s2 = "Ends at: "+tsLong;
-                        endTime.setText(s2);
-                        purchase = (float) (hour[0] * 1.50);
-                        String s3 = "Total: $"+purchase;
-                        totalPurchase.setText(s3);
-                    }
-                    else{
-                        String s1 = hour[0]+"hr(s)";
-                        duration.setText(s1);
-                        String s2 = "Ends at: "+tsLong;
-                        endTime.setText(s2);
-                        purchase = (float) (hour[0] * 1.50);
-                        String s3 = "Total: $"+purchase;
-                        totalPurchase.setText(s3);
-                    }
-                }
-
-            }
-            @Override
-            public void onStartTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {
-
-            }
-        });
     }
-
 }

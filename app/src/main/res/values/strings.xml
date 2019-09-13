@@ -11,4 +11,5 @@
     <string name="change">CHANGE</string>
     <string name="_0">0</string>
     <string name="titlebar">titleBar</string>
+    <string name="menubar">menuBar</string>
 </resources>

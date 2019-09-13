@@ -17,13 +17,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="60dp"
+            app:end_angle="358"
             app:layout_constraintBottom_toTopOf="@+id/startParkBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.955"
-            app:max="300"
+            app:layout_constraintVertical_bias="1.0"
+            app:max="10"
             app:pointer_color="#FFFFFF"
             app:pointer_halo_color="#FF8100"
             app:pointer_size="20dp"
@@ -131,7 +132,7 @@
             app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.608" />
+            app:layout_constraintVertical_bias="0.529" />
 
     <TextView
             android:id="@+id/durationEndsText"
@@ -175,15 +176,15 @@
 
     <TextView
             android:id="@+id/valueText"
-            android:layout_width="122dp"
-            android:layout_height="66dp"
+            android:layout_width="171dp"
+            android:layout_height="72dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:hint="@string/_0"
             android:textAlignment="center"
-            android:textSize="40sp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/durationEndsText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
@@ -196,11 +197,24 @@
             android:layout_width="412dp"
             android:layout_height="64dp"
             android:layout_marginStart="1dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="36dp"
             android:contentDescription="@string/titlebar"
             app:layout_constraintBottom_toTopOf="@+id/carRegisText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/aut_triangles" />
+
+    <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/menubar"
+            app:layout_constraintBottom_toBottomOf="@+id/titleBarImage"
+            app:layout_constraintEnd_toEndOf="@+id/titleBarImage"
+            app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintStart_toStartOf="@+id/titleBarImage"
+            app:layout_constraintTop_toTopOf="@+id/titleBarImage"
+            app:layout_constraintVertical_bias="0.642"
+            app:srcCompat="@drawable/menu_bar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
