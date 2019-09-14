@@ -1,8 +1,7 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Date;
 import java.util.Map;
@@ -69,11 +68,9 @@ public class DocumentConverter {
         UserData newUser = new UserData(userID, accountType);
 
         newUser.setBreachNoticeNotification(breachNoticeNotification);
-        newUser.setCurrentParkingSession(AccountManager.getParkingSession("")); //TODO: Need to allow the software to findout if the user has any current parking session that need to be gotten
+        //newUser.setCurrentParkingSession(AccountManager.getParkingSession("")); //TODO: Need to allow the software to findout if the user has any current parking session that need to be gotten
         newUser.setDefaultVehicle(AccountManager.getVehicle(defaultVehicleID));
-        newUser.setParkingRecord(AccountManager.getParkingRecord());
         newUser.setLastName(lastName);
-        newUser.setGarage(AccountManager.getGarage());
         newUser.setFirstName(firstName);
         newUser.setExpireWarningNotification(expireWarningNotification);
         newUser.setEmailAddress(emailAddress);
