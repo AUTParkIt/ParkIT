@@ -184,10 +184,6 @@ public class AccountManager {
         return AccountManager.getParkingSession(date);
     }
 
-    public static ParkingSession getParkingSession(String parkingSessionID){
-        return null; //TODO: Finish
-    }
-
     private static ParkingSession getParkingSessionFromDB(String parkingSessionID){
         return null; //TODO:Finish
     }

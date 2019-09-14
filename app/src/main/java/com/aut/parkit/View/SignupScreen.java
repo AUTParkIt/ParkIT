@@ -9,29 +9,23 @@ package com.aut.parkit.View;
 */
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.widget.*;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.aut.parkit.Model.DatabaseManagmentSystem.AccountManager;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.aut.parkit.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupScreen extends AppCompatActivity
 {
@@ -40,7 +34,7 @@ public class SignupScreen extends AppCompatActivity
     Button signUp,goBack;
     Dialog myDialog;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    String name1, name2, mail, car, pword1, pword2;
+    //String name1, name2, mail, car, pword1, pword2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,7 +63,7 @@ public class SignupScreen extends AppCompatActivity
         goBack = findViewById(R.id.goBack);
         myDialog = new Dialog(this);
 
-        goBack.setOnClickListener(new View.OnClickListener() {
+/*        goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -103,10 +97,10 @@ public class SignupScreen extends AppCompatActivity
                 });
 
             }
-        });
+        });*/
     }
 
-    private Boolean validate()                                              //completed working correctly
+ /*   private Boolean validate()                                              //completed working correctly
     {                                                                       //TODO: pad the user input to start typing where hint starts and
         Boolean result = false;                                             //verify correct email entry only??
         name1 = firstName.getText().toString();                             //does confirm password require validation??
@@ -124,7 +118,7 @@ public class SignupScreen extends AppCompatActivity
         else return true;
 
         return false;
-    }
+    }*/
 
     /*public void clickSignUpButton(View view)                                //when user clicks the signup button then data should be sent to the database
     {
