@@ -13,4 +13,7 @@
     <string name="search">SEARCH</string>
     <string name="search_by_licence_plate"><font size="16">SEARCH BY LICENCE PLATE</font></string>
     <string name="search_by_carpark_id"><font size="16">SEARCH BY CARPARK ID</font></string>
+    <string name="extend_parking">Extend Parking</string>
+    <string name="licence_plate">FUJ626</string>
+    <string name="space_number">PARKING SPACE A17</string>
 </resources>
