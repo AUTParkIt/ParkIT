@@ -35,7 +35,7 @@ public class LoginTestActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), SignupScreen.class));
+                startActivity(new Intent(LoginTestActivity.this, AccountCreationActivityTest.class));
             }
         });
 
