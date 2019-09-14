@@ -8,7 +8,7 @@ public class CarPark {
     private String carParkID;
     private int totalSpaces, freeSpaces;
     private LinkedList<Space> parkingSpaces;
-    private Campus campus;
+    private CampusData campusData;
 
     //TODO: Finish class
 

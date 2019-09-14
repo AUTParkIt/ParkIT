@@ -1,11 +1,18 @@
 package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.aut.parkit.View.Updatable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +25,8 @@ public class AccountManager {
     private static Map<Object, UserData> referenceList = new HashMap<>();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static FirebaseFirestore mFStore = FirebaseFirestore.getInstance();
+    private static boolean listening = false;
+    private static LinkedList<Updatable> updatableScreens = new LinkedList<>();
 
 
     //TODO: need to add the ability to push a parking session and update the records
@@ -68,13 +77,23 @@ public class AccountManager {
         }
     }
 
+    public static void addUpdatable(Updatable u){
+        AccountManager.updatableScreens.add(u);
+    }
+
     private static void invalidateAll(){
         for (UserData u : AccountManager.referenceList.values()) {
             u.invalidate();
             AccountManager.referenceList.remove(u);
         }
 
-        AccountManager.userData.invalidate();
+        AccountManager.updateScreens();
+    }
+
+    private static void updateScreens(){
+        for (Updatable u : AccountManager.updatableScreens){
+            u.update();
+        }
     }
 
     private static void loadUserFromDB(){
@@ -88,6 +107,10 @@ public class AccountManager {
 
         UserData newUser = DocumentConverter.toUser(dbw.getDoc().getData());
         userData = newUser;
+
+        if (!listening){
+            AccountManager.addListenerToUser();
+        }
     }
 
     public static void createUser(String firstName, String lastName, String emailAddress, String licencePlate){
@@ -198,6 +221,28 @@ public class AccountManager {
 
     private static LinkedList<ParkingSession> getParkingSessionFromBD(Date date){
         return null; //TODO: need to impliment geting patrkingsessions from the DB and convert it to a parkingSession
+    }
+
+    private static void addListenerToUser(){
+        DocumentReference docRef = mFStore.collection("Users").document(mAuth.getUid());
+
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null){
+                    Log.e("addListenerToUser Error",e.toString());
+                    return;
+                }
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    Log.d("addListenerToUser", "Current data: " + documentSnapshot.getData());
+                    AccountManager.userData = DocumentConverter.toUser(documentSnapshot.getData());
+                    AccountManager.invalidateAll();
+                } else {
+                    Log.d("addListenerToUser", "Current data: null");
+                }
+            }
+        });
     }
 
     //TODO: Finish
