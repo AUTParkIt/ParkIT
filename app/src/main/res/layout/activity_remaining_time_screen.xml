@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/greyBackground"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         android:gravity="top|center_vertical"
         android:orientation="vertical"
         android:paddingLeft="10dp"
@@ -13,7 +13,7 @@
         <TextView
                 android:id="@+id/licence_plate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/colorWhite"
                 android:gravity="center"
@@ -29,7 +29,7 @@
         <TextView
                 android:id="@+id/parking_space"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/colorWhite"
                 android:gravity="center"
@@ -44,21 +44,87 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="350dp"
                 android:layout_height="350dp"
-                android:layoutDirection="rtl"
                 android:background="@drawable/countdown_timer_background"
                 android:indeterminate="false"
-                android:progress="65"
+                android:layoutDirection="rtl"
                 android:progressDrawable="@drawable/countdown_timer"
                 app:layout_constraintBottom_toTopOf="@+id/extend_parking"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/parking_space" />
 
+        <TextView
+                android:id="@+id/time_remaining"
+                android:layout_width="215dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="100dp"
+                android:text="5H 30M"
+                android:textColor="@color/colorPrimary"
+                android:textSize="60sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                app:layout_constraintStart_toStartOf="@+id/progressBar"
+                app:layout_constraintTop_toTopOf="@+id/progressBar" />
+
+        <TextView
+                android:id="@+id/session_expired"
+                android:layout_width="211dp"
+                android:layout_height="109dp"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
+                android:text="SESSION EXPIRED!"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="40sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/end_time"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                app:layout_constraintHorizontal_bias="0.51"
+                app:layout_constraintStart_toStartOf="@+id/progressBar"
+                app:layout_constraintTop_toTopOf="@+id/progressBar"
+                app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+                android:id="@+id/remaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REMAINING"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                app:layout_constraintStart_toStartOf="@+id/progressBar"
+                app:layout_constraintTop_toBottomOf="@+id/time_remaining" />
+
+        <TextView
+                android:id="@+id/start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp"
+                android:text="Started 11:26 am"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/end_time"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                app:layout_constraintStart_toStartOf="@+id/progressBar"
+                app:layout_constraintTop_toBottomOf="@+id/remaining" />
+
+        <TextView
+                android:id="@+id/end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="100dp"
+                android:text="Ends 4:56 pm"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                app:layout_constraintStart_toStartOf="@+id/progressBar"
+                app:layout_constraintTop_toBottomOf="@+id/start_time" />
+
         <Button
                 android:id="@+id/extend_parking"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_edges"
                 android:includeFontPadding="true"
@@ -67,5 +133,22 @@
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+                android:id="@+id/new_session"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_edges"
+                android:includeFontPadding="true"
+                android:text="@string/start_new_session"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

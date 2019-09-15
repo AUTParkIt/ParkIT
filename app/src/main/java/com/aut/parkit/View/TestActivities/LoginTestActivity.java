@@ -1,4 +1,4 @@
-package com.aut.parkit.View;
+package com.aut.parkit.View.TestActivities;
 
 import android.content.Intent;
 import android.os.Bundle;

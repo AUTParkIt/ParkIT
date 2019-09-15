@@ -2,28 +2,33 @@ package com.aut.parkit.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.aut.parkit.Model.ParkingTimeFormatter;
 import com.aut.parkit.R;
-import static android.view.animation.Animation.RELATIVE_TO_SELF;
+import com.google.firebase.Timestamp;
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RemainingTimeScreen extends AppCompatActivity {
 
+    private CountDownTimer countDownTimer;
     private ProgressBar progressBar;
-    private Button extendParking;
-    int myProgress = 0;
-    int progress;
-    CountDownTimer countDownTimer;
-    int endTime = 250;
-
+    private TextView licencePlateText, parkingSpaceText, timeRemainingText, session_expired, remainingText, startTimeText, endTimeText;
+    private Button extendParking, startNewSession;
+    private Timestamp startTimeStamp, endTimeStamp;
+    private long remainingMillis;
+    private boolean firstTickComplete;
+    private String formattedStartTime, formattedEndTime;
+    private ParkingTimeFormatter timeFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,84 +38,108 @@ public class RemainingTimeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_remaining_time_screen);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        extendParking = (Button)findViewById(R.id.extend_parking);
-        extendParking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO extend parking
-            }
-        });
+        licencePlateText = (TextView) findViewById(R.id.licence_plate);
+        parkingSpaceText = (TextView) findViewById(R.id.parking_space);
+        startTimeText = (TextView) findViewById(R.id.start_time);
+        endTimeText = (TextView) findViewById(R.id.end_time);
+        timeRemainingText = (TextView) findViewById(R.id.time_remaining);
+        session_expired = (TextView) findViewById(R.id.session_expired);
+        remainingText = (TextView) findViewById(R.id.remaining);
+        extendParking = (Button) findViewById(R.id.extend_parking);
+        startNewSession = (Button) findViewById(R.id.new_session);
+
+        timeFormatter = new ParkingTimeFormatter();
+        setButtonListeners();
+        setLicencePlate();
+        setParkingSpace();
+        setStartEndTimes();
+        setRemainingTime();
         startTimer();
     }
 
-    public void startTimer(){
-        progressBar.setSecondaryProgress(endTime);
+    public void setButtonListeners(){
+        extendParking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        startNewSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RemainingTimeScreen.this, HomeScreen.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void setLicencePlate(){
+        String plateNumber = "GLD620";
+        licencePlateText.setText(plateNumber);
+    }
+
+    public void setParkingSpace(){
+        String spaceId = "B17";
+        parkingSpaceText.setText("PARKING SPACE "+spaceId);
+    }
+
+    public void setStartEndTimes(){
+        //Generate test timestamps
+        startTimeStamp = new Timestamp(new Date());
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(startTimeStamp.getSeconds()*1000);
+        cal.add(Calendar.SECOND, 120);
+        endTimeStamp = new Timestamp(cal.getTime());
+        //End of test code
+
+        formattedStartTime = timeFormatter.convertTimestampToString(startTimeStamp);
+        startTimeText.setText("Started "+formattedStartTime);
+
+        formattedEndTime = timeFormatter.convertTimestampToString(endTimeStamp);
+        endTimeText.setText("Ends "+formattedEndTime);
+    }
+
+    public void setRemainingTime() {
+        remainingMillis = (endTimeStamp.getSeconds() - startTimeStamp.getSeconds())*1000;
+        String remainingTime = timeFormatter.calculateRemainingTime(remainingMillis);
+        timeRemainingText.setText(remainingTime);
+    }
+
+    private void endParkingSession(){
+        timeRemainingText.setVisibility(View.INVISIBLE);
+        remainingText.setVisibility(View.INVISIBLE);
+        session_expired.setVisibility(View.VISIBLE);
+        endTimeText.setText("Ended "+formattedEndTime);
+        extendParking.setVisibility(View.INVISIBLE);
+        startNewSession.setVisibility(View.VISIBLE);
+    }
+
+    public void startTimer() {
+        progressBar.setMax(new BigDecimal(remainingMillis).intValueExact());
+        System.out.println("Max set to: "+new BigDecimal(remainingMillis).intValueExact());
         progressBar.setProgress(0);
+        System.out.println("Progress set to: "+progressBar.getProgress());
+        firstTickComplete = false;
 
-/*        if (timer_text.getText().toString().length()>0) {
-            myProgress = 0;
+        countDownTimer = new CountDownTimer(remainingMillis, (60000 - 500)) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if(!firstTickComplete) {
+                    firstTickComplete = true;
+                }else{
 
-            *//*try {
-                countDownTimer.cancel();
-
-            } catch (Exception e) {
-
-            }*//*
-
-            String timeInterval = timer_text.getText().toString();
-            progress = 1;
-            endTime = Integer.parseInt(timeInterval); // up to finish time*/
-
-            countDownTimer = new CountDownTimer(endTime * 1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    setProgress(progress, endTime);
-                    progress = progress + 1;
-                    int seconds = (int) (millisUntilFinished / 1000) % 60;
-                    int minutes = (int) ((millisUntilFinished / (1000 * 60)) % 60);
-                    int hours = (int) ((millisUntilFinished / (1000 * 60 * 60)) % 24);
-                    String newtime = hours + ":" + minutes + ":" + seconds;
-
-                    /*if (newtime.equals("0:0:0")) {
-                        timer_text.setText("00:00:00");
-                    } else if ((String.valueOf(hours).length() == 1) && (String.valueOf(minutes).length() == 1) && (String.valueOf(seconds).length() == 1)) {
-                        timer_text.setText("0" + hours + ":0" + minutes + ":0" + seconds);
-                    } else if ((String.valueOf(hours).length() == 1) && (String.valueOf(minutes).length() == 1)) {
-                        timer_text.setText("0" + hours + ":0" + minutes + ":" + seconds);
-                    } else if ((String.valueOf(hours).length() == 1) && (String.valueOf(seconds).length() == 1)) {
-                        timer_text.setText("0" + hours + ":" + minutes + ":0" + seconds);
-                    } else if ((String.valueOf(minutes).length() == 1) && (String.valueOf(seconds).length() == 1)) {
-                        timer_text.setText(hours + ":0" + minutes + ":0" + seconds);
-                    } else if (String.valueOf(hours).length() == 1) {
-                        timer_text.setText("0" + hours + ":" + minutes + ":" + seconds);
-                    } else if (String.valueOf(minutes).length() == 1) {
-                        timer_text.setText(hours + ":0" + minutes + ":" + seconds);
-                    } else if (String.valueOf(seconds).length() == 1) {
-                        timer_text.setText(hours + ":" + minutes + ":0" + seconds);
-                    } else {
-                        timer_text.setText(hours + ":" + minutes + ":" + seconds);
-                    }*/
-
+                    timeRemainingText.setText(timeFormatter.calculateRemainingTime(millisUntilFinished));
+                    System.out.println(timeRemainingText.getText());
+                    progressBar.setProgress(progressBar.getProgress()+60000);
+                    System.out.println("Progress is: "+progressBar.getProgress());
                 }
-
-                @Override
-                public void onFinish() {
-                    setProgress(progress, endTime);
-
-
-                }
-            };
-            countDownTimer.start();
-        }/*else {
-            Toast.makeText(getApplicationContext(),"Please enter the value",Toast.LENGTH_LONG).show();
-        }*/
-
-
-
-    public void setProgress(int startTime, int endTime) {
-        progressBar.setMax(endTime);
-        progressBar.setSecondaryProgress(endTime);
-        progressBar.setProgress(startTime);
+            }
+            @Override
+            public void onFinish() {
+                endParkingSession();
+            }
+        };
+        countDownTimer.start();
     }
 
 
