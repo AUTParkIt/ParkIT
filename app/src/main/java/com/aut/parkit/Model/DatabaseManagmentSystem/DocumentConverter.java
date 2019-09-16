@@ -78,4 +78,18 @@ public class DocumentConverter {
 
         return newUser;
     }
+
+    public static CampusData toCampus(Map<String, Object> campus){
+        String campusID;
+        int totalSpaces, freeSpaces, maxTime;
+        float price;
+
+        campusID = (String) campus.get(CampusData.KEY_ID);
+        totalSpaces = (int) campus.get(CampusData.KEY_TOTALSPACES);
+        freeSpaces = (int) campus.get(CampusData.KEY_FREESPACES);
+        maxTime = (int) campus.get(CampusData.KEY_MAXTIME);
+        price = (float) campus.get(CampusData.KEY_PRICE);
+
+        return new CampusData(campusID, totalSpaces, freeSpaces, maxTime, price);
+    }
 }

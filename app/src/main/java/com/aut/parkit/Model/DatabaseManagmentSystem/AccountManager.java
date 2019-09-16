@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class AccountManager {
@@ -197,10 +198,6 @@ public class AccountManager {
         return AccountManager.userData.getParkingRecord();
     }
 
-    public static LinkedList<Vehicle> getGarage(){
-        return AccountManager.userData.getGarage();
-    }
-
     private static Vehicle getVehicleFromDB(String numberPlate){
         ThreadLock lock = new ThreadLock();
 
@@ -243,6 +240,29 @@ public class AccountManager {
                 }
             }
         });
+    }
+
+    public static LinkedList<Vehicle> getGarage() {
+        LinkedList<Vehicle> gar = userData.getGarage();
+        gar.clear();
+
+        ThreadLock lock = new ThreadLock();
+
+        DBWorkerGetterCollections dbw = new DBWorkerGetterCollections("Users/" + mAuth.getUid() + "/" + "Vehicles", lock);
+        Thread t = new Thread(dbw);
+
+        t.start();
+        lock.lockThread();
+
+        List<DocumentSnapshot> data = dbw.getData();
+
+        if (!data.isEmpty()) {
+            for (DocumentSnapshot doc : data) {
+                gar.add(DocumentConverter.toVehicle(doc.getData()));
+            }
+        }
+
+        return gar;
     }
 
     //TODO: Finish

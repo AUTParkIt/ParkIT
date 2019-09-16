@@ -2,6 +2,7 @@ package com.aut.parkit.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -9,7 +10,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
+import com.aut.parkit.Model.DatabaseManagmentSystem.Vehicle;
 import com.aut.parkit.R;
+
+import java.util.LinkedList;
 
 public class LoggedInTestActivity extends AppCompatActivity implements Updatable{
 
@@ -29,6 +33,12 @@ public class LoggedInTestActivity extends AppCompatActivity implements Updatable
                 logInView = findViewById(R.id.textView_loginActivity);
 
                 logInView.setText("Welcome " + user.getFirstName() + " " + user.getLastName());
+
+                LinkedList<Vehicle> gar = user.getGarage();
+
+                for (Vehicle v : gar){
+                    Log.i("Ve:", v.toString());
+                }
             }
         });
         t.start();
