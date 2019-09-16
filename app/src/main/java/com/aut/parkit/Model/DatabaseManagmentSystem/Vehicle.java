@@ -1,4 +1,4 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ public class Vehicle {
     public static final String KEY_NUMBERPLATE = "NumberPlate", KEY_VEHICLENAME = "VehicleName", KEY_OWNER = "Owner";
 
     public Vehicle(String numberPlate, String vehicleName, String ownerID) {
-        this.numberPlate = numberPlate;
+        this.numberPlate = numberPlate.toUpperCase();
         this.vehicleName = vehicleName;
         this.ownerID = ownerID;
     }

@@ -1,8 +1,7 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Date;
 import java.util.Map;
@@ -22,6 +21,7 @@ public class DocumentConverter {
     public static ParkingSession toParkingSession(Map<String, Object> map) {
         String sessionID;
         String userID;
+        String numberPlate;
         String parkingSpaceID;
         Date startTime;
         Date endTime;
@@ -34,7 +34,7 @@ public class DocumentConverter {
         parkingSpaceID = (String) map.get(ParkingSession.KEY_SPACEID);
         carParkID = (String) map.get(ParkingSession.KEY_CARPARKID);
         campusID = (String) map.get(ParkingSession.KEY_CAMPUSID);
-
+        numberPlate = (String) map.get(ParkingSession.KEY_NUMBERPLATE);
         startTime = ((com.google.firebase.Timestamp) map.get(ParkingSession.KEY_STARTTIME)).toDate();
         endTime = ((com.google.firebase.Timestamp) map.get(ParkingSession.KEY_ENDTIME)).toDate();
 
@@ -43,7 +43,7 @@ public class DocumentConverter {
             refundedTime = ts.toDate();
         }
 
-        ParkingSession ps = new ParkingSession(sessionID, userID, parkingSpaceID, startTime, endTime, carParkID, campusID);
+        ParkingSession ps = new ParkingSession(sessionID, userID, numberPlate, parkingSpaceID, startTime, endTime, carParkID, campusID);
 
         if (refundedTime != null) {
             ps.setRefundedTime(refundedTime);
@@ -69,15 +69,27 @@ public class DocumentConverter {
         UserData newUser = new UserData(userID, accountType);
 
         newUser.setBreachNoticeNotification(breachNoticeNotification);
-        newUser.setCurrentParkingSession(AccountManager.getParkingSession("")); //TODO: Need to allow the software to findout if the user has any current parking session that need to be gotten
+        //newUser.setCurrentParkingSession(AccountManager.getParkingSession("")); //TODO: Need to allow the software to findout if the user has any current parking session that need to be gotten
         newUser.setDefaultVehicle(AccountManager.getVehicle(defaultVehicleID));
-        newUser.setParkingRecord(AccountManager.getParkingRecord());
         newUser.setLastName(lastName);
-        newUser.setGarage(AccountManager.getGarage());
         newUser.setFirstName(firstName);
         newUser.setExpireWarningNotification(expireWarningNotification);
         newUser.setEmailAddress(emailAddress);
 
         return newUser;
+    }
+
+    public static CampusData toCampus(Map<String, Object> campus){
+        String campusID;
+        int totalSpaces, freeSpaces, maxTime;
+        float price;
+
+        campusID = (String) campus.get(CampusData.KEY_ID);
+        totalSpaces = (int) campus.get(CampusData.KEY_TOTALSPACES);
+        freeSpaces = (int) campus.get(CampusData.KEY_FREESPACES);
+        maxTime = (int) campus.get(CampusData.KEY_MAXTIME);
+        price = (float) campus.get(CampusData.KEY_PRICE);
+
+        return new CampusData(campusID, totalSpaces, freeSpaces, maxTime, price);
     }
 }

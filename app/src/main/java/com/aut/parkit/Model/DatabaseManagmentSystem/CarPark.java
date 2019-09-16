@@ -1,4 +1,4 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import android.widget.Space;
 
@@ -8,7 +8,7 @@ public class CarPark {
     private String carParkID;
     private int totalSpaces, freeSpaces;
     private LinkedList<Space> parkingSpaces;
-    private Campus campus;
+    private CampusData campusData;
 
     //TODO: Finish class
 

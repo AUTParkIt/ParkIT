@@ -1,5 +1,6 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
+import android.util.Log;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
@@ -16,18 +17,21 @@ public class DBWorkerGetter implements Runnable {
 
     public DBWorkerGetter(String location, ThreadLock locker) {
         docRef = mFStore.document(location);
+        //docRef = mFStore.collection("Users").document("Test User");
         this.locker = locker;
     }
 
     @Override
     public void run() {
-        Task<DocumentSnapshot> task = docRef.get();
+        final Task<DocumentSnapshot> task = docRef.get();
+
 
         doc = null;
         try {
             doc = Tasks.await(task);
         } catch (ExecutionException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            Log.e("Error:", e.toString());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

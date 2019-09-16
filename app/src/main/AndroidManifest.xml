@@ -14,12 +14,35 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".View.ViewVehicleTestActivity"></activity>
+        <activity android:name=".View.AddVehicleTestActivity" />
+        <activity android:name=".View.LoginTestActivity" />
+        <activity android:name=".View.LoggedInTestActivity" />
+        <activity android:name=".View.AccountCreationActivityTest" />
+        <activity android:name=".View.LoadingScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
+        <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
+        </activity>
+      
+      
+      
+        <activity android:name=".View.LoadingScreenJava" />
         <activity android:name=".GaragePopup"></activity>
         <activity android:name=".View.HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity
+		
         <activity
                 android:name="$View.TransactionScreen"
                 android:theme="@style/Transparent" />
@@ -28,12 +51,8 @@
         <activity android:name="$View.AccountCreationActivityTest" />
         <activity android:name="$View.LoadingScreenJava" />
         <activity android:name=".View.PaymentScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+		
         <activity
                 android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
                 android:launchMode="singleTask">
