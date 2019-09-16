@@ -14,7 +14,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="$View.HomeScreen">
+        <activity android:name=".GaragePopup"></activity>
+        <activity android:name=".View.HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -26,7 +27,7 @@
         <activity android:name="$View.LoggedInActivity" />
         <activity android:name="$View.AccountCreationActivityTest" />
         <activity android:name="$View.LoadingScreenJava" />
-        <activity android:name="$View.PaymentScreen">
+        <activity android:name=".View.PaymentScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

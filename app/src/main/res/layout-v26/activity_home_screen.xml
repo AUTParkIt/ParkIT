@@ -192,29 +192,4 @@
             app:layout_constraintTop_toTopOf="@+id/durationSeekbar"
             app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-            android:id="@+id/titleBarImage"
-            android:layout_width="412dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginBottom="36dp"
-            android:contentDescription="@string/titlebar"
-            app:layout_constraintBottom_toTopOf="@+id/carRegisText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/aut_triangles" />
-
-    <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/menubar"
-            app:layout_constraintBottom_toBottomOf="@+id/titleBarImage"
-            app:layout_constraintEnd_toEndOf="@+id/titleBarImage"
-            app:layout_constraintHorizontal_bias="0.954"
-            app:layout_constraintStart_toStartOf="@+id/titleBarImage"
-            app:layout_constraintTop_toTopOf="@+id/titleBarImage"
-            app:layout_constraintVertical_bias="0.642"
-            app:srcCompat="@drawable/menu_bar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
