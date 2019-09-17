@@ -2,35 +2,31 @@ package com.aut.parkit.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.aut.parkit.GaragePopup;
-import com.aut.parkit.Model.AccountManager;
+import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 
-import java.text.ParseException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 
-public class HomeScreen extends AppCompatActivity {
-    AccountManager aM = new AccountManager();
+public class HomeScreen extends AppCompatActivity implements Updatable{
     Date currentTime;
     Calendar cTime;
-    SimpleDateFormat df = new SimpleDateFormat("hh:mm aa");
+    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+    DecimalFormat df = new DecimalFormat("0.00");
+    TextView rego;
+    User user;
+    static double pay = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +35,13 @@ public class HomeScreen extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_home_screen);
 
+        rego = findViewById(R.id.carRegisText);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user = new User(HomeScreen.this);
+            }
+        }).start();
         final HoloCircleSeekBar seekBar = findViewById(R.id.durationSeekbar);
         currentTime = Calendar.getInstance().getTime();
         cTime = Calendar.getInstance();
@@ -52,58 +55,73 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onProgressChanged(HoloCircleSeekBar holoCircleSeekBar, int i, boolean b) {
                 int time;
-                double pay = i * 0.75;
-                String price = "Total: $"+pay;
+                pay = i * 0.75;
+                String price = "Total: $"+df.format(pay);
                 totalPurchase.setText(price);
                 currentTime.getTime();
                 cTime.setTime(currentTime);
+                seekBar.setMax(10);
 
-                if(currentTime.getHours() >= 14 && currentTime.getHours() < 15){
-                        seekBar.setMax(8);
+                if(currentTime.getHours() >= 13/2 && currentTime.getHours() < 14){
+                    seekBar.setMax(9);
                 }
-                else if(currentTime.getHours() >= 15 && currentTime.getHours() < 16){
+                else if(currentTime.getHours() >= 14 && currentTime.getHours() < 14/2){
+                    seekBar.setMax(8);
+                }
+                else if(currentTime.getHours() >= 14/2 && currentTime.getHours() < 15){
+                    seekBar.setMax(7);
+                }
+                else if(currentTime.getHours() >= 15 && currentTime.getHours() < 15/2){
                     seekBar.setMax(6);
                 }
-                else if(currentTime.getHours() >= 16 && currentTime.getHours() < 17){
+                else if(currentTime.getHours() >= 15/2 && currentTime.getHours() < 16){
+                    seekBar.setMax(5);
+                }
+                else if(currentTime.getHours() >= 16 && currentTime.getHours() < 16/2){
                     seekBar.setMax(4);
                 }
-                else if (currentTime.getHours() >= 17 && currentTime.getHours() < 18) {
+                else if(currentTime.getHours() >= 16/2 && currentTime.getHours() < 17){
+                    seekBar.setMax(3);
+                }
+                else if(currentTime.getHours() >= 17 && currentTime.getHours() < 17/2) {
                     seekBar.setMax(2);
                 }
-                else if(currentTime.getHours() >= 18){
-                    seekBar.setMax(0);
+                else if(currentTime.getHours() >= 17/2 && currentTime.getHours() < 18){
+                    seekBar.setMax(1);
+                }
+                else if(currentTime.getHours() >= 18 || currentTime.getDay() == 6 || currentTime.getDay() == 7){
                     String s6 = "FREE PARKING";
                     String t6 = "Free after 06:00 PM";
                     duration.setText(s6);
                     endTime.setText(t6);
+                    seekBar.setMax(0);
                     return;
                 }
 
-                if(i%2 == 1){
-                    i = i/2;
-                    time = (i*60)+30;
-                    cTime.add(Calendar.MINUTE, time);
-                    String s30 = i+"h 30m";
-                    String t30 = "Ends at: "+df.format(cTime.getTime());
-                    duration.setText(s30);
-                    endTime.setText(t30);
-                }
-                else if(i == seekBar.getMaxValue()){
+                if(i == seekBar.getMaxValue()){
                     String sMax = "ALL DAY PARKING";
                     String tMax = "Ends at: 06:00 PM";
                     duration.setText(sMax);
                     endTime.setText(tMax);
+                }
+                else if(i%2 == 1){
+                    i = i/2;
+                    time = (i*60)+30;
+                    cTime.add(Calendar.MINUTE, time);
+                    String s30 = i+"h 30m";
+                    String t30 = "Ends at: "+sdf.format(cTime.getTime());
+                    duration.setText(s30);
+                    endTime.setText(t30);
                 }
                 else{
                     i = i/2;
                     time = (i*60);
                     cTime.add(Calendar.MINUTE, time);
                     String s = i+"h";
-                    String t = "Ends at: "+df.format(cTime.getTime());
+                    String t = "Ends at: "+sdf.format(cTime.getTime());
                     duration.setText(s);
                     endTime.setText(t);
                 }
-
             }
             @Override
             public void onStartTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {}
@@ -127,5 +145,10 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
             }
         });
+    }
+
+    @Override
+    public void update() {
+        rego.setText(user.getDefaultVehicle().getNumberPlate());
     }
 }

@@ -24,7 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:max="10"
             app:pointer_color="#FFFFFF"
             app:pointer_halo_color="#FF8100"
             app:pointer_size="20dp"

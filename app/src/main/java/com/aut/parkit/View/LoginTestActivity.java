@@ -52,7 +52,7 @@ public class LoginTestActivity extends AppCompatActivity {
                 }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Intent i = new Intent(LoginTestActivity.this, LoggedInTestActivity.class);
+                        Intent i = new Intent(LoginTestActivity.this, HomeScreen.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                     }

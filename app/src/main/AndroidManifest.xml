@@ -17,7 +17,9 @@
 
         <activity android:name=".View.ViewVehicleTestActivity"></activity>
         <activity android:name=".View.AddVehicleTestActivity" />
-        <activity android:name=".View.LoginTestActivity" />
+        <activity android:name=".View.LoginTestActivity">
+        </activity>
+
         <activity android:name=".View.LoggedInTestActivity" />
         <activity android:name=".View.AccountCreationActivityTest" />
         <activity android:name=".View.LoadingScreen">
@@ -25,7 +27,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            </intent-filter>
         </activity>
 
         <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
@@ -41,7 +43,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity
+        </activity>
 		
         <activity
                 android:name="$View.TransactionScreen"
