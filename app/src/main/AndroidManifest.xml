@@ -5,6 +5,12 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <supports-screens
+            android:smallScreens="true"
+            android:normalScreens="true"
+            android:largeScreens="true"
+            android:xlargeScreens="true"/>
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -15,34 +21,27 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".View.ViewVehicleTestActivity"></activity>
         <activity android:name=".View.AddVehicleTestActivity" />
-        <activity android:name=".View.LoginTestActivity" />
-        <activity android:name=".View.LoggedInTestActivity" />
-        <activity android:name=".View.AccountCreationActivityTest" />
-
-        <activity android:name=".View.LoadingScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+        <activity android:name=".View.TransactionScreen"
+                  android:theme="@style/Transparent">
         </activity>
 
-        <activity android:name=".View.LoginScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-				</intent-filter>
+        <activity android:name=".View.LoginTestActivity">
         </activity>
-		
-        <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
+        <activity android:name=".View.LoggedInTestActivity">
         </activity>
-      
-      
-      
+        <activity android:name=".View.AccountCreationActivityTest">
+
+        </activity>
+        <activity android:name=".View.SignupScreen" android:theme="@style/Transparent">
+        </activity>
+
         <activity android:name=".View.LoadingScreenJava">
         </activity>
 
         <activity android:name=".View.PaymentScreen">
+        </activity>
+
+        <activity android:name=".View.LoginScreen" android:theme="@style/Transparent">
         </activity>
 
         <activity
@@ -51,12 +50,18 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
+                <data android:scheme="${applicationId}.braintree"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
 
-                <data android:scheme="${applicationId}.braintree"/>
-        </intent-filter>
+        <activity android:name=".View.LoadingScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
-
 </manifest>

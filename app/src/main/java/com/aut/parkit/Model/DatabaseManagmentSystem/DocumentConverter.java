@@ -21,6 +21,7 @@ public class DocumentConverter {
     public static ParkingSession toParkingSession(Map<String, Object> map) {
         String sessionID;
         String userID;
+        String numberPlate;
         String parkingSpaceID;
         Date startTime;
         Date endTime;
@@ -33,7 +34,7 @@ public class DocumentConverter {
         parkingSpaceID = (String) map.get(ParkingSession.KEY_SPACEID);
         carParkID = (String) map.get(ParkingSession.KEY_CARPARKID);
         campusID = (String) map.get(ParkingSession.KEY_CAMPUSID);
-
+        numberPlate = (String) map.get(ParkingSession.KEY_NUMBERPLATE);
         startTime = ((com.google.firebase.Timestamp) map.get(ParkingSession.KEY_STARTTIME)).toDate();
         endTime = ((com.google.firebase.Timestamp) map.get(ParkingSession.KEY_ENDTIME)).toDate();
 
@@ -42,7 +43,7 @@ public class DocumentConverter {
             refundedTime = ts.toDate();
         }
 
-        ParkingSession ps = new ParkingSession(sessionID, userID, parkingSpaceID, startTime, endTime, carParkID, campusID);
+        ParkingSession ps = new ParkingSession(sessionID, userID, numberPlate, parkingSpaceID, startTime, endTime, carParkID, campusID);
 
         if (refundedTime != null) {
             ps.setRefundedTime(refundedTime);
