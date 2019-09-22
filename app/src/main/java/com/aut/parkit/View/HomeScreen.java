@@ -45,6 +45,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         final HoloCircleSeekBar seekBar = findViewById(R.id.durationSeekbar);
         currentTime = Calendar.getInstance().getTime();
         cTime = Calendar.getInstance();
+        final int day = currentTime.getDay();
         Button change = findViewById(R.id.changeRegisBtn);
         final Button strtPark = findViewById(R.id.startParkBtn);
         final TextView endTime = findViewById(R.id.durationEndsText);
@@ -60,7 +61,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 totalPurchase.setText(price);
                 currentTime.getTime();
                 cTime.setTime(currentTime);
-                seekBar.setMax(10);
+                strtPark.setEnabled(pay > 0);
 
                 if(currentTime.getHours() >= 13/2 && currentTime.getHours() < 14){
                     seekBar.setMax(9);
@@ -89,13 +90,16 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 else if(currentTime.getHours() >= 17/2 && currentTime.getHours() < 18){
                     seekBar.setMax(1);
                 }
-                else if(currentTime.getHours() >= 18 || currentTime.getDay() == 6 || currentTime.getDay() == 7){
+                else if(currentTime.getHours() >= 18 || day == 0 || day == 6){
                     String s6 = "FREE PARKING";
                     String t6 = "Free after 06:00 PM";
                     duration.setText(s6);
                     endTime.setText(t6);
                     seekBar.setMax(0);
                     return;
+                }
+                else{
+                    seekBar.setMax(10);
                 }
 
                 if(i == seekBar.getMaxValue()){

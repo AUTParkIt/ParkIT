@@ -12,4 +12,5 @@
     <string name="_0">0</string>
     <string name="titlebar">titleBar</string>
     <string name="menubar">menuBar</string>
+    <string-array name="cars_list"></string-array>
 </resources>
