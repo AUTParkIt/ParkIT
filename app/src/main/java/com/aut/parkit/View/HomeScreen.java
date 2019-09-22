@@ -63,7 +63,10 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 cTime.setTime(currentTime);
                 strtPark.setEnabled(pay > 0);
 
-                if(currentTime.getHours() >= 13/2 && currentTime.getHours() < 14){
+                if(currentTime.getHours() <= 13){
+                    seekBar.setMax(10);
+                }
+                else if(currentTime.getHours() >= 13/2 && currentTime.getHours() < 14){
                     seekBar.setMax(9);
                 }
                 else if(currentTime.getHours() >= 14 && currentTime.getHours() < 14/2){
@@ -97,9 +100,6 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                     endTime.setText(t6);
                     seekBar.setMax(0);
                     return;
-                }
-                else{
-                    seekBar.setMax(10);
                 }
 
                 if(i == seekBar.getMaxValue()){
