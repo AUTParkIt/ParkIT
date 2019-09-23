@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">ParkIT</string>
-    <string name="actionbar">
-    </string>
+    <string name="actionbar"><font color='#ffffff'>PARK</font><font color='#000000'>IT</font></string>
     <string name="myaccount">My Account</string>
     <string name="strtprk">Start Parking</string>
     <string name="total_1_50_per_hour">Total: $1.50 per hour</string>
@@ -11,6 +10,13 @@
     <string name="change">CHANGE</string>
     <string name="_0">0</string>
     <string name="titlebar">titleBar</string>
+    <string name="search">SEARCH</string>
+    <string name="search_by_licence_plate"><font size="16">SEARCH BY LICENCE PLATE</font></string>
+    <string name="search_by_carpark_id"><font size="16">SEARCH BY CARPARK ID</font></string>
+    <string name="extend_parking">Extend Parking</string>
+    <string name="licence_plate">FUJ626</string>
+    <string name="space_number">PARKING SPACE A17</string>
+    <string name="start_new_session">START NEW SESSION</string>
     <string name="menubar">menuBar</string>
     <string-array name="cars_list"></string-array>
 </resources>

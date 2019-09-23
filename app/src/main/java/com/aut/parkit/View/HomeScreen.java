@@ -12,12 +12,10 @@ import com.aut.parkit.GaragePopup;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 
 public class HomeScreen extends AppCompatActivity implements Updatable{
     Date currentTime;

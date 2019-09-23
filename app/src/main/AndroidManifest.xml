@@ -23,6 +23,7 @@
         <activity android:name=".View.LoggedInTestActivity" />
         <activity android:name=".View.AccountCreationActivityTest" />
         <activity android:name=".View.LoadingScreen">
+        <activity android:name=".View.RemainingTimeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,9 +33,9 @@
 
         <activity android:name=".View.TransactionScreen" android:theme="@style/Transparent">
         </activity>
-      
-      
-      
+
+
+
         <activity android:name=".View.LoadingScreenJava" />
         <activity android:name=".GaragePopup"></activity>
         <activity android:name=".View.HomeScreen">
@@ -44,17 +45,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		
+        <activity android:name=".View.HomeScreen"></activity>
+        <activity android:name=".View.PeoSearchScreen" />
+        <activity android:name=".View.TestActivities.ViewVehicleTestActivity" />
+        <activity android:name=".View.TestActivities.AddVehicleTestActivity" />
+        <activity android:name=".View.TestActivities.LoginTestActivity" />
+        <activity android:name=".View.TestActivities.LoggedInTestActivity" />
+        <activity android:name=".View.TestActivities.AccountCreationActivityTest" />
+        <activity android:name=".View.LoadingScreen" />
+
         <activity
-                android:name="$View.TransactionScreen"
+                android:name=".View.TransactionScreen"
                 android:theme="@style/Transparent" />
+        <activity android:name=".View.LoadingScreenJava" />
+        <activity android:name=".View.PaymentScreen" />
         <activity android:name="$View.LoginTestActivity" />
         <activity android:name="$View.LoggedInActivity" />
         <activity android:name="$View.AccountCreationActivityTest" />
         <activity android:name="$View.LoadingScreenJava" />
         <activity android:name=".View.PaymentScreen">
         </activity>
-		
+
         <activity
                 android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
                 android:launchMode="singleTask">
