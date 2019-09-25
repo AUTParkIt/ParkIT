@@ -12,10 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.Model.DatabaseManagmentSystem.Vehicle;
 import com.aut.parkit.R;
+import com.aut.parkit.View.TestActivities.AddVehicleTestActivity;
+import com.aut.parkit.View.Updatable;
+import com.aut.parkit.View.TestActivities.ViewVehicleTestActivity;
 
 import java.util.LinkedList;
 
-public class LoggedInTestActivity extends AppCompatActivity implements Updatable{
+public class LoggedInTestActivity extends AppCompatActivity implements Updatable {
 
     private TextView logInView;
     private User user;

@@ -8,7 +8,7 @@
               android:background="#FFFFFF">
 
     <TextView
-            android:id="@+id/paymentTextView"
+            android:id="@+id/payTextView"
             android:layout_width="318dp"
             android:layout_height="83dp"
             android:textSize="25sp"

@@ -30,7 +30,7 @@ public class CarparkManager {
         return null;
     }
 
-    private CampusData getCampusFromDB(String campusID) {
+    private static CampusData getCampusFromDB(String campusID) {
         ThreadLock lock = new ThreadLock();
 
         DBWorkerGetter dbw = new DBWorkerGetter("Campus/" + campusID, lock);

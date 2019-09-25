@@ -61,7 +61,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 cTime.setTime(currentTime);
                 strtPark.setEnabled(pay > 0);
 
-                if(currentTime.getHours() <= 13){
+                if(currentTime.getHours() <= 13 && currentTime.getTime() < 13/2){
                     seekBar.setMax(10);
                 }
                 else if(currentTime.getHours() >= 13/2 && currentTime.getHours() < 14){
@@ -131,14 +131,14 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
             public void onStopTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {}
         });
 
-        change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Change Car Registration", Toast.LENGTH_SHORT);
-                toast.show();
-                startActivity(new Intent(HomeScreen.this, GaragePopup.class));
-            }
-        });
+//        change.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast toast = Toast.makeText(getApplicationContext(), "Change Car Registration", Toast.LENGTH_SHORT);
+//                toast.show();
+//                startActivity(new Intent(HomeScreen.this, GaragePopup.class));
+//            }
+//        });
         strtPark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
