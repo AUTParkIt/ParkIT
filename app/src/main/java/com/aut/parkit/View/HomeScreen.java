@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.aut.parkit.GaragePopup;
@@ -49,6 +50,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         final TextView endTime = findViewById(R.id.durationEndsText);
         final TextView totalPurchase = findViewById(R.id.totalPayText);
         final TextView duration = findViewById(R.id.valueText);
+        final EditText space = findViewById(R.id.spaceNumText);
 
         seekBar.setOnSeekBarChangeListener(new HoloCircleSeekBar.OnCircleSeekBarChangeListener() {
             @Override
@@ -59,12 +61,12 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 totalPurchase.setText(price);
                 currentTime.getTime();
                 cTime.setTime(currentTime);
-                strtPark.setEnabled(pay > 0);
+                strtPark.setEnabled(pay > 0 && !space.getText().equals(null));
 
-                if(currentTime.getHours() <= 13 && currentTime.getTime() < 13/2){
+                if(currentTime.getHours() >= 0 && currentTime.getTime() < 1/2){
                     seekBar.setMax(10);
                 }
-                else if(currentTime.getHours() >= 13/2 && currentTime.getHours() < 14){
+                else if(currentTime.getHours() >= 1/2 && currentTime.getHours() < 14){
                     seekBar.setMax(9);
                 }
                 else if(currentTime.getHours() >= 14 && currentTime.getHours() < 14/2){
@@ -131,14 +133,14 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
             public void onStopTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {}
         });
 
-//        change.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast toast = Toast.makeText(getApplicationContext(), "Change Car Registration", Toast.LENGTH_SHORT);
-//                toast.show();
-//                startActivity(new Intent(HomeScreen.this, GaragePopup.class));
-//            }
-//        });
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Change Car Registration", Toast.LENGTH_SHORT);
+                toast.show();
+                startActivity(new Intent(HomeScreen.this, GaragePopup.class));
+            }
+        });
         strtPark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,6 +149,16 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
             }
         });
+
+        if(space.getText() == null){
+            strtPark.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter parking space number", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            });
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="55dp"
+            app:max="10"
             app:end_angle="358"
             app:layout_constraintBottom_toTopOf="@+id/startParkBtn"
             app:layout_constraintEnd_toEndOf="parent"
