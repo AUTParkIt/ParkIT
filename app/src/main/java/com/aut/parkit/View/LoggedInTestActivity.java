@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.aut.parkit.Model.DatabaseManagmentSystem.CampusData;
+import com.aut.parkit.Model.DatabaseManagmentSystem.CarPark;
+import com.aut.parkit.Model.DatabaseManagmentSystem.CarparkManager;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.Model.DatabaseManagmentSystem.Vehicle;
 import com.aut.parkit.R;
@@ -19,12 +22,15 @@ public class LoggedInTestActivity extends AppCompatActivity implements Updatable
 
     private TextView logInView;
     private User user;
-    private Button AddVehicleBtn, viewVehicleBtn;
+    private Button AddVehicleBtn, viewVehicleBtn,bookButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in_test);
+
+        bookButton = findViewById(R.id.parkingSessionButton);
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -43,6 +49,23 @@ public class LoggedInTestActivity extends AppCompatActivity implements Updatable
         });
         t.start();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                LinkedList<CampusData> campus = CarparkManager.getAllCampusesFromDB();
+
+                for (CampusData c : campus) {
+                    LinkedList<CarPark> carParks = CarparkManager.getAllCarparksFromDB(c.getCampusID());
+
+                    for (CarPark cp : carParks) {
+                        Log.i(c.getCampusID(), cp.getCarParkID());
+                    }
+                }
+
+
+            }
+        }).start();
+
         this.AddVehicleBtn = findViewById(R.id.addVehicleBtn_LoggedInScreen);
         this.viewVehicleBtn = findViewById(R.id.viewVehicle_Button_loggedIn);
 
@@ -57,6 +80,13 @@ public class LoggedInTestActivity extends AppCompatActivity implements Updatable
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoggedInTestActivity.this, ViewVehicleTestActivity.class));
+            }
+        });
+
+        this.bookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
