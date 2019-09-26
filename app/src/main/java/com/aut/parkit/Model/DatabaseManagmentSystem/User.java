@@ -60,14 +60,7 @@ public class User {
     }
 
     public LinkedList<Vehicle> getGarage() {
-        try {
-            return this.userData.getGarage();
-        } catch (Exception e) {
-            this.updateUser();
-            return this.getGarage();
-        }
-
-
+            return AccountManager.getGarage();
     }
 
     public Vehicle getVehicle(String numberPlate) {

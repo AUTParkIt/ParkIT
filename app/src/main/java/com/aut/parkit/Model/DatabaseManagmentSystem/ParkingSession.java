@@ -1,6 +1,7 @@
 package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -17,13 +18,15 @@ public class ParkingSession implements Comparable<ParkingSession> {
     private boolean refunded;
     private Map<String, Object> map;
 
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     public static final String KEY_SESSIONID = "SessionID", KEY_USERID = "UserID", KEY_SPACEID = "SpaceID", KEY_STARTTIME = "StartTime",
             KEY_ENDTIME = "EndTime", KEY_REFUNDTIME = "RefundTime", KEY_CARPARKID = "CarParkID", KEY_REFUNDED = "Refunded",
             KEY_CAMPUSID = "CampusID", KEY_NUMBERPLATE = "NumberPlate";
 
-    public ParkingSession(String sessionID, String userID, String numberPlate, String parkingSpaceID, Date startTime, Date endTime, String carParkID, String campusID) {
-        this.sessionID = sessionID;
-        this.userID = userID;
+    public ParkingSession(String numberPlate, String parkingSpaceID, Date startTime, Date endTime, String carParkID, String campusID) {
+        this.sessionID = mAuth.getUid() + "-" + numberPlate+ "-"+ parkingSpaceID + "-" + startTime.toString();
+        this.userID = mAuth.getUid();
         this.numberPlate = numberPlate;
         this.parkingSpaceID = parkingSpaceID;
         this.startTime = startTime;
@@ -53,7 +56,7 @@ public class ParkingSession implements Comparable<ParkingSession> {
     }
 
     public ParkingSession clone() {
-        ParkingSession parking = new ParkingSession(this.sessionID, this.userID, this.numberPlate, this.parkingSpaceID, (Date) this.startTime.clone(), (Date) this.endTime.clone(), this.carParkID, this.campusID);
+        ParkingSession parking = new ParkingSession(this.numberPlate, this.parkingSpaceID, (Date) this.startTime.clone(), (Date) this.endTime.clone(), this.carParkID, this.campusID);
 
         if (this.refunded) {
             parking.setRefundedTime((Date) this.refundedTime.clone());

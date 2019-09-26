@@ -42,4 +42,14 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addVehicleBtn_LoggedInScreen" />
+
+    <Button
+            android:id="@+id/parkingSessionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewVehicle_Button_loggedIn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
