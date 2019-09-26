@@ -112,7 +112,7 @@ public class AccountCreationInstrimentalTest {
         Assert.assertNull(mAuth.getUid());
         enterText("Unit", "Test", "unitTest@Test.com", "ABC123", "123456", "123456");
         signUp();
-        Assert.assertNull(mAuth.getUid());
+        Assert.assertNotNull(mAuth.getUid());
     }
 
     public void signUp(){
