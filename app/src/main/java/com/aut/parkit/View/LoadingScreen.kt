@@ -15,9 +15,7 @@ class LoadingScreen : AppCompatActivity() {
         setContentView(R.layout.activity_loading_screen)
 
         val intent:Intent
-		
-        mAuth.signOut()
-		
+
         if (mAuth.uid == null){
             intent = Intent(this, LoginTestActivity::class.java)
         }

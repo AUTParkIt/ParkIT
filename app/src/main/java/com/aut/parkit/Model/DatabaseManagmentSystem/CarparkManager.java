@@ -1,5 +1,8 @@
 package com.aut.parkit.Model.DatabaseManagmentSystem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -10,6 +13,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class CarparkManager {
+    private static LinkedList<CampusData> campusData;
     private static LinkedList<CampusData> campusData = new LinkedList<>();
     private static FirebaseFirestore mFStore = FirebaseFirestore.getInstance();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -102,6 +106,7 @@ public class CarparkManager {
         }
 
         CarPark carPark = CarparkManager.getCarPark(campus.getCampusID(), carParkID);
+
         if (carPark == null){
             return null;
         }

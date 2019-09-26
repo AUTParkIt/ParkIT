@@ -16,15 +16,26 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aut.parkit.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupScreen extends AppCompatActivity
@@ -63,7 +74,7 @@ public class SignupScreen extends AppCompatActivity
         goBack = findViewById(R.id.goBack);
         myDialog = new Dialog(this);
 
-/*        goBack.setOnClickListener(new View.OnClickListener() {
+        goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -73,14 +84,73 @@ public class SignupScreen extends AppCompatActivity
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //String name, lasname, emaladd, passwrd, conpwrd, licenplat;
-//firstName,lastName, email,vehReg,password, confirmPassword;
-                final String name = firstName.getText().toString();
-                final String lasname = lastName.getText().toString();
-                final String emaladd = email.getText().toString();
-                final String passwrd = password.getText().toString();
-                final String licenplat = vehReg.getText().toString();
-                final String cPasswrd = confirmPassword.getText().toString();
+                final String name = firstName.getText().toString().trim();
+                final String lasname = lastName.getText().toString().trim();
+                final String emaladd = email.getText().toString().trim();
+                final String passwrd = password.getText().toString().trim();
+                final String licenplat = vehReg.getText().toString().toUpperCase().trim();
+                final String cPasswrd = confirmPassword.getText().toString().trim();
+
+                if (name.isEmpty()){
+                    firstName.setError("First Name Required");
+                    firstName.requestFocusFromTouch();
+                    return;
+                }
+
+                if (lasname.isEmpty()){
+                    lastName.setError("Last Name Required");
+                    lastName.requestFocusFromTouch();
+                    return;
+                }
+
+                if (emaladd.isEmpty()){
+                    email.setError("Email Required");
+                    email.requestFocusFromTouch();
+                    return;
+                }
+
+                if (passwrd.isEmpty()){
+                    password.setError("Password Required");
+                    password.requestFocusFromTouch();
+                    return;
+                }
+
+                if (passwrd.length() < 6){
+                    password.setError("Password Requires ^ Characters");
+                    password.requestFocusFromTouch();
+                    return;
+                }
+
+                if (licenplat.isEmpty()){
+                    vehReg.setError("Licence Plate Required");
+                    vehReg.requestFocusFromTouch();
+                    return;
+                }
+
+                if (cPasswrd.isEmpty()){
+                    confirmPassword.setError("Confirmation Password Required");
+                    confirmPassword.requestFocusFromTouch();
+                    return;
+                }
+
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(emaladd).matches()){
+                    email.setError("Email is invalid");
+                    email.requestFocusFromTouch();
+                    return;
+                }
+
+                if (!passwrd.contentEquals(cPasswrd)){
+                    confirmPassword.setError("Passwords do not Match");
+                    confirmPassword.requestFocusFromTouch();
+                    return;
+                }
+
+                if (!termsConditions.isChecked()){
+                    Toast.makeText(getApplicationContext(), "Please Accept the terms an conditions", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 mAuth.createUserWithEmailAndPassword(emaladd, passwrd).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -97,49 +167,28 @@ public class SignupScreen extends AppCompatActivity
                 });
 
             }
-        });*/
+        });
     }
 
- /*   private Boolean validate()                                              //completed working correctly
-    {                                                                       //TODO: pad the user input to start typing where hint starts and
-        Boolean result = false;                                             //verify correct email entry only??
-        name1 = firstName.getText().toString();                             //does confirm password require validation??
-        name2 = lastName.getText().toString();
-        mail = email.getText().toString();
-        car = vehReg.getText().toString();
-        pword1 = password.getText().toString();
-        pword2 = confirmPassword.getText().toString();
-
-        if((name1.isEmpty()) || (name2.isEmpty()) || (mail.isEmpty())
-            || (car.isEmpty())  || (pword1.isEmpty()) || (pword2.isEmpty()))
-        {
-            Toast.makeText(SignupScreen.this, "You must complete all fields", Toast.LENGTH_SHORT).show();
-        }
-        else return true;
-
-        return false;
-    }*/
-
-    /*public void clickSignUpButton(View view)                                //when user clicks the signup button then data should be sent to the database
-    {
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        signUp.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-               sendUserData();
-            }
-        });
-    }*/
-
-    /*public void sendUserData()                                             //check with above method
-    {
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference(firebaseAuth.getUid());
-        SignupUserProfile signupUserProfile = new SignupUserProfile(name1, name2, mail, car, pword1, pword2);
-        myRef.setValue(signupUserProfile);
-    }*/
+//    private Boolean validate()                                              //completed working correctly
+//    {                                                                       //TODO: pad the user input to start typing where hint starts and
+//        Boolean result = false;                                             //verify correct email entry only??
+//        name1 = firstName.getText().toString();                             //does confirm password require validation??
+//        name2 = lastName.getText().toString();
+//        mail = email.getText().toString();
+//        car = vehReg.getText().toString();
+//        pword1 = password.getText().toString();
+//        pword2 = confirmPassword.getText().toString();
+//
+//        if((name1.isEmpty()) || (name2.isEmpty()) || (mail.isEmpty())
+//            || (car.isEmpty())  || (pword1.isEmpty()) || (pword2.isEmpty()))
+//        {
+//            Toast.makeText(SignupScreen.this, "You must complete all fields", Toast.LENGTH_SHORT).show();
+//        }
+//        else return true;
+//
+//        return false;
+//    }
 
     public void spanScreenTitle()                                           //completed working correctly
     {                                                                       //only showing on emulator not on design view
@@ -185,27 +234,6 @@ public class SignupScreen extends AppCompatActivity
         });
 
         myDialog.show();
-
     }
-
-/*    public void onClick(View view)                                          //completed working correctly
-    {
-        Toast.makeText(SignupScreen.this, "Go Back to Login/SignUp Screen", Toast.LENGTH_SHORT).show();
-    }*/
-
-    /*public void returnToLogInScreen(View view)                          //check if this changes to LoginScreen
-    {
-        goBack.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                startActivity(new Intent(SignupScreen.this, LoginScreen.class));
-
-            }
-
-        });
-        //finish();
-    }*/
 
 }
