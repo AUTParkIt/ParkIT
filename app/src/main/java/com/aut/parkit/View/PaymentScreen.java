@@ -41,7 +41,7 @@ public class PaymentScreen extends AppCompatActivity{
         //TODO get payment total
         //intent.putExtra("amount", "2.00");
         TextView t1 = findViewById(R.id.payTextView);
-        String price = "Payment due: $"+hs.df.format(hs.pay);
+        String price = "PAYMENT DUE:/n$"+hs.df.format(hs.pay);
         t1.setText(price);
         intent.putExtra("Amount", t1.getText().toString());
         startActivity(intent);

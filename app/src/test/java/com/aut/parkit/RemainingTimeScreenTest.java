@@ -59,7 +59,7 @@ public class RemainingTimeScreenTest {
 
     @Test
     public void correctLicencePlateRetrieved(){
-        assertTrue(licencePlateText.getText() == "testNumberPlate");
+        Assert.assertTrue(licencePlateText.getText() == "testNumberPlate");
     }
 
     @Test

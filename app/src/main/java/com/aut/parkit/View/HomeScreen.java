@@ -56,12 +56,12 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
             @Override
             public void onProgressChanged(HoloCircleSeekBar holoCircleSeekBar, int i, boolean b) {
                 int time;
-                pay = i * 0.75;
+                paymentTotal(i,0.75);
                 String price = "Total: $"+df.format(pay);
                 totalPurchase.setText(price);
                 currentTime.getTime();
                 cTime.setTime(currentTime);
-                strtPark.setEnabled(pay > 0 && !space.getText().equals(null));
+                strtPark.setEnabled(pay > 0);
 
                 if(currentTime.getHours() >= 0 && currentTime.getTime() < 1/2){
                     seekBar.setMax(10);
@@ -150,19 +150,24 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
             }
         });
 
-        if(space.getText() == null){
-            strtPark.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter parking space number", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            });
-        }
+//        if(space.getText() == null){
+//            strtPark.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter parking space number", Toast.LENGTH_LONG);
+//                    toast.show();
+//                }
+//            });
+//        }
     }
 
     @Override
     public void update() {
         rego.setText(user.getDefaultVehicle().getNumberPlate());
+    }
+
+    public double paymentTotal (int roller, double price){
+        pay = roller * price;
+        return pay;
     }
 }
