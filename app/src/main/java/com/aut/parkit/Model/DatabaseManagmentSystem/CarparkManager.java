@@ -153,9 +153,9 @@ public class CarparkManager {
 
         parkingSpace = parkingSession.getParkingSpaceID();
 
-        StringTokenizer token = new StringTokenizer("-");
+        StringTokenizer token = new StringTokenizer(parkingSpace, "-");
 
-        campus = token.nextToken(parkingSpace);
+        campus = token.nextToken();
 
         carpark = campus + "-" + token.nextToken();
 
