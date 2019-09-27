@@ -187,15 +187,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="2dp"
-            android:text="Button"
-            app:layout_constraintEnd_toStartOf="@+id/spaceNumText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spaceNumText" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

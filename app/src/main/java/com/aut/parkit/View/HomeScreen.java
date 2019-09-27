@@ -2,6 +2,9 @@ package com.aut.parkit.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +36,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
     protected HoloCircleSeekBar seekBar;
     protected TextView rego, endTime, totalPurchase, duration;
     protected EditText space;
-    protected Button strtPark, change, but;
+    protected Button strtPark, change;
     protected User user;
     private int day, time;
     private ProgressBar loadBar;
@@ -74,7 +77,6 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         totalPurchase = findViewById(R.id.totalPayText);
         duration = findViewById(R.id.valueText);
         space = findViewById(R.id.spaceNumText);
-        but = findViewById(R.id.button2);
 
         duration.setText("$1.50 per hour");
 
@@ -176,12 +178,6 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
             }
         });
-        but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeScreen.this, MenuScreen.class));
-            }
-        });
     }
 
     @Override
@@ -193,4 +189,23 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         pay = roller * price;
         return pay;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.action_myaccount:
+                startActivity(new Intent(HomeScreen.this, MenuScreen.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }
