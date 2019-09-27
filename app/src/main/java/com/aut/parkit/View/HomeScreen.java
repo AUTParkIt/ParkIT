@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,10 +27,9 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
     protected SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
     protected DecimalFormat df = new DecimalFormat("0.00");
     protected HoloCircleSeekBar seekBar;
-    protected Spinner campusSpin, numberSpin;
     protected TextView rego, endTime, totalPurchase, duration;
     protected EditText space;
-    protected Button strtPark, change;
+    protected Button strtPark, change, but;
     protected User user;
     private int day, time;
     private ProgressBar loadBar;
@@ -72,6 +70,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         totalPurchase = findViewById(R.id.totalPayText);
         duration = findViewById(R.id.valueText);
         space = findViewById(R.id.spaceNumText);
+        but = findViewById(R.id.button2);
 
         duration.setText("$1.50 per hour");
 
@@ -84,42 +83,13 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 currentTime.getTime();
                 cTime.setTime(currentTime);
 
-//                if(currentTime.getHours() >= 6 && currentTime.getHours() < 27/2){
-//                    seekBar.setMax(10);
-//                }
-//                else if(currentTime.getHours() >= 27/2 && currentTime.getHours() < 14){
-//                    seekBar.setMax(9);
-//                }
-//                else if(currentTime.getHours() >= 14 && currentTime.getHours() < 29/2){
-//                    seekBar.setMax(8);
-//                }
-//                else if(currentTime.getHours() >= 29/2 && currentTime.getHours() < 15){
-//                    seekBar.setMax(7);
-//                }
-//                else if(currentTime.getHours() >= 15 && currentTime.getHours() < 31/2){
-//                    seekBar.setMax(6);
-//                }
-//                else if(currentTime.getHours() >= 31/2 && currentTime.getHours() < 16){
-//                    seekBar.setMax(5);
-//                }
-//                else if(currentTime.getHours() >= 16 && currentTime.getHours() < 33/2){
-//                    seekBar.setMax(4);
-//                }
-//                else if(currentTime.getHours() >= 33/2 && currentTime.getHours() < 17){
-//                    seekBar.setMax(3);
-//                }
-//                else if(currentTime.getHours() >= 17 && currentTime.getHours() < 35/2) {
-//                    seekBar.setMax(2);
-//                }
-//                else if(currentTime.getHours() >= 35/2 && currentTime.getHours() < 18){
-//                    seekBar.setMax(1);
-//                }
-
                 seekBar.setMax((18 - currentTime.getHours()) * 2);
-                if (currentTime.getMinutes() > 30){
+                if(seekBar.getMaxValue() > 10) {
+                    seekBar.setMax(10);
+                }
+                else if (currentTime.getMinutes() >= 30 && seekBar.getMaxValue() < 10 && seekBar.getMaxValue() > 0) {
                     seekBar.setMax(seekBar.getMaxValue() - 1);
                 }
-
                 else if(currentTime.getHours() >= 18 || day == 0 || day == 6){
                     String s6 = "FREE PARKING";
                     String t6 = "Free after 06:00 PM";
@@ -134,7 +104,6 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                     String tMax = "Ends at: 06:00 PM";
                     duration.setText(sMax);
                     endTime.setText(tMax);
-                    seekBar.setInitPosition(seekBar.getBaseline());
                 }
                 else if(i%2 == 1 && i != 0){
                     i = i/2;
@@ -154,6 +123,10 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                     duration.setText(s);
                     endTime.setText(t);
                 }
+                else if (i == 0){
+                    duration.setText("$1.50 per hour");
+                    endTime.setText("Loading...");
+                }
             }
             @Override
             public void onStartTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {}
@@ -164,8 +137,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Change Car Registration", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "Change Car Registration", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(HomeScreen.this, GaragePopup.class));
             }
         });
@@ -175,21 +147,16 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 if (pay == 0){
                     return;
                 }
-                Toast toast = Toast.makeText(getApplicationContext(), "Confirm Park", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "Confirm Park", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
             }
         });
-
-//        if(space.getText() == null){
-//            strtPark.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter parking space number", Toast.LENGTH_LONG);
-//                    toast.show();
-//                }
-//            });
-//        }
+        but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeScreen.this, MenuScreen.class));
+            }
+        });
     }
 
     @Override
@@ -199,11 +166,6 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
     public double paymentTotal (int roller, double price){
         pay = roller * price;
-
-        if (pay >= 7.50){
-            pay = 7.50;
-        }
-
         return pay;
     }
 }

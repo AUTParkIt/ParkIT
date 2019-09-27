@@ -20,6 +20,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".View.TAndCs"></activity>
+        <activity android:name=".View.MenuScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <activity android:name=".View.ViewVehicleTestActivity" />
         <activity android:name=".View.AddVehicleTestActivity" />
         <activity android:name=".View.LoginTestActivity" />
@@ -33,18 +39,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.UpdateDetailsScreen"/>
         <activity
                 android:name=".View.TransactionScreen"
-                android:theme="@style/Transparent"></activity>
+                android:theme="@style/Transparent" />
         <activity
                 android:name=".View.SignupScreen"
-                android:theme="@style/Transparent"></activity>
-        <activity android:name=".View.GaragePopup"></activity>
-        <activity android:name=".View.LoadingScreenJava"></activity>
-        <activity android:name=".View.PaymentScreen"></activity>
-        <activity android:name=".View.HomeScreen">
-        </activity>
-
+                android:theme="@style/Transparent" />
+        <activity android:name=".View.GaragePopup" />
+        <activity android:name=".View.LoadingScreenJava" />
+        <activity android:name=".View.PaymentScreen" />
+        <activity android:name=".View.HomeScreen" />
         <activity
                 android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
                 android:launchMode="singleTask">
@@ -58,4 +63,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

@@ -14,6 +14,7 @@
             android:layout_height="227dp"
             android:layout_marginTop="-50dp"
             android:layout_marginBottom="50dp"
+            android:alpha="0.9"
             android:contentDescription="TODO"
             app:srcCompat="@drawable/parking" />
 
@@ -24,7 +25,8 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:textSize="35sp"
+            android:textStyle="bold" />
 
     <Button
             android:id="@+id/start_parking"
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="-100dp"
+            android:alpha="0.9"
             android:background="@drawable/rounded_edges"
             android:gravity="center"
             android:onClick="onPaymentSubmit"

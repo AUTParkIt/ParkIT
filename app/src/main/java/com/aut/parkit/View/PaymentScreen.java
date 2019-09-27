@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -15,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.aut.parkit.Model.Payment.BraintreeClientToken;
 import com.aut.parkit.R;
-
-import org.w3c.dom.Text;
 
 public class PaymentScreen extends AppCompatActivity{
     HomeScreen hs = new HomeScreen();
@@ -31,7 +28,7 @@ public class PaymentScreen extends AppCompatActivity{
         token = new BraintreeClientToken();
         token.generateClientTokenfromServer();
         TextView t0 = findViewById(R.id.payTextView);
-        String pay = "Payment due: $"+hs.df.format(hs.pay);
+        String pay = "PAYMENT DUE:\n$"+hs.df.format(hs.pay);
         t0.setText(pay);
     }
 
@@ -66,7 +63,6 @@ public class PaymentScreen extends AppCompatActivity{
         if (id == R.id.action_myaccount) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

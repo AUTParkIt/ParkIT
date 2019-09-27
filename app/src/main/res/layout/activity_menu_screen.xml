@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E4DBDB"
+        tools:context=".View.MenuScreen"
+        tools:layout_editor_absoluteY="81dp">
+
+    <Button
+            android:id="@+id/myAccountBtn"
+            android:layout_width="350dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginEnd="8dp"
+            android:background=" #ff7043 "
+            android:text="     MY ACCOUNT"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.488"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+            android:id="@+id/garageBtn"
+            android:layout_width="350dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background=" #f4511e "
+            android:text="     MY GARAGE"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/payMethodBtn" />
+
+    <Button
+            android:id="@+id/payMethodBtn"
+            android:layout_width="350dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background=" #ff5722 "
+            android:text="     MY PAYMENT METHOD"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myAccountBtn" />
+
+    <Button
+            android:id="@+id/termsBtn"
+            android:layout_width="350dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background=" #e64a19 "
+            android:text="     TERMS AND CONDITIONS"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/garageBtn" />
+
+    <Button
+            android:id="@+id/logOutBtn"
+            android:layout_width="350dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background=" #d84315 "
+            android:text="     LOG OUT"
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/termsBtn" />
+</androidx.constraintlayout.widget.ConstraintLayout>
