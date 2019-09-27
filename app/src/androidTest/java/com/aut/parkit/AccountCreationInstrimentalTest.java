@@ -62,7 +62,7 @@ public class AccountCreationInstrimentalTest {
     @Test(timeout = 60000)
     public void nameNotEmailText(){
         Assert.assertNull(mAuth.getUid());
-        enterText("Unit", "Test", "unitTest.com", null, null, null);
+        enterText("Unit", "Test", "unitTest.com", "ABC123", "123456", "123456");
         signUp();
         Assert.assertNull(mAuth.getUid());
     }
