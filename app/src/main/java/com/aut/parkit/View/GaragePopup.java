@@ -56,14 +56,54 @@ public class GaragePopup extends AppCompatActivity {
                         String carName = name.getText().toString();
 
                         if (licPlate.isEmpty()){
-                            licencePlate.setError("Licence Plate Required");
-                            licencePlate.requestFocusFromTouch();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    licencePlate.setError("Licence Plate Required");
+                                    licencePlate.requestFocusFromTouch();
+                                }
+                            });
+
                             return;
                         }
 
+                        if (licPlate.length() > 6){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    licencePlate.setError("No more than 6 Characters Allowed");
+                                    licencePlate.requestFocusFromTouch();
+                                }
+                            });
+
+                            return;
+                        }
+
+                        for (char c: licPlate.toCharArray()){
+                            if (!Character.isLetterOrDigit(c)){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        licencePlate.setError("Alphanumerical Characters Only");
+                                        licencePlate.requestFocusFromTouch();
+                                    }
+                                });
+
+                                return;
+                            }
+                        }
+
+
+
                         if (gar.size() >= 5){
-                            licencePlate.setError("Maximum Cars Reached");
-                            licencePlate.requestFocusFromTouch();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    licencePlate.setError("Maximum Cars Reached");
+                                    licencePlate.requestFocusFromTouch();
+                                }
+                            });
+
                             return;
                         }
 
@@ -80,6 +120,7 @@ public class GaragePopup extends AppCompatActivity {
                             @Override
                             public void run() {
                                 setText();
+                                licencePlate.setText("");
                             }
                         });
                     }
@@ -93,25 +134,43 @@ public class GaragePopup extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String licPlate = licencePlate.getText().toString().trim().toUpperCase();
+                        final String licPlate = licencePlate.getText().toString().trim().toUpperCase();
 
                         if (licPlate.isEmpty()){
-                            licencePlate.setError("Licence Plate Required");
-                            licencePlate.requestFocusFromTouch();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    licencePlate.setError("Licence Plate Required");
+                                    licencePlate.requestFocusFromTouch();
+                                }
+                            });
+
                             return;
                         }
 
                         if (gar.size() == 1){
-                            licencePlate.setError("You must have at least one Vehicle");
-                            licencePlate.requestFocusFromTouch();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    licencePlate.setError("You must have at least one Vehicle");
+                                    licencePlate.requestFocusFromTouch();
+                                }
+                            });
+
                             return;
                         }
 
                         Vehicle v = user.getVehicle(licPlate);
 
                         if (v == null){
-                            licencePlate.setError("No Car with that Licence Plate Exists");
-                            licencePlate.requestFocusFromTouch();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    licencePlate.setError("No Car with that Licence Plate Exists");
+                                    licencePlate.requestFocusFromTouch();
+                                }
+                            });
+
                             return;
                         }
 
@@ -129,6 +188,7 @@ public class GaragePopup extends AppCompatActivity {
                             @Override
                             public void run() {
                                 setText();
+                                licencePlate.setText("");
                             }
                         });
 
