@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.aut.parkit.Model.DatabaseManagmentSystem.AccountManager;
 import com.aut.parkit.R;
+import com.aut.parkit.View.TestActivities.LoggedInTestActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
