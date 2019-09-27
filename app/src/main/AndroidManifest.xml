@@ -20,6 +20,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".View.MenuScreen"></activity>
         <activity android:name=".View.ViewVehicleTestActivity" />
         <activity android:name=".View.AddVehicleTestActivity" />
         <activity android:name=".View.LoginTestActivity" />
@@ -34,16 +35,14 @@
         </activity>
         <activity
                 android:name=".View.TransactionScreen"
-                android:theme="@style/Transparent"></activity>
+                android:theme="@style/Transparent" />
         <activity
                 android:name=".View.SignupScreen"
-                android:theme="@style/Transparent"></activity>
-        <activity android:name=".View.GaragePopup"></activity>
-        <activity android:name=".View.LoadingScreenJava"></activity>
-        <activity android:name=".View.PaymentScreen"></activity>
-        <activity android:name=".View.HomeScreen">
-        </activity>
-
+                android:theme="@style/Transparent" />
+        <activity android:name=".View.GaragePopup" />
+        <activity android:name=".View.LoadingScreenJava" />
+        <activity android:name=".View.PaymentScreen" />
+        <activity android:name=".View.HomeScreen"></activity>
         <activity
                 android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
                 android:launchMode="singleTask">
@@ -57,4 +56,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
