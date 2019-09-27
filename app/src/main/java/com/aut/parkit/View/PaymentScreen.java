@@ -30,6 +30,9 @@ public class PaymentScreen extends AppCompatActivity{
         setContentView(R.layout.activity_payment_screen);
         token = new BraintreeClientToken();
         token.generateClientTokenfromServer();
+        TextView t0 = findViewById(R.id.payTextView);
+        String pay = "Payment due: $"+hs.df.format(hs.pay);
+        t0.setText(pay);
     }
 
     public void onPaymentSubmit(View v) {
@@ -37,10 +40,10 @@ public class PaymentScreen extends AppCompatActivity{
         intent.putExtra("token", token.getClientToken());
         //TODO get payment total
         //intent.putExtra("amount", "2.00");
-        TextView t = findViewById(R.id.paymentTextView);
-        String price = "Payment due: $"+hs.df.format(hs.pay);
-        t.setText(price);
-        intent.putExtra("Amount", t.getText().toString());
+        TextView t1 = findViewById(R.id.payTextView);
+        String price = "PAYMENT DUE:\n$"+hs.df.format(hs.pay);
+        t1.setText(price);
+        intent.putExtra("Amount", t1.getText().toString());
         startActivity(intent);
     }
 

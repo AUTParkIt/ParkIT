@@ -14,7 +14,7 @@ public class BraintreeTransaction extends AppCompatActivity {
     private BraintreeInterface bInterface;
     private AsyncHttpClient client;
     private String amount;
-    //public static String testAmount = "5.00"; //TEST VALUE FOR USE IN SANDBOX ENVIRONMENT ONLY
+    public static String testAmount = "5.00"; //TEST VALUE FOR USE IN SANDBOX ENVIRONMENT ONLY
 
     public BraintreeTransaction(String paymentNonce, String amount, BraintreeInterface bInterface){
         this.paymentNonce = paymentNonce;

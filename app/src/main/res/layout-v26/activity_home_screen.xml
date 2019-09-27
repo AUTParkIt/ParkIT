@@ -16,6 +16,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="55dp"
+            app:max="10"
             app:end_angle="358"
             app:layout_constraintBottom_toTopOf="@+id/startParkBtn"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +63,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="45dp"
             android:background="#FFFFFF"
             android:backgroundTint="#FDFDFE"
             android:text="@string/change"
@@ -71,6 +72,7 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -82,7 +84,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="44dp"
+            android:layout_marginBottom="25dp"
             android:autofillHints=""
             android:background="#FFFFFF"
             android:ems="10"
@@ -105,7 +107,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="45dp"
+            android:layout_marginBottom="62dp"
             android:background="#FFFFFF"
             android:gravity="center_horizontal|center_vertical"
             android:hint="@string/car_registration"
@@ -114,6 +116,7 @@
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -172,5 +175,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/durationSeekbar"
             app:layout_constraintVertical_bias="0.777" />
+
+    <Spinner
+            android:id="@+id/campusSpinner"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+            android:id="@+id/pLotSpinner"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/campusSpinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

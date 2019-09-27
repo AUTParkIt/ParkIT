@@ -1,4 +1,4 @@
-package com.aut.parkit.View;
+package com.aut.parkit.View.TestActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,7 +50,7 @@ public class AccountCreationActivityTest extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         AccountManager.createUser(name, lasname, emaladd, licenplat);
-                        startActivity(new Intent(AccountCreationActivityTest.this, LoggedInTestActivity.class));
+                        startActivity(new Intent(AccountCreationActivityTest.this, com.aut.parkit.View.TestActivities.LoggedInTestActivity.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
