@@ -1,15 +1,18 @@
 package com.aut.parkit;
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
-import com.aut.parkit.Model.Payment.BraintreeTransaction;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import static com.lukekorth.deviceautomator.AutomatorAction.click;
 import static com.lukekorth.deviceautomator.AutomatorAction.setText;
 import static com.lukekorth.deviceautomator.AutomatorAssertion.text;
 import static com.lukekorth.deviceautomator.DeviceAutomator.onDevice;
-import static com.lukekorth.deviceautomator.UiObjectMatcher.*;
+import static com.lukekorth.deviceautomator.UiObjectMatcher.withText;
+import static com.lukekorth.deviceautomator.UiObjectMatcher.withTextContaining;
+import static com.lukekorth.deviceautomator.UiObjectMatcher.withTextStartingWith;
 import static org.hamcrest.core.StringEndsWith.endsWith;
 
 @RunWith(AndroidJUnit4ClassRunner.class)
@@ -22,7 +25,7 @@ public class PaymentInstrumentedTest {
 
     @Test(timeout = 60000)
     public void successfulCardPayment() {
-        BraintreeTransaction.testAmount = "10.00";
+       // BraintreeTransaction.testAmount = "10.00";
         onDevice(withText("Pay Now")).waitForExists().waitForEnabled().perform(click());
         onDevice(withText("Credit or Debit Card")).perform(click());
         onDevice(withText("Card Number")).perform(setText("4111111111111111"));
@@ -35,7 +38,7 @@ public class PaymentInstrumentedTest {
 
     @Test(timeout = 60000)
     public void failedCardPayment() {
-        BraintreeTransaction.testAmount = "2000.00";
+       // BraintreeTransaction.testAmount = "2000.00";
         onDevice(withText("Pay Now")).waitForExists().waitForEnabled().perform(click());
         onDevice(withText("Credit or Debit Card")).perform(click());
         onDevice(withText("Card Number")).perform(setText("4000111111111115"));
@@ -48,7 +51,7 @@ public class PaymentInstrumentedTest {
 
     @Test(timeout = 60000)
     public void successfulPaypalPayment() {
-        BraintreeTransaction.testAmount = "10.00";
+       // BraintreeTransaction.testAmount = "10.00";
         onDevice(withText("Pay Now")).waitForExists().waitForEnabled().perform(click());
         onDevice(withText("PayPal")).perform(click());
         //If testing with customer with no existing PayPal payment method stored, uncomment following line:

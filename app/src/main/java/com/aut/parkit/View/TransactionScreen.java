@@ -4,9 +4,10 @@ package com.aut.parkit.View;
 
 import android.content.Intent;
 import android.graphics.Color;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.aut.parkit.Model.Payment.BraintreeClientToken;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.aut.parkit.Model.Payment.BraintreeInterface;
 import com.aut.parkit.Model.Payment.BraintreeTransaction;
 import com.aut.parkit.R;
@@ -38,6 +39,7 @@ public class TransactionScreen extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE){
             if (resultCode == RESULT_OK){
                 DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);

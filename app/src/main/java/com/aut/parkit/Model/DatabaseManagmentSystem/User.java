@@ -1,14 +1,22 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
+import com.aut.parkit.View.Updatable;
 import java.util.Date;
 import java.util.LinkedList;
 
 public class User {
 
-    UserData userData;
+    private UserData userData;
+    private Updatable updatable;
 
     public User() {
         this.userData = AccountManager.getPartialUser(this);
+    }
+
+    public User(Updatable updatable){
+        this.updatable = updatable;
+        this.userData = AccountManager.getPartialUser(this);
+        AccountManager.addUpdatable(this.updatable);
     }
 
     public String getUserID() {
@@ -29,7 +37,7 @@ public class User {
             return this.userData.getFirstName();
         } catch (Exception e) {
             this.updateUser();
-            return this.getAccountType();
+            return this.getFirstName();
         }
     }
 
@@ -52,14 +60,7 @@ public class User {
     }
 
     public LinkedList<Vehicle> getGarage() {
-        try {
-            return this.userData.getGarage();
-        } catch (Exception e) {
-            this.updateUser();
-            return this.getGarage();
-        }
-
-
+            return AccountManager.getGarage();
     }
 
     public Vehicle getVehicle(String numberPlate) {

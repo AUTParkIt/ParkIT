@@ -1,6 +1,7 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 public class ParkingSession implements Comparable<ParkingSession> {
     private String sessionID;
     private String userID;
+    private String numberPlate;
     private String parkingSpaceID;
     private Date startTime, endTime, refundedTime;
     private String carParkID;
@@ -16,13 +18,16 @@ public class ParkingSession implements Comparable<ParkingSession> {
     private boolean refunded;
     private Map<String, Object> map;
 
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     public static final String KEY_SESSIONID = "SessionID", KEY_USERID = "UserID", KEY_SPACEID = "SpaceID", KEY_STARTTIME = "StartTime",
             KEY_ENDTIME = "EndTime", KEY_REFUNDTIME = "RefundTime", KEY_CARPARKID = "CarParkID", KEY_REFUNDED = "Refunded",
-            KEY_CAMPUSID = "CampusID";
+            KEY_CAMPUSID = "CampusID", KEY_NUMBERPLATE = "NumberPlate";
 
-    public ParkingSession(String sessionID, String userID, String parkingSpaceID, Date startTime, Date endTime, String carParkID, String campusID) {
-        this.sessionID = sessionID;
-        this.userID = userID;
+    public ParkingSession(String numberPlate, String parkingSpaceID, Date startTime, Date endTime, String carParkID, String campusID) {
+        this.sessionID = mAuth.getUid() + "-" + numberPlate+ "-"+ parkingSpaceID + "-" + startTime.toString();
+        this.userID = mAuth.getUid();
+        this.numberPlate = numberPlate;
         this.parkingSpaceID = parkingSpaceID;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -36,6 +41,7 @@ public class ParkingSession implements Comparable<ParkingSession> {
 
         this.map.put(ParkingSession.KEY_SESSIONID, this.sessionID);
         this.map.put(ParkingSession.KEY_USERID, this.userID);
+        this.map.put(ParkingSession.KEY_NUMBERPLATE, this.numberPlate);
         this.map.put(ParkingSession.KEY_CAMPUSID, this.campusID);
         this.map.put(ParkingSession.KEY_CARPARKID, this.carParkID);
         this.map.put(ParkingSession.KEY_SPACEID, this.parkingSpaceID);
@@ -50,7 +56,7 @@ public class ParkingSession implements Comparable<ParkingSession> {
     }
 
     public ParkingSession clone() {
-        ParkingSession parking = new ParkingSession(this.sessionID, this.userID, this.parkingSpaceID, (Date) this.startTime.clone(), (Date) this.endTime.clone(), this.carParkID, this.campusID);
+        ParkingSession parking = new ParkingSession(this.numberPlate, this.parkingSpaceID, (Date) this.startTime.clone(), (Date) this.endTime.clone(), this.carParkID, this.campusID);
 
         if (this.refunded) {
             parking.setRefundedTime((Date) this.refundedTime.clone());

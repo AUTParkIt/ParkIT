@@ -1,8 +1,7 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Date;
 import java.util.Map;
@@ -22,6 +21,7 @@ public class DocumentConverter {
     public static ParkingSession toParkingSession(Map<String, Object> map) {
         String sessionID;
         String userID;
+        String numberPlate;
         String parkingSpaceID;
         Date startTime;
         Date endTime;
@@ -34,7 +34,7 @@ public class DocumentConverter {
         parkingSpaceID = (String) map.get(ParkingSession.KEY_SPACEID);
         carParkID = (String) map.get(ParkingSession.KEY_CARPARKID);
         campusID = (String) map.get(ParkingSession.KEY_CAMPUSID);
-
+        numberPlate = (String) map.get(ParkingSession.KEY_NUMBERPLATE);
         startTime = ((com.google.firebase.Timestamp) map.get(ParkingSession.KEY_STARTTIME)).toDate();
         endTime = ((com.google.firebase.Timestamp) map.get(ParkingSession.KEY_ENDTIME)).toDate();
 
@@ -43,7 +43,7 @@ public class DocumentConverter {
             refundedTime = ts.toDate();
         }
 
-        ParkingSession ps = new ParkingSession(sessionID, userID, parkingSpaceID, startTime, endTime, carParkID, campusID);
+        ParkingSession ps = new ParkingSession(numberPlate, parkingSpaceID, startTime, endTime, carParkID, campusID);
 
         if (refundedTime != null) {
             ps.setRefundedTime(refundedTime);
@@ -69,15 +69,49 @@ public class DocumentConverter {
         UserData newUser = new UserData(userID, accountType);
 
         newUser.setBreachNoticeNotification(breachNoticeNotification);
-        newUser.setCurrentParkingSession(AccountManager.getParkingSession("")); //TODO: Need to allow the software to findout if the user has any current parking session that need to be gotten
+        //newUser.setCurrentParkingSession(AccountManager.getParkingSession("")); //TODO: Need to allow the software to findout if the user has any current parking session that need to be gotten
         newUser.setDefaultVehicle(AccountManager.getVehicle(defaultVehicleID));
-        newUser.setParkingRecord(AccountManager.getParkingRecord());
         newUser.setLastName(lastName);
-        newUser.setGarage(AccountManager.getGarage());
         newUser.setFirstName(firstName);
         newUser.setExpireWarningNotification(expireWarningNotification);
         newUser.setEmailAddress(emailAddress);
 
         return newUser;
+    }
+
+    public static CampusData toCampus(Map<String, Object> campus){
+        String campusID;
+        long totalSpaces, freeSpaces, maxTime;
+        double price;
+
+        campusID = (String) campus.get(CampusData.KEY_ID);
+        totalSpaces = (long) campus.get(CampusData.KEY_TOTALSPACES);
+        freeSpaces = (long) campus.get(CampusData.KEY_FREESPACES);
+        maxTime = (long) campus.get(CampusData.KEY_MAXTIME);
+        price = (double) campus.get(CampusData.KEY_PRICE);
+
+        return new CampusData(campusID, totalSpaces, freeSpaces, maxTime, price);
+    }
+
+    public  static CarPark toCarPark(Map<String, Object> carPark){
+        String carParkID, campusID;
+        long totalSpaces, freeSpaces;
+
+        carParkID = (String) carPark.get(CarPark.KEY_ID);
+        campusID = (String) carPark.get(CarPark.KEY_CAMPUSID);
+        totalSpaces = (long) carPark.get(CarPark.KEY_TOTALSPACES);
+        freeSpaces = (long) carPark.get(CarPark.KEY_FREESPACES);
+
+        return new CarPark(carParkID, totalSpaces, freeSpaces, campusID);
+    }
+
+    public static ParkingSpace toParkingSpace(Map<String, Object> parkingSpace){
+        String ID;
+        boolean booked;
+
+        ID = (String) parkingSpace.get(ParkingSpace.KEY_SPACEID);
+        booked = (boolean) parkingSpace.get(ParkingSpace.KEY_BOOKED);
+
+        return new ParkingSpace(ID, booked);
     }
 }

@@ -1,15 +1,23 @@
-package com.aut.parkit.Model;
+package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.aut.parkit.View.Updatable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class AccountManager {
@@ -18,6 +26,8 @@ public class AccountManager {
     private static Map<Object, UserData> referenceList = new HashMap<>();
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static FirebaseFirestore mFStore = FirebaseFirestore.getInstance();
+    private static boolean listening = false;
+    private static LinkedList<Updatable> updatableScreens = new LinkedList<>();
 
 
     //TODO: need to add the ability to push a parking session and update the records
@@ -68,13 +78,23 @@ public class AccountManager {
         }
     }
 
+    public static void addUpdatable(Updatable u){
+        AccountManager.updatableScreens.add(u);
+    }
+
     private static void invalidateAll(){
         for (UserData u : AccountManager.referenceList.values()) {
             u.invalidate();
             AccountManager.referenceList.remove(u);
         }
 
-        AccountManager.userData.invalidate();
+        AccountManager.updateScreens();
+    }
+
+    private static void updateScreens(){
+        for (Updatable u : AccountManager.updatableScreens){
+            u.update();
+        }
     }
 
     private static void loadUserFromDB(){
@@ -89,6 +109,9 @@ public class AccountManager {
         UserData newUser = DocumentConverter.toUser(dbw.getDoc().getData());
         userData = newUser;
 
+        if (!listening){
+            AccountManager.addListenerToUser();
+        }
     }
 
     public static void createUser(String firstName, String lastName, String emailAddress, String licencePlate){
@@ -123,15 +146,20 @@ public class AccountManager {
     }
 
     public static Vehicle getVehicle(String numberPlate){
-        Vehicle v = AccountManager.userData.getVehicle(numberPlate);
+        Vehicle v;
 
-        if (v != null){
-            return v;
+        if (AccountManager.userData != null){
+            v = AccountManager.userData.getVehicle(numberPlate.toUpperCase());
+
+            if (v != null){
+                return v;
+            }
         }
 
-        v = AccountManager.getVehicleFromDB(numberPlate);
 
-        if (v != null){
+        v = AccountManager.getVehicleFromDB(numberPlate.toUpperCase());
+
+        if (v != null && AccountManager.userData != null){
             AccountManager.userData.addVehicleToGarage(v);
             return v;
         }
@@ -142,7 +170,7 @@ public class AccountManager {
     public static void addVehicle(Vehicle v){
         AccountManager.userData.addVehicleToGarage(v);
 
-        mFStore.collection("Users").document(mAuth.getUid()).collection("Vehicles").document(v.getNumberPlate()).set(v.toMap());
+        mFStore.collection("Users").document(mAuth.getUid()).collection("Vehicles").document(mAuth.getUid()+"-"+v.getNumberPlate()).set(v.toMap());
     }
 
     public static LinkedList<ParkingSession> getParkingSession(Date date){
@@ -157,25 +185,19 @@ public class AccountManager {
         return AccountManager.getParkingSession(date);
     }
 
-    public static ParkingSession getParkingSession(String parkingSessionID){
-        return null; //TODO: Finish
-    }
-
     private static ParkingSession getParkingSessionFromDB(String parkingSessionID){
         return null; //TODO:Finish
     }
 
     public static LinkedList<ParkingSession> getParkingRecord(){
-        return AccountManager.userData.getParkingRecord();
-    }
 
-    public static LinkedList<Vehicle> getGarage(){
-        return AccountManager.userData.getGarage();
+        return AccountManager.userData.getParkingRecord();
     }
 
     private static Vehicle getVehicleFromDB(String numberPlate){
         ThreadLock lock = new ThreadLock();
-        DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid() + "/" + "Vehicle/" + numberPlate, lock);
+
+        DBWorkerGetter dbw = new DBWorkerGetter("Users/" + mAuth.getUid() + "/" + "Vehicles/" + mAuth.getUid()+"-"+numberPlate, lock);
         Thread t = new Thread(dbw);
 
         t.start();
@@ -183,11 +205,60 @@ public class AccountManager {
 
         DocumentSnapshot doc = dbw.getDoc();
 
-        return DocumentConverter.toVehicle(doc.getData());
+        if (doc.exists()) {
+            return DocumentConverter.toVehicle(doc.getData());
+        }
+
+        return null;
     }
 
     private static LinkedList<ParkingSession> getParkingSessionFromBD(Date date){
         return null; //TODO: need to impliment geting patrkingsessions from the DB and convert it to a parkingSession
+    }
+
+    private static void addListenerToUser(){
+        DocumentReference docRef = mFStore.collection("Users").document(mAuth.getUid());
+
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null){
+                    Log.e("addListenerToUser Error",e.toString());
+                    return;
+                }
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    Log.d("addListenerToUser", "Current data: " + documentSnapshot.getData());
+                    AccountManager.userData = DocumentConverter.toUser(documentSnapshot.getData());
+                    AccountManager.invalidateAll();
+                } else {
+                    Log.d("addListenerToUser", "Current data: null");
+                }
+            }
+        });
+    }
+
+    public static LinkedList<Vehicle> getGarage() {
+        LinkedList<Vehicle> gar = userData.getGarage();
+        gar.clear();
+
+        ThreadLock lock = new ThreadLock();
+
+        DBWorkerGetterCollections dbw = new DBWorkerGetterCollections("Users/" + mAuth.getUid() + "/" + "Vehicles", lock);
+        Thread t = new Thread(dbw);
+
+        t.start();
+        lock.lockThread();
+
+        List<DocumentSnapshot> data = dbw.getData();
+
+        if (!data.isEmpty()) {
+            for (DocumentSnapshot doc : data) {
+                gar.add(DocumentConverter.toVehicle(doc.getData()));
+            }
+        }
+
+        return gar;
     }
 
     //TODO: Finish
