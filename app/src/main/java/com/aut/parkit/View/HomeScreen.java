@@ -12,6 +12,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.aut.parkit.Model.DatabaseManagmentSystem.CampusData;
+import com.aut.parkit.Model.DatabaseManagmentSystem.CarPark;
+import com.aut.parkit.Model.DatabaseManagmentSystem.CarparkManager;
+import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSession;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
@@ -149,6 +153,27 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 }
                 Toast.makeText(getApplicationContext(), "Confirm Park", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CampusData cam = CarparkManager.getCampus("Manukau");
+                        Date date = new Date(System.currentTimeMillis());
+                        Date date2 = new Date(date.getTime());
+
+
+                        date2.setHours(date.getHours() + seekBar.getValue()/2);
+                        if (date.getHours() % 2 == 1){
+                            date2.setHours(date2.getHours());
+                            date2.setMinutes(30);
+                        }
+
+                        CarPark park = CarparkManager.getCarPark(cam.getCampusID(), cam.getCampusID() + "-A");
+                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), cam.getCampusID() + "-"+ park.getCarParkID() + "-1", date, date2, park.getCarParkID(), cam.getCampusID());
+                        CarparkManager.addParkingSessionToDB(session);
+                    }
+                }).start();
+
             }
         });
         but.setOnClickListener(new View.OnClickListener() {
