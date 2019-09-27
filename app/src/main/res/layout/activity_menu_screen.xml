@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EEE3E3"
+        android:background="#E4DBDB"
         tools:context=".View.MenuScreen"
         tools:layout_editor_absoluteY="81dp">
 
@@ -75,12 +75,10 @@
             android:layout_height="85dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="90dp"
             android:background=" #d84315 "
             android:text="     LOG OUT"
             android:textAlignment="textStart"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.485"
             app:layout_constraintStart_toStartOf="parent"

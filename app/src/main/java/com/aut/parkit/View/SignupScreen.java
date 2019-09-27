@@ -40,7 +40,7 @@ public class SignupScreen extends AppCompatActivity
     EditText firstName,lastName, email,vehReg,password, confirmPassword;
     CheckBox termsConditions;
     Button signUp,goBack;
-    Dialog myDialog;
+    static Dialog myDialog;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     //String name1, name2, mail, car, pword1, pword2;
 
@@ -215,7 +215,7 @@ public class SignupScreen extends AppCompatActivity
         termsConditions.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public void ShowPopUp(View view)                                        //completed working correctly
+    public static void ShowPopUp(View view)                                        //completed working correctly
     {
         TextView popupClose;
         myDialog.setContentView(R.layout.custompopup);
