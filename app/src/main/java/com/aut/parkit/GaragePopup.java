@@ -28,7 +28,6 @@ public class GaragePopup extends Activity {
         setContentView(R.layout.activity_garage_popup);
 
 
-        garage = findViewById(R.id.garageListView);
         rego = findViewById(R.id.carRegisText);
         new Thread(new Runnable() {
             @Override

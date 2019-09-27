@@ -38,7 +38,7 @@
         <activity
                 android:name=".View.SignupScreen"
                 android:theme="@style/Transparent"></activity>
-        <activity android:name=".GaragePopup"></activity>
+        <activity android:name=".View.GaragePopup"></activity>
         <activity android:name=".View.LoadingScreenJava"></activity>
         <activity android:name=".View.PaymentScreen"></activity>
         <activity android:name=".View.HomeScreen">

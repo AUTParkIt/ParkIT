@@ -1,4 +1,4 @@
-package com.aut.parkit.View.TestActivities;
+package com.aut.parkit.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.aut.parkit.R;
-import com.aut.parkit.View.HomeScreen;
-import com.aut.parkit.View.SignupScreen;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;

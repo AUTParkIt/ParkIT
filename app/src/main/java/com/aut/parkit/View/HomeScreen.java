@@ -1,19 +1,22 @@
 package com.aut.parkit.View;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.aut.parkit.GaragePopup;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,6 +34,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
     protected Button strtPark, change;
     protected User user;
     private int day, time;
+    private ProgressBar loadBar;
     static double pay = 0;
 
     @Override
@@ -41,10 +45,21 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         setContentView(R.layout.activity_home_screen);
 
         rego = findViewById(R.id.carRegisText);
+
+        loadBar = findViewById(R.id.progressBar2);
+        loadBar.setVisibility(View.VISIBLE);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 user = new User(HomeScreen.this);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadBar.setVisibility(View.GONE);
+                    }
+                });
             }
         }).start();
         seekBar = findViewById(R.id.durationSeekbar);

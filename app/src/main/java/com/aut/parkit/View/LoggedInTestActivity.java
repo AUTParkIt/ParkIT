@@ -1,4 +1,4 @@
-package com.aut.parkit.View.TestActivities;
+package com.aut.parkit.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,6 @@ import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSession;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.Model.DatabaseManagmentSystem.Vehicle;
 import com.aut.parkit.R;
-import com.aut.parkit.View.TestActivities.AddVehicleTestActivity;
-import com.aut.parkit.View.Updatable;
-import com.aut.parkit.View.TestActivities.ViewVehicleTestActivity;
 
 import java.util.Date;
 import java.util.LinkedList;

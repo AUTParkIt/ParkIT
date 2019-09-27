@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.aut.parkit.R
-import com.aut.parkit.View.TestActivities.LoggedInTestActivity
-import com.aut.parkit.View.TestActivities.LoginTestActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoadingScreen : AppCompatActivity() {
@@ -17,6 +15,8 @@ class LoadingScreen : AppCompatActivity() {
         setContentView(R.layout.activity_loading_screen)
 
         val intent:Intent
+
+        mAuth.signOut()
 
         if (mAuth.uid == null){
             intent = Intent(this, LoginTestActivity::class.java)
