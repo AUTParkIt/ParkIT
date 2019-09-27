@@ -25,6 +25,7 @@
         <activity android:name=".View.LoginTestActivity" />
         <activity android:name=".View.LoggedInTestActivity" />
         <activity android:name=".View.AccountCreationActivityTest" />
+        <activity android:name=".View.UpdateDetailsScreen" />
         <activity android:name=".View.LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

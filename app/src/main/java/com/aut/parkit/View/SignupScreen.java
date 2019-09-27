@@ -153,7 +153,7 @@ public class SignupScreen extends AppCompatActivity
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         AccountManager.createUser(name, lasname, emaladd, licenplat);
-                        startActivity(new Intent(SignupScreen.this, LoggedInTestActivity.class));
+                        startActivity(new Intent(SignupScreen.this, HomeScreen.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
