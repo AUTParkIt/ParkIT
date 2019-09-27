@@ -9,21 +9,18 @@
 
     <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
             android:id="@+id/durationSeekbar"
-            android:layout_width="277dp"
-            android:layout_height="274dp"
+            android:layout_width="311dp"
+            android:layout_height="305dp"
             android:layout_above="@+id/startParkBtn"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="55dp"
+            app:max="10"
+            app:end_angle="358"
             app:layout_constraintBottom_toTopOf="@+id/startParkBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.955"
-            app:max="300"
             app:pointer_color="#FFFFFF"
             app:pointer_halo_color="#FF8100"
             app:pointer_size="20dp"
@@ -31,7 +28,7 @@
             app:start_angle="2"
             app:text_color="#FF8100"
             app:text_size="50dp"
-            app:wheel_active_color="@drawable/wheel"
+            app:wheel_active_color="#FDAD5C"
             app:wheel_size="60"
             app:wheel_unactive_color="#A9A9A9" />
 
@@ -42,7 +39,6 @@
             android:layout_height="58dp"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_edges"
@@ -55,13 +51,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     <Button
             android:id="@+id/changeRegisBtn"
-            android:layout_width="373dp"
+            android:layout_width="350dp"
             android:layout_height="24dp"
             android:layout_above="@+id/spaceNumText"
             android:layout_below="@+id/carRegisText"
@@ -69,7 +63,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="45dp"
             android:background="#FFFFFF"
             android:backgroundTint="#FDFDFE"
             android:text="@string/change"
@@ -78,22 +72,19 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.454"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/carRegisText"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
             android:id="@+id/spaceNumText"
-            android:layout_width="372dp"
+            android:layout_width="350dp"
             android:layout_height="35dp"
             android:layout_above="@+id/durationSeekbar"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="52dp"
+            android:layout_marginBottom="25dp"
             android:autofillHints=""
             android:background="#FFFFFF"
             android:ems="10"
@@ -104,22 +95,19 @@
             android:textColor="#050505"
             app:layout_constraintBottom_toTopOf="@+id/durationSeekbar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.478"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
             android:id="@+id/carRegisText"
-            android:layout_width="373dp"
+            android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="62dp"
             android:background="#FFFFFF"
             android:gravity="center_horizontal|center_vertical"
             android:hint="@string/car_registration"
@@ -128,10 +116,8 @@
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.454"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.608" />
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
             android:id="@+id/durationEndsText"
@@ -175,32 +161,50 @@
 
     <TextView
             android:id="@+id/valueText"
-            android:layout_width="122dp"
-            android:layout_height="66dp"
+            android:layout_width="171dp"
+            android:layout_height="72dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:hint="@string/_0"
             android:textAlignment="center"
-            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/durationEndsText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/durationSeekbar"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.777" />
 
-    <ImageView
-            android:id="@+id/titleBarImage"
-            android:layout_width="412dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginBottom="40dp"
-            android:contentDescription="@string/titlebar"
-            app:layout_constraintBottom_toTopOf="@+id/carRegisText"
+    <Spinner
+            android:id="@+id/campusSpinner"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+            android:id="@+id/pLotSpinner"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/campusSpinner" />
+
+    <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="#FF5722"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/aut_triangles" />
+            app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

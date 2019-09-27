@@ -142,6 +142,10 @@ public class User {
         }
     }
 
+    public void setDefaultVehicle(Vehicle v){
+        userData.setDefaultVehicle(v);
+    }
+
     private void updateUser() {
         if (!this.userData.isPartialClone()) {
             this.userData = AccountManager.getUser(this);
@@ -149,5 +153,21 @@ public class User {
             this.userData = AccountManager.getPartialUser(this);
         }
 
+    }
+
+    public void pushUser(){
+        try {
+            AccountManager.pushModifiedUser(userData);
+        }catch (Exception e){
+            UserData oldUser = userData.clone();
+            userData = AccountManager.getUser(this);
+            try {
+                userData.setDefaultVehicle(oldUser.getDefaultVehicle());
+                this.pushUser();
+            }catch (Exception ex){
+
+            }
+
+        }
     }
 }

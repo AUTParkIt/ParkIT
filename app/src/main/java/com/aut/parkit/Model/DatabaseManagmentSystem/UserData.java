@@ -266,4 +266,6 @@ public class UserData implements Serializable {
     public void setGarage(LinkedList<Vehicle> garage){
         this.garage = garage;
     }
+
+
 }

@@ -12,13 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CampusData;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CarPark;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CarparkManager;
+import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSession;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.Model.DatabaseManagmentSystem.Vehicle;
 import com.aut.parkit.R;
 
+import java.util.Date;
 import java.util.LinkedList;
 
-public class LoggedInTestActivity extends AppCompatActivity implements Updatable{
+public class LoggedInTestActivity extends AppCompatActivity implements Updatable {
 
     private TextView logInView;
     private User user;
@@ -40,7 +42,7 @@ public class LoggedInTestActivity extends AppCompatActivity implements Updatable
 
                 logInView.setText("Welcome " + user.getFirstName() + " " + user.getLastName());
 
-                LinkedList<Vehicle> gar = user.getGarage();
+                LinkedList<Vehicle> gar = (LinkedList<Vehicle>) user.getGarage().clone();
 
                 for (Vehicle v : gar){
                     Log.i("Ve:", v.toString());
@@ -87,6 +89,19 @@ public class LoggedInTestActivity extends AppCompatActivity implements Updatable
             @Override
             public void onClick(View view) {
 
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CampusData cam = CarparkManager.getCampus("Manukau");
+                        Date date = new Date(System.currentTimeMillis());
+                        Date date2 = new Date(date.getTime());
+                        date2.setHours(date.getHours() + 4);
+                        CarPark park = CarparkManager.getCarPark(cam.getCampusID(), cam.getCampusID() + "-A");
+                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), cam.getCampusID() + "-"+ park.getCarParkID() + "-1", date, date2, park.getCarParkID(), cam.getCampusID());
+                        CarparkManager.addParkingSessionToDB(session);
+                    }
+                }).start();
             }
         });
     }

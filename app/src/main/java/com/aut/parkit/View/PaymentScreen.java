@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aut.parkit.Model.Payment.BraintreeClientToken;
 import com.aut.parkit.R;
 
-public class PaymentScreen extends AppCompatActivity{
+import org.w3c.dom.Text;
 
+public class PaymentScreen extends AppCompatActivity{
+    HomeScreen hs = new HomeScreen();
     private BraintreeClientToken token;
 
     @Override
@@ -27,6 +30,9 @@ public class PaymentScreen extends AppCompatActivity{
         setContentView(R.layout.activity_payment_screen);
         token = new BraintreeClientToken();
         token.generateClientTokenfromServer();
+        TextView t0 = findViewById(R.id.payTextView);
+        String pay = "Payment due: $"+hs.df.format(hs.pay);
+        t0.setText(pay);
     }
 
     public void onPaymentSubmit(View v) {
@@ -34,8 +40,10 @@ public class PaymentScreen extends AppCompatActivity{
         intent.putExtra("token", token.getClientToken());
         //TODO get payment total
         //intent.putExtra("amount", "2.00");
-        EditText t = findViewById(R.id.testAmount_paymentScreen);
-        intent.putExtra("amount", t.getText().toString());
+        TextView t1 = findViewById(R.id.payTextView);
+        String price = "PAYMENT DUE:\n$"+hs.df.format(hs.pay);
+        t1.setText(price);
+        intent.putExtra("Amount", t1.getText().toString());
         startActivity(intent);
     }
 

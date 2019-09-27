@@ -173,6 +173,10 @@ public class AccountManager {
         mFStore.collection("Users").document(mAuth.getUid()).collection("Vehicles").document(mAuth.getUid()+"-"+v.getNumberPlate()).set(v.toMap());
     }
 
+    public static void removeVehicle(Vehicle v){
+        mFStore.collection("Users").document(mAuth.getUid()).collection("Vehicles").document(mAuth.getUid() + "-" + v.getNumberPlate()).delete();
+    }
+
     public static LinkedList<ParkingSession> getParkingSession(Date date){
         try {
             LinkedList<ParkingSession> parkingList = AccountManager.getParkingSessionFromBD(date);
