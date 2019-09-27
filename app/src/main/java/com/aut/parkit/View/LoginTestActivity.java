@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.aut.parkit.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,6 +24,8 @@ public class LoginTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
+        getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_login_test);
 
 
@@ -52,7 +55,7 @@ public class LoginTestActivity extends AppCompatActivity {
                 }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Intent i = new Intent(LoginTestActivity.this, LoggedInTestActivity.class);
+                        Intent i = new Intent(LoginTestActivity.this, HomeScreen.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                     }

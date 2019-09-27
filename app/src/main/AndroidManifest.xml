@@ -13,13 +13,13 @@
 
     <application
             android:allowBackup="true"
+            android:fullBackupContent="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Test"></activity>
         <activity android:name=".View.ViewVehicleTestActivity" />
         <activity android:name=".View.AddVehicleTestActivity" />
         <activity android:name=".View.LoginTestActivity" />
@@ -38,9 +38,12 @@
         <activity
                 android:name=".View.SignupScreen"
                 android:theme="@style/Transparent"></activity>
+        <activity android:name=".View.GaragePopup"></activity>
         <activity android:name=".View.LoadingScreenJava"></activity>
         <activity android:name=".View.PaymentScreen"></activity>
-        <activity android:name="SignUpScreenTests.SignUpScreenUnitTest"></activity>
+        <activity android:name=".View.HomeScreen">
+        </activity>
+
         <activity
                 android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
                 android:launchMode="singleTask">

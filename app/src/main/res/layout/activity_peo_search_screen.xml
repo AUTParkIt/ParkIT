@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:background="@color/greyBackground">
+
+    <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimaryDark"
+            android:theme="?attr/actionBarTheme"
+            android:minHeight="?attr/actionBarSize" android:id="@+id/toolbar2" app:titleTextColor="@color/colorWhite"
+            app:title="SEARCH FOR PARKING STATUS" android:textAlignment="inherit" app:titleMarginStart="62dp"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:gravity="center">
+
+        <SearchView
+                android:id="@+id/enter_licence"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+
+                android:textAlignment="center"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@color/colorWhite"
+                android:background="@color/colorWhite"
+                app:iconifiedByDefault="false"
+                android:queryHint="@string/search_by_licence_plate" android:gravity="center_horizontal|top"
+                android:goIcon="@android:drawable/ic_menu_search"/>
+
+        <SearchView
+                android:id="@+id/enter_carpark"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="70dp"
+                android:textAlignment="center"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@color/colorWhite"
+                android:background="@color/colorWhite"
+                app:iconifiedByDefault="false"
+                android:queryHint="@string/search_by_carpark_id" android:gravity="center_horizontal|top"/>
+    </LinearLayout>
+
+    <!--<Button-->
+    <!--android:id="@+id/searchButton"-->
+    <!--android:layout_width="300dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:textSize="24sp"-->
+    <!--android:text="@string/search"-->
+    <!--android:textColor="@color/colorWhite"-->
+    <!--android:background="@drawable/rounded_button"-->
+    <!--/>-->
+</LinearLayout>
