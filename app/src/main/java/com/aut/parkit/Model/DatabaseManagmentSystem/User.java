@@ -1,7 +1,6 @@
 package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.aut.parkit.View.Updatable;
-
 import java.util.Date;
 import java.util.LinkedList;
 
