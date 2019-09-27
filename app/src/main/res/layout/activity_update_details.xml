@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        tools:context=".View.UpdateDetailsScreen">
+
+    <TextView
+            android:id="@+id/email"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_button"
+            android:drawableStart="@drawable/ic_mail_outline_black_24dp"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="   EMAIL"
+            android:padding="14dp"
+            android:textColorHint="#DDEEEEEE"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/editText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.615"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.92" />
+
+    <EditText
+            android:id="@+id/editText"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_button"
+            android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+            android:ems="10"
+            android:hint="   PASSWORD"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:paddingStart="10dp"
+            android:textColorHint="#DDEEEEEE"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/confirmPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.626"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.94" />
+
+    <EditText
+            android:id="@+id/confirmPassword"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_button"
+            android:ems="10"
+            android:hint="CONFIRM PASSWORD"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:textColorHint="#DDEEEEEE"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.626"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+            android:layout_width="107dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginEnd="7dp"
+            android:alpha="0.8"
+            android:background="@drawable/update_details_buttons"
+            android:text="Cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.608" />
+
+    <Button
+            android:id="@+id/button4"
+            android:layout_width="205dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="36dp"
+            android:alpha="0.8"
+            android:background="@drawable/update_details_buttons"
+            android:text="Update Account"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.607" />
+
+    <TextView
+            android:id="@+id/carImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableTop="@drawable/ic_directions_car_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.806"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.028" />
+</androidx.constraintlayout.widget.ConstraintLayout>
