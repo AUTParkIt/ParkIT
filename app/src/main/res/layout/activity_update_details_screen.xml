@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        tools:context=".View.UpdateDetailsScreen">
+
+    <TextView
+            android:id="@+id/carImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableTop="@drawable/ic_directions_car_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+            android:id="@+id/currentPassword"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="128dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_button"
+            android:ems="10"
+            android:hint="CURRENT PASSWORD"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:paddingStart="10dp"
+            android:textColorHint="#DDEEEEEE"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/newPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.626"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+            android:id="@+id/newPassword"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="184dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_button"
+            android:ems="10"
+            android:hint="NEW PASSWORD"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:paddingStart="10dp"
+            android:textColorHint="#DDEEEEEE"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/confirmNewPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.64"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.04" />
+
+    <EditText
+            android:id="@+id/confirmNewPassword"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_button"
+            android:ems="10"
+            android:hint="CONFIRM NEW PASSWORD"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:textColorHint="#DDEEEEEE"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.64"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.435" />
+
+    <Button
+            android:id="@+id/cancel"
+            android:layout_width="107dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginEnd="7dp"
+            android:alpha="0.8"
+            android:background="@drawable/update_details_buttons"
+            android:text="Cancel"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/updatePassword"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.534" />
+
+    <Button
+            android:id="@+id/updatePassword"
+            android:layout_width="205dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="36dp"
+            android:alpha="0.8"
+            android:background="@drawable/update_details_buttons"
+            android:text="Update Password"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.532" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
