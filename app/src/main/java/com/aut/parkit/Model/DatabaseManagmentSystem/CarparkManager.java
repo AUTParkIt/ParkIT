@@ -115,9 +115,9 @@ public class CarparkManager {
     public static ParkingSpace getParkingSpace(String parkingSpaceID){
         String campus, carpark;
 
-        StringTokenizer token = new StringTokenizer("-");
+        StringTokenizer token = new StringTokenizer(parkingSpaceID,"-");
 
-        campus = token.nextToken(parkingSpaceID);
+        campus = token.nextToken();
 
         carpark = campus + "-" + token.nextToken();
 

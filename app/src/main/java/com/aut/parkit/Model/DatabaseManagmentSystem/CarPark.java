@@ -30,6 +30,11 @@ public class CarPark {
     }
 
     public ParkingSpace getParkingSpace(String id){
+
+        if (this.parkingSpaces == null){
+            return null;
+        }
+
         for (ParkingSpace p: this.parkingSpaces){
             if (p.getSpaceID().contentEquals(id)){
                 return p;

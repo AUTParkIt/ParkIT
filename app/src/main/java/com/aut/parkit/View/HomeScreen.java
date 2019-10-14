@@ -22,6 +22,7 @@ import com.aut.parkit.Model.DatabaseManagmentSystem.CampusData;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CarPark;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CarparkManager;
 import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSession;
+import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSpace;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
@@ -203,6 +204,17 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                             });
                         }
 
+                        ParkingSpace pSpace = CarparkManager.getParkingSpace(cam.getCampusID() + "-" +park.getCarParkID()+ "-" + spaceNumb);
+                        if (pSpace == null){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    space.setError("Spaces does not exist");
+                                    space.requestFocusFromTouch();
+                                }
+                            });
+                        }
+
                         Date date = new Date(System.currentTimeMillis());
                         Date date2 = new Date(date.getTime());
 
@@ -213,7 +225,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                             date2.setMinutes(30);
                         }
 
-                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), park.getCarParkID()+ "-" + spaceNumb, date, date2, park.getCarParkID(), cam.getCampusID());
+                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), cam.getCampusID() + "-" +park.getCarParkID()+ "-" + spaceNumb, date, date2, park.getCarParkID(), cam.getCampusID());
                         CarparkManager.addParkingSessionToDB(session);
                     }
                 }).start();
@@ -291,10 +303,12 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
             @Override
             public void run() {
                 LinkedList<CarPark> list = CarparkManager.getAllCarparks(campus.getCampusID());
-                carList = list;
+
                 if (list.isEmpty()){
                     list = CarparkManager.getAllCarparksFromDB(campus.getCampusID());
                 }
+
+                carList = list;
 
                 String[] nameList = new String[list.size()];
 
