@@ -153,8 +153,12 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 if (pay == 0){
                     return;
                 }
-                Toast.makeText(getApplicationContext(), "Confirm Park", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
+                Toast.makeText(getApplicationContext(), "Payment system not working, getting the error \n " +
+                        "java.net.ConnectException: failed to connect to us-central1-autparkitnz.cloudfunctions.net/2404:6800:4006:805::200e (port 443) from /2001:db8:ad:0:ff:: (port 35004) after 10000ms: isConnected failed: ENETUNREACH (Network is unreachable). But our network is enabled as our database is being used so we cannot figure what the error is",
+                        Toast.LENGTH_LONG).show();
+
+
+                //startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
 
                 new Thread(new Runnable() {
                     @Override
