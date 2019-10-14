@@ -6,9 +6,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 
 public class HomeScreen extends AppCompatActivity implements Updatable{
     protected Date currentTime;
@@ -41,6 +44,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
     private int day, time;
     private ProgressBar loadBar;
     static double pay = 0;
+    private Spinner camSpin, carSpin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +57,55 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
         loadBar = findViewById(R.id.progressBar2);
         loadBar.setVisibility(View.VISIBLE);
+        camSpin = findViewById(R.id.spinner);
+        carSpin = findViewById(R.id.spinner2);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 user = new User(HomeScreen.this);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LinkedList<CampusData> list = CarparkManager.getAllCampusesFromDB();
+                        String[] nameList = new String[list.size()];
+
+                        for (int i = 0; i < list.size(); i++){
+                            nameList[i] = list.get(i).getCampusID();
+                        }
+
+                        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, nameList);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                camSpin.setAdapter(adapter);
+                            }
+                        });
+                    }
+                }).start();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LinkedList<CarPark> list = CarparkManager.getAllCarparksFromDB("Manukau");
+                        String[] nameList = new String[list.size()];
+
+                        for(int i = 0; i < list.size(); i++){
+                            nameList[i] = list.get(i).getCarParkID();
+                        }
+
+                        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, nameList);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                carSpin.setAdapter(adapter);
+                            }
+                        });
+                    }
+                }).start();
 
                 runOnUiThread(new Runnable() {
                     @Override

@@ -63,7 +63,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="44dp"
             android:background="#FFFFFF"
             android:backgroundTint="#FDFDFE"
             android:text="@string/change"
@@ -71,29 +71,6 @@
             android:textColor="#FF1A00"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.555"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-            android:id="@+id/spaceNumText"
-            android:layout_width="350dp"
-            android:layout_height="35dp"
-            android:layout_above="@+id/durationSeekbar"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="40dp"
-            android:autofillHints=""
-            android:background="#FFFFFF"
-            android:ems="10"
-            android:hint="@string/enter_space_number"
-            android:inputType="number"
-            android:maxLength="4"
-            android:textAlignment="center"
-            android:textColor="#050505"
-            app:layout_constraintBottom_toTopOf="@+id/durationSeekbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toStartOf="parent" />
@@ -107,7 +84,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="45dp"
+            android:layout_marginBottom="64dp"
             android:background="#FFFFFF"
             android:gravity="center_horizontal|center_vertical"
             android:hint="@string/car_registration"
@@ -115,6 +92,43 @@
             android:textColor="#050505"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="175dp"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
+            tools:layout_editor_absoluteX="33dp" />
+
+    <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="175dp"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/spaceNumText"
+            app:layout_constraintStart_toEndOf="@+id/spinner" />
+
+    <EditText
+            android:id="@+id/spaceNumText"
+            android:layout_width="350dp"
+            android:layout_height="35dp"
+            android:layout_above="@+id/durationSeekbar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="28dp"
+            android:autofillHints=""
+            android:background="#FFFFFF"
+            android:ems="10"
+            android:hint="@string/enter_space_number"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textAlignment="center"
+            android:textColor="#050505"
+            app:layout_constraintBottom_toTopOf="@+id/durationSeekbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toStartOf="parent" />
