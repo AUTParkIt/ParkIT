@@ -177,7 +177,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                     @Override
                     public void run() {
                         CampusData cam = camList.get(camSpin.getSelectedItemPosition());
-                        CarPark park = carList.get(camSpin.getSelectedItemPosition());
+                        CarPark park = carList.get(carSpin.getSelectedItemPosition());
 
                         String spaceNumb = space.getText().toString();
 
