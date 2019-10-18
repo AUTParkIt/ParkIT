@@ -1,5 +1,6 @@
 package com.aut.parkit.View;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +28,15 @@ import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSpace;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
+import com.paypal.android.sdk.payments.PayPalAuthorization;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalFuturePaymentActivity;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,12 +60,19 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
     private LinkedList<CampusData> camList;
     private LinkedList<CarPark> carList;
 
+    private static final String PAYPALKEY = "AbczlE1gUuUamNWlTatUfGH-GEmzSG6Etz63PoJdSH6g0pQQuL2klMts7lkwafLC1i8eUMKt3OlDrEzq", ENVIROMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
+    private static final int PAYMENT = 1, FUTUREPAYMENT = 2;
+    private static PayPalConfiguration configuration;
+    PayPalPayment thingsToBuy;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_home_screen);
+
+        configurPayPal();
 
         rego = findViewById(R.id.carRegisText);
 
@@ -159,9 +176,12 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 startActivity(new Intent(HomeScreen.this, GaragePopup.class));
             }
         });
+
+        final Activity parent = this;
         strtPark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (pay == 0){
                     Toast.makeText(getApplicationContext(), "Please Choose an amount of time",Toast.LENGTH_LONG).show();
                     return;
@@ -172,6 +192,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
 
                 //startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
+                makePayment(pay);
 
                 new Thread(new Runnable() {
                     @Override
@@ -244,6 +265,61 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
             }
         });
+    }
+
+    private void configurPayPal() {
+        configuration = new PayPalConfiguration()
+                .environment(ENVIROMENT)
+                .clientId(PAYPALKEY)
+                .merchantName("Paypal Login");
+    }
+
+    private void makePayment(double payment) {
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configuration);
+        startService(intent);
+        thingsToBuy = new PayPalPayment(new BigDecimal(String.valueOf(((payment * 1.034) + 0.43) * 0.93)), "AUD", "Payment", PayPalPayment.PAYMENT_INTENT_SALE);
+        Intent paymentAct = new Intent(this, PaymentActivity.class);
+        paymentAct.putExtra(PaymentActivity.EXTRA_PAYMENT, thingsToBuy);
+        paymentAct.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configuration);
+        startActivityForResult(paymentAct, PAYMENT);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PAYMENT){
+            if (resultCode == Activity.RESULT_OK){
+                PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+
+                if (confirm != null){
+                    try {
+                        System.out.println(confirm.toJSONObject().toString(4));
+                        System.out.println(confirm.getPayment().toJSONObject().toString(4));
+                        Toast.makeText(this, "Payment successful", Toast.LENGTH_SHORT).show();
+                    }
+                    catch (Exception e){
+                        System.out.println(e.toString());
+                    }
+                }
+            }
+            else if (resultCode == Activity.RESULT_CANCELED){
+                Toast.makeText(this, "Payment has been cancelled", Toast.LENGTH_SHORT).show();
+            }
+            else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID){
+                Toast.makeText(this, "An Error occurred", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if (resultCode == FUTUREPAYMENT){
+            if (resultCode == Activity.RESULT_OK){
+                PayPalAuthorization authorization = data.getParcelableExtra(PayPalFuturePaymentActivity.EXTRA_RESULT_AUTHORIZATION);
+                if (authorization != null){
+                    String authorisationCode = authorization.getAuthorizationCode();
+                }
+            }
+        }
     }
 
     @Override
@@ -327,6 +403,4 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
             }
         }).start();
     }
-
-
 }

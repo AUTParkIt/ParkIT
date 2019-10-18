@@ -31,6 +31,7 @@ public class CarPark {
 
     public ParkingSpace getParkingSpace(String id){
 
+
         if (this.parkingSpaces == null){
             return null;
         }

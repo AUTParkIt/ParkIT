@@ -8,7 +8,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.aut.parkit"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -65,6 +65,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'com.lukekorth:device-automator:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+
 
 }
 
