@@ -338,7 +338,9 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(getApplicationContext(), RemainingTimeScreen.class));
+                                Intent intent = new Intent(getApplicationContext(), RemainingTimeScreen.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }
                         }).start();
 

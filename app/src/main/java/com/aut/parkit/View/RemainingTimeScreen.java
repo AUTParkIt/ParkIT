@@ -1,7 +1,5 @@
 package com.aut.parkit.View;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -11,12 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSession;
+import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.Model.ParkingTimeFormatter;
 import com.aut.parkit.R;
 import com.google.firebase.Timestamp;
+
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
 
 public class RemainingTimeScreen extends AppCompatActivity {
 
@@ -30,6 +33,9 @@ public class RemainingTimeScreen extends AppCompatActivity {
     private String formattedStartTime, formattedEndTime;
     private ParkingTimeFormatter timeFormatter;
 
+    private User user;
+    private ParkingSession session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,24 +43,40 @@ public class RemainingTimeScreen extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_remaining_time_screen);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        licencePlateText = (TextView) findViewById(R.id.licence_plate);
-        parkingSpaceText = (TextView) findViewById(R.id.parking_space);
-        startTimeText = (TextView) findViewById(R.id.start_time);
-        endTimeText = (TextView) findViewById(R.id.end_time);
-        timeRemainingText = (TextView) findViewById(R.id.time_remaining);
-        session_expired = (TextView) findViewById(R.id.session_expired);
-        remainingText = (TextView) findViewById(R.id.remaining);
-        extendParking = (Button) findViewById(R.id.extend_parking);
-        startNewSession = (Button) findViewById(R.id.new_session);
+        progressBar = findViewById(R.id.progressBar);
+        licencePlateText = findViewById(R.id.licence_plate);
+        parkingSpaceText = findViewById(R.id.parking_space);
+        startTimeText = findViewById(R.id.start_time);
+        endTimeText = findViewById(R.id.end_time);
+        timeRemainingText = findViewById(R.id.time_remaining);
+        session_expired = findViewById(R.id.session_expired);
+        remainingText = findViewById(R.id.remaining);
+        extendParking = findViewById(R.id.extend_parking);
+        startNewSession = findViewById(R.id.new_session);
 
         timeFormatter = new ParkingTimeFormatter();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user = new User();
+                session = user.getCurrentParkingSession();
+
+                setLicencePlate();//
+                setParkingSpace();//
+                setStartEndTimes();//
+                setRemainingTime();//
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        startTimer();
+                    }
+                });
+            }
+        }).start();
+
         setButtonListeners();
-        setLicencePlate();
-        setParkingSpace();
-        setStartEndTimes();
-        setRemainingTime();
-        startTimer();
     }
 
     public void setButtonListeners(){
@@ -74,35 +96,73 @@ public class RemainingTimeScreen extends AppCompatActivity {
     }
 
     public void setLicencePlate(){
-        String plateNumber = "GLD620";
-        licencePlateText.setText(plateNumber);
+        //String plateNumber = "GLD620";
+        final String plateNumber = session.getNumberPlate();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                licencePlateText.setText(plateNumber);
+            }
+        });
+
     }
 
     public void setParkingSpace(){
-        String spaceId = "B17";
-        parkingSpaceText.setText("PARKING SPACE "+spaceId);
+        //String spaceId = "B17";
+        final String spaceId = session.getParkingSpaceID();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                parkingSpaceText.setText(spaceId);
+            }
+        });
+
     }
 
     public void setStartEndTimes(){
         //Generate test timestamps
-        startTimeStamp = new Timestamp(new Date());
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(startTimeStamp.getSeconds()*1000);
-        cal.add(Calendar.SECOND, 120);
-        endTimeStamp = new Timestamp(cal.getTime());
-        //End of test code
+//        startTimeStamp = new Timestamp(new Date());
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTimeInMillis(startTimeStamp.getSeconds()*1000);
+//        cal.add(Calendar.SECOND, 120);
+//        endTimeStamp = new Timestamp(cal.getTime());
+//        //End of test code
+//
+//        formattedStartTime = timeFormatter.convertTimestampToString(startTimeStamp);
+//        startTimeText.setText("Started "+formattedStartTime);
+//
+//        formattedEndTime = timeFormatter.convertTimestampToString(endTimeStamp);
+//        endTimeText.setText("Ends "+formattedEndTime);
 
+
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTimeInMillis(startTimeStamp.getSeconds()*1000);
+//        cal.add(Calendar.SECOND, 120);
+        startTimeStamp = new Timestamp(session.getStartTime());
+        endTimeStamp = new Timestamp(session.getEndTime());
         formattedStartTime = timeFormatter.convertTimestampToString(startTimeStamp);
-        startTimeText.setText("Started "+formattedStartTime);
-
         formattedEndTime = timeFormatter.convertTimestampToString(endTimeStamp);
-        endTimeText.setText("Ends "+formattedEndTime);
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                startTimeText.setText("Started "+formattedStartTime);
+                endTimeText.setText("Ends "+formattedEndTime);
+            }
+        });
     }
 
     public void setRemainingTime() {
         remainingMillis = (endTimeStamp.getSeconds() - startTimeStamp.getSeconds())*1000;
-        String remainingTime = timeFormatter.calculateRemainingTime(remainingMillis);
-        timeRemainingText.setText(remainingTime);
+        final String remainingTime = timeFormatter.calculateRemainingTime(remainingMillis);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                timeRemainingText.setText(remainingTime);
+            }
+        });
+
     }
 
     private void endParkingSession(){
