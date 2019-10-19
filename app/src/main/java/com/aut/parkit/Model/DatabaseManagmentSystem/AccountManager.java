@@ -193,6 +193,11 @@ public class AccountManager {
         return null; //TODO:Finish
     }
 
+    public static void addParkingSession(ParkingSession session){
+        AccountManager.userData.setCurrentParkingSession(session);
+        AccountManager.invalidateAll();
+    }
+
     public static LinkedList<ParkingSession> getParkingRecord(){
 
         return AccountManager.userData.getParkingRecord();

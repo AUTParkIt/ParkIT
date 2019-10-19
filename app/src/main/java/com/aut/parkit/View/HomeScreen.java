@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.aut.parkit.Model.DatabaseManagmentSystem.AccountManager;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CampusData;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CarPark;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CarparkManager;
@@ -119,13 +120,15 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 cTime.setTime(currentTime);
 
                 seekBar.setMax((18 - currentTime.getHours()) * 2);
+
                 if(seekBar.getMaxValue() > 10) {
                     seekBar.setMax(10);
                 }
                 else if (currentTime.getMinutes() >= 30 && seekBar.getMaxValue() < 10 && seekBar.getMaxValue() > 0) {
                     seekBar.setMax(seekBar.getMaxValue() - 1);
                 }
-                else if(currentTime.getHours() >= 18 || day == 0 || day == 6){
+
+                else if(currentTime.getHours() >= 18){
                     String s6 = "FREE PARKING";
                     String t6 = "Free after 06:00 PM";
                     duration.setText(s6);
@@ -133,6 +136,14 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                     seekBar.setMax(0);
                     return;
                 }
+//                else if (day == 0 || day == 6){
+//                    String s6 = "FREE PARKING";
+//                    String t6 = "Free on Weekends";
+//                    duration.setText(s6);
+//                    endTime.setText(t6);
+//                    seekBar.setMax(0);
+//                    return;
+//                }
 
                 if(i == seekBar.getMaxValue() || (currentTime.getHours() + (seekBar.getValue()/2)) >= 18 || seekBar.getValue() >= 10 ){
                     String sMax = "ALL DAY PARKING";
@@ -186,13 +197,13 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                     Toast.makeText(getApplicationContext(), "Please Choose an amount of time",Toast.LENGTH_LONG).show();
                     return;
                 }
-                Toast.makeText(getApplicationContext(), "Payment system not working, getting the error \n " +
-                        "java.net.ConnectException: failed to connect to us-central1-autparkitnz.cloudfunctions.net/2404:6800:4006:805::200e (port 443) from /2001:db8:ad:0:ff:: (port 35004) after 10000ms: isConnected failed: ENETUNREACH (Network is unreachable). But our network is enabled as our database is being used so we cannot figure what the error is",
-                        Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Payment system not working, getting the error \n " +
+                //        "java.net.ConnectException: failed to connect to us-central1-autparkitnz.cloudfunctions.net/2404:6800:4006:805::200e (port 443) from /2001:db8:ad:0:ff:: (port 35004) after 10000ms: isConnected failed: ENETUNREACH (Network is unreachable). But our network is enabled as our database is being used so we cannot figure what the error is",
+                //        Toast.LENGTH_LONG).show();
 
 
                 //startActivity(new Intent(HomeScreen.this, PaymentScreen.class));
-                makePayment(pay);
+
 
                 new Thread(new Runnable() {
                     @Override
@@ -210,6 +221,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                                     space.requestFocusFromTouch();
                                 }
                             });
+                            return;
                         }
 
                         try {
@@ -223,6 +235,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                                     space.requestFocusFromTouch();
                                 }
                             });
+                            return;
                         }
 
                         ParkingSpace pSpace = CarparkManager.getParkingSpace(cam.getCampusID() + "-" +park.getCarParkID()+ "-" + spaceNumb);
@@ -234,20 +247,23 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                                     space.requestFocusFromTouch();
                                 }
                             });
+                            return;
                         }
 
-                        Date date = new Date(System.currentTimeMillis());
-                        Date date2 = new Date(date.getTime());
+                        makePayment(pay);
 
-
-                        date2.setHours(date.getHours() + seekBar.getValue()/2);
-                        if (date.getHours() % 2 == 1){
-                            date2.setHours(date2.getHours());
-                            date2.setMinutes(30);
-                        }
-
-                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), cam.getCampusID() + "-" +park.getCarParkID()+ "-" + spaceNumb, date, date2, park.getCarParkID(), cam.getCampusID());
-                        CarparkManager.addParkingSessionToDB(session);
+//                        Date date = new Date(System.currentTimeMillis());
+//                        Date date2 = new Date(date.getTime());
+//
+//
+//                        date2.setHours(date.getHours() + seekBar.getValue()/2);
+//                        if (date.getHours() % 2 == 1){
+//                            date2.setHours(date2.getHours());
+//                            date2.setMinutes(30);
+//                        }
+//
+//                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), cam.getCampusID() + "-" +park.getCarParkID()+ "-" + spaceNumb, date, date2, park.getCarParkID(), cam.getCampusID());
+//                        CarparkManager.addParkingSessionToDB(session);
                     }
                 }).start();
 
@@ -299,6 +315,34 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                         System.out.println(confirm.toJSONObject().toString(4));
                         System.out.println(confirm.getPayment().toJSONObject().toString(4));
                         Toast.makeText(this, "Payment successful", Toast.LENGTH_SHORT).show();
+
+                        CampusData cam = camList.get(camSpin.getSelectedItemPosition());
+                        CarPark park = carList.get(camSpin.getSelectedItemPosition());
+
+                        String spaceNumb = space.getText().toString();
+
+                        Date date = new Date(System.currentTimeMillis());
+                        Date date2 = new Date(date.getTime());
+
+
+                        date2.setHours(date.getHours() + seekBar.getValue()/2);
+                        if (date.getHours() % 2 == 1){
+                            date2.setHours(date2.getHours());
+                            date2.setMinutes(30);
+                        }
+
+
+
+                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), cam.getCampusID() + "-" +park.getCarParkID()+ "-" + spaceNumb, date, date2, park.getCarParkID(), cam.getCampusID());
+                        AccountManager.addParkingSession(session);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(getApplicationContext(), RemainingTimeScreen.class));
+                            }
+                        }).start();
+
+                        CarparkManager.addParkingSessionToDB(session);
                     }
                     catch (Exception e){
                         System.out.println(e.toString());
