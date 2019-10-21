@@ -1,7 +1,13 @@
 package com.aut.parkit.View;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,9 +22,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.aut.parkit.Model.DatabaseManagmentSystem.AccountManager;
 import com.aut.parkit.Model.DatabaseManagmentSystem.CampusData;
@@ -28,6 +36,8 @@ import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSession;
 import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSpace;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -44,7 +54,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class HomeScreen extends AppCompatActivity implements Updatable{
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
+public class HomeScreen extends AppCompatActivity implements Updatable, LocationListener {
     protected Date currentTime;
     protected Calendar cTime;
     protected SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
@@ -62,9 +75,15 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
     private LinkedList<CarPark> carList;
 
     private static final String PAYPALKEY = "AbczlE1gUuUamNWlTatUfGH-GEmzSG6Etz63PoJdSH6g0pQQuL2klMts7lkwafLC1i8eUMKt3OlDrEzq", ENVIROMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
-    private static final int PAYMENT = 1, FUTUREPAYMENT = 2;
+    private static final int PAYMENT = 1, FUTUREPAYMENT = 2, LOCATIONCODE = 3;
     private static PayPalConfiguration configuration;
-    PayPalPayment thingsToBuy;
+    private PayPalPayment thingsToBuy;
+    private FusedLocationProviderClient locationClient;
+    private LocationManager locationManager;
+    private LocationListener listener;
+    private Criteria criteria;
+    private int gpsAccuractDelay = 2; //request is every 5 seconds, 5*2 = 10;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +91,20 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_home_screen);
+
+        locationClient = LocationServices.getFusedLocationProviderClient(this);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setPowerRequirement(Criteria.POWER_HIGH);
+        criteria.setAltitudeRequired(false);
+        criteria.setCostAllowed(false);
+        criteria.setBearingRequired(false);
+
+        criteria.setHorizontalAccuracy(Criteria.ACCURACY_HIGH);
+        criteria.setVerticalAccuracy(Criteria.ACCURACY_HIGH);
+        requestLocation();
 
         configurPayPal();
 
@@ -110,25 +143,25 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
         duration.setText("$1.50 per hour");
 
+
+
+
         seekBar.setOnSeekBarChangeListener(new HoloCircleSeekBar.OnCircleSeekBarChangeListener() {
             @Override
             public void onProgressChanged(HoloCircleSeekBar holoCircleSeekBar, int i, boolean b) {
-                paymentTotal(i,0.75);
-                String price = "Total: $"+df.format(pay);
+                paymentTotal(i, 0.75);
+                String price = "Total: $" + df.format(pay);
                 totalPurchase.setText(price);
                 currentTime.getTime();
                 cTime.setTime(currentTime);
 
                 seekBar.setMax((18 - currentTime.getHours()) * 2);
 
-                if(seekBar.getMaxValue() > 10) {
+                if (seekBar.getMaxValue() > 10) {
                     seekBar.setMax(10);
-                }
-                else if (currentTime.getMinutes() >= 30 && seekBar.getMaxValue() < 10 && seekBar.getMaxValue() > 0) {
+                } else if (currentTime.getMinutes() >= 30 && seekBar.getMaxValue() < 10 && seekBar.getMaxValue() > 0) {
                     seekBar.setMax(seekBar.getMaxValue() - 1);
-                }
-
-                else if(currentTime.getHours() >= 18){
+                } else if (currentTime.getHours() >= 18) {
                     String s6 = "FREE PARKING";
                     String t6 = "Free after 06:00 PM";
                     duration.setText(s6);
@@ -145,39 +178,40 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 //                    return;
 //                }
 
-                if(i == seekBar.getMaxValue() || (currentTime.getHours() + (seekBar.getValue()/2)) >= 18 || seekBar.getValue() >= 10 ){
+                if (i == seekBar.getMaxValue() || (currentTime.getHours() + (seekBar.getValue() / 2)) >= 18 || seekBar.getValue() >= 10) {
                     String sMax = "ALL DAY PARKING";
                     String tMax = "Ends at: 06:00 PM";
                     duration.setText(sMax);
                     endTime.setText(tMax);
-                }
-                else if(i%2 == 1 && i != 0){
-                    i = i/2;
-                    time = (i*60)+30;
+                } else if (i % 2 == 1 && i != 0) {
+                    i = i / 2;
+                    time = (i * 60) + 30;
                     cTime.add(Calendar.MINUTE, time);
-                    String s30 = i+"h 30m";
-                    String t30 = "Ends at: "+sdf.format(cTime.getTime());
+                    String s30 = i + "h 30m";
+                    String t30 = "Ends at: " + sdf.format(cTime.getTime());
                     duration.setText(s30);
                     endTime.setText(t30);
-                }
-                else if(i != 0){
-                    i = i/2;
-                    time = (i*60);
+                } else if (i != 0) {
+                    i = i / 2;
+                    time = (i * 60);
                     cTime.add(Calendar.MINUTE, time);
-                    String s = i+"h";
-                    String t = "Ends at: "+sdf.format(cTime.getTime());
+                    String s = i + "h";
+                    String t = "Ends at: " + sdf.format(cTime.getTime());
                     duration.setText(s);
                     endTime.setText(t);
-                }
-                else if (i == 0){
+                } else if (i == 0) {
                     duration.setText("$1.50 per hour");
                     endTime.setText("Loading...");
                 }
             }
+
             @Override
-            public void onStartTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {}
+            public void onStartTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {
+            }
+
             @Override
-            public void onStopTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {}
+            public void onStopTrackingTouch(HoloCircleSeekBar holoCircleSeekBar) {
+            }
         });
 
         change.setOnClickListener(new View.OnClickListener() {
@@ -193,8 +227,9 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
             @Override
             public void onClick(View view) {
 
-                if (pay == 0){
-                    Toast.makeText(getApplicationContext(), "Please Choose an amount of time",Toast.LENGTH_LONG).show();
+                locationManager.removeUpdates(HomeScreen.this);
+                if (pay == 0) {
+                    Toast.makeText(getApplicationContext(), "Please Choose an amount of time", Toast.LENGTH_LONG).show();
                     return;
                 }
                 //Toast.makeText(getApplicationContext(), "Payment system not working, getting the error \n " +
@@ -213,7 +248,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
                         String spaceNumb = space.getText().toString();
 
-                        if (spaceNumb.isEmpty()){
+                        if (spaceNumb.isEmpty()) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -226,8 +261,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
                         try {
                             Integer inte = Integer.getInteger(spaceNumb);
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -238,8 +272,8 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                             return;
                         }
 
-                        ParkingSpace pSpace = CarparkManager.getParkingSpace(cam.getCampusID() + "-" +park.getCarParkID()+ "-" + spaceNumb);
-                        if (pSpace == null){
+                        ParkingSpace pSpace = CarparkManager.getParkingSpace(cam.getCampusID() + "-" + park.getCarParkID() + "-" + spaceNumb);
+                        if (pSpace == null) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -306,11 +340,11 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PAYMENT){
-            if (resultCode == Activity.RESULT_OK){
+        if (requestCode == PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
                 PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
 
-                if (confirm != null){
+                if (confirm != null) {
                     try {
                         System.out.println(confirm.toJSONObject().toString(4));
                         System.out.println(confirm.getPayment().toJSONObject().toString(4));
@@ -325,15 +359,14 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                         Date date2 = new Date(date.getTime());
 
 
-                        date2.setHours(date.getHours() + seekBar.getValue()/2);
-                        if (date.getHours() % 2 == 1){
+                        date2.setHours(date.getHours() + seekBar.getValue() / 2);
+                        if (date.getHours() % 2 == 1) {
                             date2.setHours(date2.getHours());
                             date2.setMinutes(30);
                         }
 
 
-
-                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), cam.getCampusID() + "-" +park.getCarParkID()+ "-" + spaceNumb, date, date2, park.getCarParkID(), cam.getCampusID());
+                        ParkingSession session = new ParkingSession(user.getDefaultVehicle().getNumberPlate(), cam.getCampusID() + "-" + park.getCarParkID() + "-" + spaceNumb, date, date2, park.getCarParkID(), cam.getCampusID());
                         AccountManager.addParkingSession(session);
                         new Thread(new Runnable() {
                             @Override
@@ -345,23 +378,19 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                         }).start();
 
                         CarparkManager.addParkingSessionToDB(session);
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e.toString());
                     }
                 }
-            }
-            else if (resultCode == Activity.RESULT_CANCELED){
+            } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Payment has been cancelled", Toast.LENGTH_SHORT).show();
-            }
-            else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID){
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 Toast.makeText(this, "An Error occurred", Toast.LENGTH_SHORT).show();
             }
-        }
-        else if (resultCode == FUTUREPAYMENT){
-            if (resultCode == Activity.RESULT_OK){
+        } else if (resultCode == FUTUREPAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
                 PayPalAuthorization authorization = data.getParcelableExtra(PayPalFuturePaymentActivity.EXTRA_RESULT_AUTHORIZATION);
-                if (authorization != null){
+                if (authorization != null) {
                     String authorisationCode = authorization.getAuthorizationCode();
                 }
             }
@@ -373,20 +402,21 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         rego.setText(user.getDefaultVehicle().getNumberPlate());
     }
 
-    public double paymentTotal (int roller, double price){
+    public double paymentTotal(int roller, double price) {
         pay = roller * price;
         return pay;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.action_myaccount:
                 startActivity(new Intent(HomeScreen.this, MenuScreen.class));
                 return true;
@@ -395,7 +425,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         }
     }
 
-    private void populateCampusSpinner(){
+    private void populateCampusSpinner() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -403,7 +433,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                 camList = list;
                 String[] nameList = new String[list.size()];
 
-                for (int i = 0; i < list.size(); i++){
+                for (int i = 0; i < list.size(); i++) {
                     nameList[i] = list.get(i).getCampusID();
                 }
 
@@ -419,14 +449,14 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
         }).start();
     }
 
-    private void populateCarParkSpinner(String campusID){
+    private void populateCarParkSpinner(String campusID) {
         final CampusData campus = CarparkManager.getCampus(campusID);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 LinkedList<CarPark> list = CarparkManager.getAllCarparks(campus.getCampusID());
 
-                if (list.isEmpty()){
+                if (list.isEmpty()) {
                     list = CarparkManager.getAllCarparksFromDB(campus.getCampusID());
                 }
 
@@ -434,7 +464,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
 
                 String[] nameList = new String[list.size()];
 
-                for(int i = 0; i < list.size(); i++){
+                for (int i = 0; i < list.size(); i++) {
                     nameList[i] = list.get(i).getCarParkID();
                 }
 
@@ -446,7 +476,58 @@ public class HomeScreen extends AppCompatActivity implements Updatable{
                         carSpin.setAdapter(adapter);
                     }
                 });
+                chooseCarpark();
             }
         }).start();
+    }
+
+    private void chooseCarpark() {
+        if (gpsAccuractDelay > 0){
+            gpsAccuractDelay--;
+            return;
+        }
+        //TODO: Decide what carpark here;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATIONCODE){
+            requestLocation();
+        }
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+        chooseCarpark();
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
+
+    private void requestLocation(){
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            ActivityCompat.requestPermissions(HomeScreen.this, new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, LOCATIONCODE);
+            return;
+        }
+        locationManager.requestLocationUpdates(5000, 1, criteria, HomeScreen.this, HomeScreen.this.getMainLooper());
     }
 }
