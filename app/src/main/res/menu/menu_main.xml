@@ -3,9 +3,9 @@
       xmlns:tools="http://schemas.android.com/tools">
       <!--tools:context="com.example.myapplication.PaymentScreen"-->
     <item
-            android:id="@+id/action_myaccount"
+            android:id="@+id/settingsMenu"
             android:orderInCategory="101"
-            android:title="@string/myaccount"
+            android:title="SETTINGS"
             app:showAsAction="never" />
 
 </menu>
