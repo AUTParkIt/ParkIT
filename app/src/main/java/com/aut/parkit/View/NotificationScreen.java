@@ -12,12 +12,14 @@ import android.view.MenuItem;
 import android.widget.Switch;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 
-public class NotificationScreen extends RemainingTimeScreen {
-    protected Switch expire, bexpire;
+public class NotificationScreen extends AppCompatActivity {
+    protected static Switch expire, bexpire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +30,18 @@ public class NotificationScreen extends RemainingTimeScreen {
         expire = (Switch) findViewById(R.id.expireSwitch);
         bexpire = (Switch) findViewById(R.id.expireSwitch2);
 
-
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                User user = new User();
+                expire.setChecked(user.isExpireWarningNotification());
+                bexpire.setChecked(user.isBreachNoticeNotification());
+            }
+        }).start();
     }
 
     //Function creates an Expiry Notification, as to when a driver's parking session has expired
-    private void expireNotification(){
+    public void expireNotification(){
         //First build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
@@ -52,7 +60,7 @@ public class NotificationScreen extends RemainingTimeScreen {
 
     /*Function creates a Notification, that notifies the driver that their parking session is about
     to expire soon*/
-    private void beforeExpireNotification(){
+    public void beforeExpireNotification(){
         Intent intent = new Intent(this, RemainingTimeScreen.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
