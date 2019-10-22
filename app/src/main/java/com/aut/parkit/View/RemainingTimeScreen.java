@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,16 +24,16 @@ import com.google.firebase.Timestamp;
 import java.math.BigDecimal;
 
 public class RemainingTimeScreen extends AppCompatActivity {
-
-    private CountDownTimer countDownTimer;
-    private ProgressBar progressBar;
-    private TextView licencePlateText, parkingSpaceText, timeRemainingText, session_expired, remainingText, startTimeText, endTimeText;
-    private Button extendParking, startNewSession;
-    private Timestamp startTimeStamp, endTimeStamp;
-    private long remainingMillis;
-    private boolean firstTickComplete;
-    private String formattedStartTime, formattedEndTime;
-    private ParkingTimeFormatter timeFormatter;
+    NotificationScreen notify = new NotificationScreen();
+    protected CountDownTimer countDownTimer;
+    protected ProgressBar progressBar;
+    protected TextView licencePlateText, parkingSpaceText, timeRemainingText, session_expired, remainingText, startTimeText, endTimeText;
+    protected Button extendParking, startNewSession;
+    protected Timestamp startTimeStamp, endTimeStamp;
+    protected long remainingMillis;
+    protected boolean firstTickComplete;
+    protected String formattedStartTime, formattedEndTime;
+    protected ParkingTimeFormatter timeFormatter;
 
     private User user;
     private ParkingSession session;
@@ -83,6 +85,8 @@ public class RemainingTimeScreen extends AppCompatActivity {
         extendParking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Extend Parking Session", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RemainingTimeScreen.this, HomeScreen.class));
             }
         });
 
@@ -165,6 +169,10 @@ public class RemainingTimeScreen extends AppCompatActivity {
 
     }
 
+    public String getRemainingTime() {
+        return (String) timeRemainingText.getText();
+    }
+
     private void endParkingSession(){
         timeRemainingText.setVisibility(View.INVISIBLE);
         remainingText.setVisibility(View.INVISIBLE);
@@ -186,7 +194,11 @@ public class RemainingTimeScreen extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 if(!firstTickComplete) {
                     firstTickComplete = true;
-                }else{
+                }
+                else if(millisUntilFinished == 3600000 && notify.bexpire.isActivated()){
+                    notify.beforeExpireNotification();
+                }
+                else{
 
                     timeRemainingText.setText(timeFormatter.calculateRemainingTime(millisUntilFinished));
                     System.out.println(timeRemainingText.getText());
@@ -205,24 +217,19 @@ public class RemainingTimeScreen extends AppCompatActivity {
 
     //SETTINGS MENU METHODS:
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_myaccount) {
-            return true;
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.settingsMenu:
+                startActivity(new Intent(RemainingTimeScreen.this, MenuScreen.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

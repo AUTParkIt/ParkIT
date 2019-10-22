@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MenuScreen extends AppCompatActivity {
 
-    private Button myAcc, myPay, myCars, tAndCs, logOut;
+    private Button myAcc, myMap, myCars, myNot, tAndCs, logOut;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
@@ -25,8 +25,9 @@ public class MenuScreen extends AppCompatActivity {
         setContentView(R.layout.activity_menu_screen);
 
         myAcc = findViewById(R.id.myAccountBtn);
-        myPay = findViewById(R.id.payMethodBtn);
+        myMap = findViewById(R.id.mapBtn);
         myCars = findViewById(R.id.garageBtn);
+        myNot = findViewById(R.id.notifyBtn);
         tAndCs = findViewById(R.id.termsBtn);
         logOut = findViewById(R.id.logOutBtn);
 
@@ -37,7 +38,7 @@ public class MenuScreen extends AppCompatActivity {
                 startActivity(new Intent(MenuScreen.this, UpdateDetailsScreen.class));
             }
         });
-        myPay.setOnClickListener(new View.OnClickListener() {
+        myMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "View payment methods", Toast.LENGTH_SHORT).show();
@@ -49,6 +50,13 @@ public class MenuScreen extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "View my garage", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MenuScreen.this, GaragePopup.class));
+            }
+        });
+        myNot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "View my notification options", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MenuScreen.this, NotificationScreen.class));
             }
         });
         tAndCs.setOnClickListener(new View.OnClickListener() {
