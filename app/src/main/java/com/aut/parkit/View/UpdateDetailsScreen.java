@@ -4,16 +4,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 
 public class UpdateDetailsScreen extends AppCompatActivity
 {
-    EditText currentPassword, newPassword, confirmNewPassword;
-    Button cancel, update_password;
+    private EditText fName, lName;
+    Button cancel, update_details;
+    private String firstName, lastName;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,15 +27,31 @@ public class UpdateDetailsScreen extends AppCompatActivity
         setContentView(R.layout.activity_update_details_screen);
 
         setupUI();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user = new User();
+                firstName = user.getFirstName();
+                lastName = user.getLastName();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        fName.setText(firstName);
+                        lName.setText(lastName);
+                    }
+                });
+            }
+        }).start();
     }
 
     public void setupUI()
     {
-        currentPassword = findViewById(R.id.currentPassword);
-        newPassword = findViewById(R.id.newPassword);
-        confirmNewPassword = findViewById(R.id.confirmNewPassword);
+        fName = findViewById(R.id.firstNameUpdate);
+        lName = findViewById(R.id.lastNameUpdate);
         cancel = findViewById(R.id.cancel);
-        update_password = findViewById(R.id.updatePassword);
+        update_details = findViewById(R.id.updateName);
 
         cancel.setOnClickListener(new View.OnClickListener()
         {
@@ -42,67 +61,24 @@ public class UpdateDetailsScreen extends AppCompatActivity
             }
         });
 
-        update_password.setOnClickListener(new View.OnClickListener() {
+        update_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String currentPasswrd = currentPassword.getText().toString().trim();
-                final String newPasswrd = newPassword.getText().toString().trim();
-                final String cNewPasswrd = confirmNewPassword.getText().toString().trim();
+                String firName = fName.getText().toString();
+                String lasName = lName.getText().toString();
 
-                if (currentPasswrd.isEmpty())
-                {
-                    currentPassword.setError("Password Required");
-                    currentPassword.requestFocusFromTouch();
-                    return;
+                if (!firName.isEmpty()){
+                    firstName = firName;
                 }
 
-                if (currentPasswrd.length() < 6)
-                {
-                    currentPassword.setError("Password Requires ^ Characters");
-                    currentPassword.requestFocusFromTouch();
-                    return;
+                if (!lasName.isEmpty()){
+                    lastName = lasName;
                 }
 
-                if (newPasswrd.isEmpty())
-                {
-                    newPassword.setError("New Password Required");
-                    newPassword.requestFocusFromTouch();
-                    return;
-                }
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
 
-                if (newPasswrd.length() < 6)
-                {
-                    newPassword.setError("New Password Requires ^ Characters");
-                    newPassword.requestFocusFromTouch();
-                    return;
-                }
-
-                if (cNewPasswrd.isEmpty())
-                {
-                    confirmNewPassword.setError("Confirmation Password Required");
-                    confirmNewPassword.requestFocusFromTouch();
-                    return;
-                }
-
-                if (!newPasswrd.contentEquals(cNewPasswrd))
-                {
-                    confirmNewPassword.setError("Passwords do not Match");
-                    confirmNewPassword.requestFocusFromTouch();
-                    return;
-                }
-
-                if (!cancel.isPressed())
-                {
-                    Toast.makeText(getApplicationContext(), "This Feature is Not Yet Functional", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!update_password.isPressed())
-                {
-                    Toast.makeText(getApplicationContext(), "This Feature is Not Yet Functional", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
+                user.pushUser();
             }
         });
     }

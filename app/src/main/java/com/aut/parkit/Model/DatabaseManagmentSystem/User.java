@@ -1,6 +1,7 @@
 package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.aut.parkit.View.Updatable;
+
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -152,7 +153,14 @@ public class User {
         } else {
             this.userData = AccountManager.getPartialUser(this);
         }
+    }
 
+    public void setFirstName(String name){
+        this.userData.setFirstName(name);
+    }
+
+    public void setLastName(String name){
+        this.userData.setLastName(name);
     }
 
     public void pushUser(){
