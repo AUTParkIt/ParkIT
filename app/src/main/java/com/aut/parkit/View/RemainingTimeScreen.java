@@ -1,6 +1,9 @@
 package com.aut.parkit.View;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -14,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.aut.parkit.Model.DatabaseManagmentSystem.ParkingSession;
 import com.aut.parkit.Model.DatabaseManagmentSystem.User;
@@ -24,17 +29,16 @@ import com.google.firebase.Timestamp;
 import java.math.BigDecimal;
 
 public class RemainingTimeScreen extends AppCompatActivity {
-    NotificationScreen notify = new NotificationScreen();
     protected CountDownTimer countDownTimer;
     protected ProgressBar progressBar;
     protected TextView licencePlateText, parkingSpaceText, timeRemainingText, session_expired, remainingText, startTimeText, endTimeText;
     protected Button extendParking, startNewSession;
     protected Timestamp startTimeStamp, endTimeStamp;
-    protected long remainingMillis;
+    protected static long remainingMillis;
     protected boolean firstTickComplete;
     protected String formattedStartTime, formattedEndTime;
     protected ParkingTimeFormatter timeFormatter;
-
+    private String content;
     private User user;
     private ParkingSession session;
 
@@ -44,6 +48,17 @@ public class RemainingTimeScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_remaining_time_screen);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle("Parking Session")
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, builder.build());
+
 
         progressBar = findViewById(R.id.progressBar);
         licencePlateText = findViewById(R.id.licence_plate);
@@ -80,6 +95,19 @@ public class RemainingTimeScreen extends AppCompatActivity {
 
         setButtonListeners();
     }
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Parking Session Expiration";
+            String description = "Your Parking Session has expired or is about to expire. Please purchase or extend your ticket";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+    }
+
 
     public void setButtonListeners(){
         extendParking.setOnClickListener(new View.OnClickListener() {
@@ -169,10 +197,6 @@ public class RemainingTimeScreen extends AppCompatActivity {
 
     }
 
-    public String getRemainingTime() {
-        return (String) timeRemainingText.getText();
-    }
-
     private void endParkingSession(){
         timeRemainingText.setVisibility(View.INVISIBLE);
         remainingText.setVisibility(View.INVISIBLE);
@@ -195,8 +219,8 @@ public class RemainingTimeScreen extends AppCompatActivity {
                 if(!firstTickComplete) {
                     firstTickComplete = true;
                 }
-                else if(millisUntilFinished == 3600000 && notify.bexpire.isActivated()){
-                    notify.beforeExpireNotification();
+                else if(millisUntilFinished == 3540000){
+                    createNotificationChannel();
                 }
                 else{
 
