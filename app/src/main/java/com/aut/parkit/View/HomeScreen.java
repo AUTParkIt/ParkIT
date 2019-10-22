@@ -38,6 +38,7 @@ import com.aut.parkit.Model.DatabaseManagmentSystem.User;
 import com.aut.parkit.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.firestore.GeoPoint;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -476,17 +477,46 @@ public class HomeScreen extends AppCompatActivity implements Updatable, Location
                         carSpin.setAdapter(adapter);
                     }
                 });
-                chooseCarpark();
             }
         }).start();
     }
 
-    private void chooseCarpark() {
+    private void chooseCarpark(Location userLoc) {
         if (gpsAccuractDelay > 0){
             gpsAccuractDelay--;
             return;
         }
         //TODO: Decide what carpark here;
+        final Location userLocation = userLoc;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for(int i = 0; i < carList.size(); i++){
+                    CarPark carpark = carList.get(i);
+                    GeoPoint tpL = carpark.getTopLeftCorner();
+                    GeoPoint boR = carpark.getBottomRightCorner();
+
+                    double userlat =  userLocation.getLatitude();
+                    double userLong =  userLocation.getLongitude();
+
+                    if (tpL.getLatitude() > userlat && tpL.getLongitude() < userLong){
+                        if ( boR.getLatitude() < userlat && boR.getLongitude() > userLong){
+
+                            final int carparkSelection = i;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    carSpin.setSelection(carparkSelection);
+                                }
+                            });
+                            return;
+                        }
+                    }
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -499,7 +529,7 @@ public class HomeScreen extends AppCompatActivity implements Updatable, Location
 
     @Override
     public void onLocationChanged(Location location) {
-        chooseCarpark();
+        chooseCarpark(location);
     }
 
     @Override

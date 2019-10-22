@@ -2,6 +2,7 @@ package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Date;
 import java.util.Map;
@@ -96,13 +97,16 @@ public class DocumentConverter {
     public  static CarPark toCarPark(Map<String, Object> carPark){
         String carParkID, campusID;
         long totalSpaces, freeSpaces;
+        GeoPoint tPLfC, bRc;
 
         carParkID = (String) carPark.get(CarPark.KEY_ID);
         campusID = (String) carPark.get(CarPark.KEY_CAMPUSID);
         totalSpaces = (long) carPark.get(CarPark.KEY_TOTALSPACES);
         freeSpaces = (long) carPark.get(CarPark.KEY_FREESPACES);
+        tPLfC = (GeoPoint) carPark.get(CarPark.KEY_TOPLEFT);
+        bRc = (GeoPoint) carPark.get(CarPark.KEY_BOTTOMRIGHT);
 
-        return new CarPark(carParkID, totalSpaces, freeSpaces, campusID);
+        return new CarPark(carParkID, totalSpaces, freeSpaces, campusID, tPLfC, bRc);
     }
 
     public static ParkingSpace toParkingSpace(Map<String, Object> parkingSpace){
