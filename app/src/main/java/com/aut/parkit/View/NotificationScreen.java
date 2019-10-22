@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Switch;
 
 import androidx.appcompat.app.ActionBar;
@@ -73,5 +76,21 @@ public class NotificationScreen extends RemainingTimeScreen {
         builder.setContentIntent(homeContentIntent);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.settingsMenu:
+                startActivity(new Intent(NotificationScreen.this, MenuScreen.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
