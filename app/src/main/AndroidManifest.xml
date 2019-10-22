@@ -9,8 +9,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+
+    <uses-feature
+            android:name="android.hardware.camera"
+            android:required="false" />
+    <uses-feature
+            android:name="android.hardware.camera.autofocus"
+            android:required="false" />
 
     <supports-screens
             android:largeScreens="true"
@@ -27,6 +32,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".View.ViewEmptySpace"></activity>
         <activity android:name=".View.NotificationScreen"></activity>
         <activity android:name=".View.TAndCs" />
         <activity android:name=".View.MenuScreen">
@@ -71,7 +77,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.paypal.android.sdk.payments.PayPalService" android:exported="false" />
+        <service
+                android:name="com.paypal.android.sdk.payments.PayPalService"
+                android:exported="false" />
         <service android:name="com.paypal.android.sdk.payments.PaymentActivity" />
         <service android:name="com.paypal.android.sdk.payments.LoginActivity" />
         <service android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />

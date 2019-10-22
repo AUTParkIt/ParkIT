@@ -421,6 +421,13 @@ public class HomeScreen extends AppCompatActivity implements Updatable, Location
             case R.id.settingsMenu:
                 startActivity(new Intent(HomeScreen.this, MenuScreen.class));
                 return true;
+
+            case R.id.CarparkItemMenu:
+                Intent intent = new Intent(HomeScreen.this, ViewEmptySpace.class);
+                CampusData cam = camList.get(camSpin.getSelectedItemPosition());
+                intent.putExtra(ViewEmptySpace.CampusKey, cam.getCampusID());
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
