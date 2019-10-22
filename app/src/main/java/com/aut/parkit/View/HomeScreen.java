@@ -416,9 +416,9 @@ public class HomeScreen extends AppCompatActivity implements Updatable, Location
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_myaccount:
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.settingsMenu:
                 startActivity(new Intent(HomeScreen.this, MenuScreen.class));
                 return true;
             default:

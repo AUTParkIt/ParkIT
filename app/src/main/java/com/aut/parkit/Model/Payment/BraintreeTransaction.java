@@ -2,6 +2,8 @@ package com.aut.parkit.Model.Payment;
 
 //Class for creating a Braintree payment transaction.
 //Payment nonce is sent to Braintree's server via cloud functions to authorise & initialise payment
+// Note: a nonce is a temporary reference to payment information, in which allows the server to
+//       communicate sensitive payment information to Braintree
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.loopj.android.http.*;
@@ -25,17 +27,20 @@ public class BraintreeTransaction extends AppCompatActivity {
     }
 
     public void setUrl(String url){
-        this.url = url;
+        if(url != null){
+            this.url = url;
+        }
     }
 
     public void setClient(AsyncHttpClient client){
-        this.client = client;
+        if(client != null){
+            this.client = client;
+        }
     }
 
     public void createTransaction(){
         RequestParams params = new RequestParams();
         params.put("payment_method_nonce", paymentNonce);
-        //TODO change to 'testAmount' to 'amount' variable when payment screen complete
         params.put("amount", amount);
         client.post(url, params, new TextHttpResponseHandler() {
             @Override

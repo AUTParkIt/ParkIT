@@ -28,6 +28,22 @@
             app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="113dp"
+                app:srcCompat="@drawable/car" />
+
+        <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <TextView
                 android:id="@+id/carTView1"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
@@ -73,7 +89,6 @@
                     android:id="@+id/carName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="56dp"
                     android:ems="10"
                     android:hint="Name (Optional)"
                     android:inputType="textPersonName"
@@ -98,7 +113,9 @@
                     android:id="@+id/addButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edges"
                     android:text="Add"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.263"
@@ -110,7 +127,9 @@
                     android:id="@+id/removeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edges"
                     android:text="Remove"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.493"
