@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +16,9 @@ public class UpdateDetailsScreen extends AppCompatActivity
 {
     private EditText fName, lName;
     Button cancel, update_details;
-    private String firstName, lastName;
+    private String firstName, lastName, email;
     private User user;
+    private TextView fstName, lstName, userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,6 +27,9 @@ public class UpdateDetailsScreen extends AppCompatActivity
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_update_details_screen);
+        fstName = findViewById(R.id.fNameText);
+        lstName = findViewById(R.id.lNameText);
+        userEmail = findViewById(R.id.emailText);
 
         setupUI();
 
@@ -34,12 +39,16 @@ public class UpdateDetailsScreen extends AppCompatActivity
                 user = new User();
                 firstName = user.getFirstName();
                 lastName = user.getLastName();
+                email = user.getEmailAddress();
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         fName.setText(firstName);
                         lName.setText(lastName);
+                        fstName.setText(firstName);
+                        lstName.setText(lastName);
+                        userEmail.setText(email);
                     }
                 });
             }
