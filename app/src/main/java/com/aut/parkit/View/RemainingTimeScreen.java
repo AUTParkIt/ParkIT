@@ -1,7 +1,5 @@
 package com.aut.parkit.View;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -11,24 +9,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.aut.parkit.Model.ParkingTimeFormatter;
 import com.aut.parkit.R;
 import com.google.firebase.Timestamp;
+
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
 public class RemainingTimeScreen extends AppCompatActivity {
 
-    private CountDownTimer countDownTimer;
-    private ProgressBar progressBar;
-    private TextView licencePlateText, parkingSpaceText, timeRemainingText, session_expired, remainingText, startTimeText, endTimeText;
-    private Button extendParking, startNewSession;
-    private Timestamp startTimeStamp, endTimeStamp;
-    private long remainingMillis;
-    private boolean firstTickComplete;
-    private String formattedStartTime, formattedEndTime;
-    private ParkingTimeFormatter timeFormatter;
+    protected CountDownTimer countDownTimer;
+    protected ProgressBar progressBar;
+    protected TextView licencePlateText, parkingSpaceText, timeRemainingText, session_expired, remainingText, startTimeText, endTimeText;
+    protected Button extendParking, startNewSession;
+    protected Timestamp startTimeStamp, endTimeStamp;
+    protected long remainingMillis;
+    protected boolean firstTickComplete;
+    protected String formattedStartTime, formattedEndTime;
+    protected ParkingTimeFormatter timeFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,8 @@ public class RemainingTimeScreen extends AppCompatActivity {
         extendParking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Extend Parking Session", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RemainingTimeScreen.this, UpdateDetailsScreen.class));
             }
         });
 
@@ -103,6 +109,10 @@ public class RemainingTimeScreen extends AppCompatActivity {
         remainingMillis = (endTimeStamp.getSeconds() - startTimeStamp.getSeconds())*1000;
         String remainingTime = timeFormatter.calculateRemainingTime(remainingMillis);
         timeRemainingText.setText(remainingTime);
+    }
+
+    public String getRemainingTime() {
+        return (String) timeRemainingText.getText();
     }
 
     private void endParkingSession(){
@@ -159,7 +169,7 @@ public class RemainingTimeScreen extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_myaccount) {
+        if (id == R.id.settingsMenu) {
             return true;
         }
 
