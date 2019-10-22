@@ -178,4 +178,12 @@ public class User {
 
         }
     }
+
+    public void setBreachNotifiction(boolean b){
+        this.userData.setBreachNoticeNotification(b);
+    }
+
+    public void setExpireNotifiction(boolean b){
+        this.userData.setExpireWarningNotification(b);
+    }
 }

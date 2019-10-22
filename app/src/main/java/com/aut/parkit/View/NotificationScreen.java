@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import androidx.appcompat.app.ActionBar;
@@ -20,6 +18,7 @@ import com.aut.parkit.R;
 
 public class NotificationScreen extends AppCompatActivity {
     protected static Switch expire, bexpire;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +26,54 @@ public class NotificationScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         setContentView(R.layout.activity_notification_screen);
-        expire = (Switch) findViewById(R.id.expireSwitch);
-        bexpire = (Switch) findViewById(R.id.expireSwitch2);
+        expire = (Switch) findViewById(R.id.expireSwitch2);
+        bexpire = (Switch) findViewById(R.id.expireSwitch);
 
+        expire.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                final boolean value = b;
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        user.setExpireNotifiction(value);
+                        user.pushUser();
+                    }
+                }).start();
+            }
+        });
+
+        bexpire.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                final boolean value = b;
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        user.setBreachNotifiction(value);
+                        user.pushUser();
+                    }
+                }).start();
+            }
+        });
         new Thread(new Runnable() {
             @Override
             public void run() {
-                User user = new User();
-                expire.setChecked(user.isExpireWarningNotification());
-                bexpire.setChecked(user.isBreachNoticeNotification());
+                user = new User();
+
+                final boolean brech = user.isBreachNoticeNotification();
+                final boolean expirebool = user.isExpireWarningNotification();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        expire.setChecked(expirebool);
+                        bexpire.setChecked(brech);
+                    }
+                });
+
             }
         }).start();
     }
@@ -84,21 +122,5 @@ public class NotificationScreen extends AppCompatActivity {
         builder.setContentIntent(homeContentIntent);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case R.id.settingsMenu:
-                startActivity(new Intent(NotificationScreen.this, MenuScreen.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }
