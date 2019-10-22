@@ -113,7 +113,7 @@ public class SignupScreen extends AppCompatActivity
                 }
 
                 if (passwrd.length() < 6){
-                    password.setError("Password Requires ^ Characters");
+                    password.setError("Password Requires 6 Characters");
                     password.requestFocusFromTouch();
                     return;
                 }

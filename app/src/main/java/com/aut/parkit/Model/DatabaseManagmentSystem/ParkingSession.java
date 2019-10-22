@@ -106,6 +106,10 @@ public class ParkingSession implements Comparable<ParkingSession> {
         return refunded;
     }
 
+    public String getNumberPlate() {
+        return numberPlate;
+    }
+
     @Override
     public int compareTo(ParkingSession parkingSession) {
         return Integer.parseInt(parkingSession.getSessionID()) - Integer.parseInt(this.sessionID);
