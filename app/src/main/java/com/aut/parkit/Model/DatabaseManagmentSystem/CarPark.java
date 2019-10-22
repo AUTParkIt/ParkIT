@@ -2,7 +2,9 @@ package com.aut.parkit.Model.DatabaseManagmentSystem;
 
 import com.google.firebase.firestore.GeoPoint;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class CarPark {
     private String carParkID;
@@ -73,5 +75,34 @@ public class CarPark {
 
     public void setBottomRightCorner(GeoPoint bottomRightCorner) {
         this.bottomRightCorner = bottomRightCorner;
+    }
+
+    public Map<String, Object>  toMap(){
+
+    Map<String, Object> map = new HashMap<>();
+    map.put(KEY_ID, carParkID);
+    map.put(KEY_TOTALSPACES, totalSpaces);
+    map.put(KEY_FREESPACES, freeSpaces);
+    map.put(KEY_CAMPUSID, campusData);
+    map.put(KEY_TOPLEFT, topLeftCorner);
+    map.put(KEY_BOTTOMRIGHT, bottomRightCorner);
+
+    return map;
+    }
+
+    public long getTotalSpaces() {
+        return totalSpaces;
+    }
+
+    public void setTotalSpaces(long totalSpaces) {
+        this.totalSpaces = totalSpaces;
+    }
+
+    public long getFreeSpaces() {
+        return freeSpaces;
+    }
+
+    public void setFreeSpaces(long freeSpaces) {
+        this.freeSpaces = freeSpaces;
     }
 }

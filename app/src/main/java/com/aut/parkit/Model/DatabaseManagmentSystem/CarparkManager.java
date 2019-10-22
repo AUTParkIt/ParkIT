@@ -162,10 +162,18 @@ public class CarparkManager {
             public void onSuccess(Void aVoid) {
                 mFStore.collection("Users").document(mAuth.getUid()).collection("ParkingRecords").document(parkingSession1.getSessionID()).set(parkingSession1.toMap());
                   ParkingSpace space = new ParkingSpace(parkingSpace, true);
+
                 mFStore.collection("Campus").document(campus).collection("Carparks").document(carpark).collection("ParkingSpaces").document(parkingSpace)
                         .update(space.toMap());
+
+                CarPark car = CarparkManager.getCarPark(campus, carpark);
+
+                car.setFreeSpaces(car.getFreeSpaces() - 1);
+                mFStore.collection("Campus").document(campus).collection("Carparks").document(carpark).update(car.toMap());
             }
         });
+
+
     }
 
     public static LinkedList<CampusData> getAllCampuses(){
